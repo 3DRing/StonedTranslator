@@ -70,12 +70,7 @@ public abstract class ToggleImageButton extends android.support.v7.widget.AppCom
     }
 
     private void initializeOnClickListener() {
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleAction(v);
-            }
-        });
+        this.setOnClickListener(v -> toggleAction(v));
     }
 
     public interface OnToggleListener {

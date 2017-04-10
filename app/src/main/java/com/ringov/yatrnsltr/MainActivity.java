@@ -9,8 +9,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.navigation)
     BottomNavigationView navigation;
     @IdRes
     int defaultMenu = R.id.navigation_translation;
@@ -19,16 +23,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setSelectedItemId(defaultMenu);
         switchFragment(defaultMenu);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switchFragment(item.getItemId());
-                return true;
-            }
+        navigation.setOnNavigationItemSelectedListener(item -> {
+            switchFragment(item.getItemId());
+            return true;
         });
 
     }
