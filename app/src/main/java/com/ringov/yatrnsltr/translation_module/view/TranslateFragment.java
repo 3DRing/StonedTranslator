@@ -17,7 +17,7 @@ import butterknife.OnClick;
  */
 
 public class TranslateFragment extends BaseFragment<TranslationPresenter>
-        implements TranslationView, TranslationRouter {
+        implements TranslationView {
 
     @BindView(R.id.tv_translation)
     TextView mTvTranslation;
@@ -29,7 +29,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     protected TranslationPresenter providePresenter() {
-        return new TranslationPresenter(this, new TranslationInteractorImpl());
+        return new TranslationPresenter(new TranslationRouter() {}, new TranslationInteractorImpl());
     }
 
     @Override
