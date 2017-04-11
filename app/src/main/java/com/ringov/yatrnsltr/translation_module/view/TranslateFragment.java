@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr.translation_module.view;
 
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
@@ -22,9 +23,12 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.tv_translation)
     TextView mTvTranslation;
 
+    @BindView(R.id.et_original_text)
+    EditText mEtOriginalText;
+
     @OnClick(R.id.btn_translate)
     void onTranslateClick() {
-        mPresenter.translateClicked("Корова!");
+        mPresenter.translateClicked(mEtOriginalText.getText().toString());
     }
 
     @Override

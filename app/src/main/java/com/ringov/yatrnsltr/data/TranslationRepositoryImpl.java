@@ -21,7 +21,7 @@ public class TranslationRepositoryImpl implements TranslationRepository {
     @Override
     public Observable<TranslationData> translate(String text) {
         // todo remove hardcode
-        return getService().translate(Config.API_KEY, "ru-en", text)
+        return getService().translate(Config.API_KEY, "en-ru", text)
                 .map(response -> convertResponse(text, response));
     }
 
