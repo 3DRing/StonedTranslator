@@ -2,6 +2,10 @@ package com.ringov.yatrnsltr.api;
 
 import com.ringov.yatrnsltr.api.raw_entity.TranslationResponse;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
 import rx.Observable;
 
 /**
@@ -10,6 +14,10 @@ import rx.Observable;
 
 public interface TranslationRetrofitService {
 
-    Observable<TranslationResponse> translate(String key, String lang, String text);
+    @FormUrlEncoded
+    @POST("translate")
+    Observable<TranslationResponse> translate(@Field("key") String key,
+                                              @Field("lang") String lang,
+                                              @Field("text") String text);
 
 }

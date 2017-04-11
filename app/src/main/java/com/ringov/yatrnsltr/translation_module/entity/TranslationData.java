@@ -1,23 +1,25 @@
 package com.ringov.yatrnsltr.translation_module.entity;
 
+import java.util.List;
+
 /**
  * Created by Sergey Koltsov on 11.04.2017.
  */
 
 public class TranslationData {
     private String originalText;
-    private String translationText;
+    private List<String> translations;
 
-    public TranslationData(String original, String translation) {
+    public TranslationData(String original, List<String> translation) {
         this.originalText = original;
-        this.translationText = translation;
+        this.translations = translation;
     }
 
     public String getOriginal() {
         return originalText;
     }
 
-    public String getTranslation() {
-        return translationText;
+    public List<String> getTranslation() {
+        return translations;
     }
 }

@@ -2,19 +2,21 @@ package com.ringov.yatrnsltr.translation_module.view.ui_entity;
 
 import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
 
+import java.util.List;
+
 /**
  * Created by Sergey Koltsov on 11.04.2017.
  */
 
 public class UITranslation {
 
-    private String translation;
+    private List<String> translations;
 
     public UITranslation(TranslationData translationData) {
-        this.translation = translationData.getTranslation();
+        this.translations = translationData.getTranslation();
     }
 
-    public String getTranslation() {
-        return translation;
+    public List<String> getTranslations() {
+        return translations;
     }
 }

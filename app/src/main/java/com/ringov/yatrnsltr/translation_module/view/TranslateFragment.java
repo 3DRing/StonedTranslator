@@ -23,8 +23,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     TextView mTvTranslation;
 
     @OnClick(R.id.btn_translate)
-    void onTranslateClick(){
-        mPresenter.translateClicked("Ку!");
+    void onTranslateClick() {
+        mPresenter.translateClicked("Корова!");
     }
 
     @Override
@@ -39,6 +39,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showTranslation(UITranslation translation) {
-        mTvTranslation.setText(translation.getTranslation());
+        if (translation.getTranslations().size() > 0) {
+            mTvTranslation.setText(translation.getTranslations().get(0));
+        }
     }
 }
