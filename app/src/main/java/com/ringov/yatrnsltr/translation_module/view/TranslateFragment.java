@@ -1,4 +1,4 @@
-package com.ringov.yatrnsltr;
+package com.ringov.yatrnsltr.translation_module.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.custom_views.FavoriteButton;
 import com.ringov.yatrnsltr.custom_views.ToggleImageButton;
 
