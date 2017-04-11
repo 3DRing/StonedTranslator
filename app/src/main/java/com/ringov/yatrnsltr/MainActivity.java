@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
 
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
             switchFragment(item.getItemId());
             return true;
         });
-
     }
 
     private void switchFragment(@IdRes int menuId) {

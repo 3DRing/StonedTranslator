@@ -5,4 +5,6 @@ package com.ringov.yatrnsltr.base.interfaces;
  */
 
 public interface BaseView {
+    void showLoading();
+    void hideLoading();
 }
