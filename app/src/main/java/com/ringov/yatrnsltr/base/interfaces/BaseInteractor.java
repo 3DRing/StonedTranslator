@@ -9,5 +9,4 @@ import rx.Observable;
  */
 
 public interface BaseInteractor {
-    Observable<UITranslation> translate(String text);
 }

@@ -9,10 +9,10 @@
         android:id="@+id/tv_translation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:text="TextView"
         android:layout_below="@+id/textInputLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:text="TextView" />
+        android:layout_centerHorizontal="true" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -25,7 +25,7 @@
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="77dp"
             android:gravity="top|start"
             android:hint="Ввдт ткст" />
 
@@ -35,8 +35,9 @@
         android:id="@+id/btn_translate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Button"
+        android:layout_below="@+id/tv_translation"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Button" />
+        android:layout_marginTop="26dp" />
 
 </RelativeLayout>
