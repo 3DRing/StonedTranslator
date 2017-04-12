@@ -1,4 +1,4 @@
-package com.ringov.yatrnsltr;
+package com.ringov.yatrnsltr.storage_module;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ringov.yatrnsltr.R;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.

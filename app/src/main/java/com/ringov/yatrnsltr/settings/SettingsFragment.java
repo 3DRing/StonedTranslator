@@ -1,4 +1,4 @@
-package com.ringov.yatrnsltr;
+package com.ringov.yatrnsltr.settings;
 
 import android.support.v4.app.Fragment;
 
