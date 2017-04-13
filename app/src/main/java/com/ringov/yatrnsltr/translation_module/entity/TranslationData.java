@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr.translation_module.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class TranslationData {
 
     public TranslationData(String original, List<String> translation) {
         this.originalText = original;
-        this.translations = translation;
+        this.translations = translation != null ? translation : new ArrayList<>();
     }
 
     public String getOriginal() {

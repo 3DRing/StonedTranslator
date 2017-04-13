@@ -5,33 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:padding="8dp">
 
-    <android.support.design.widget.TextInputLayout
+    <EditText
+        android:id="@+id/et_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/linearLayout"
-        android:layout_toStartOf="@+id/linearLayout">
-
-        <EditText
-            android:id="@+id/et_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:hint="Ввдте ткст"
-            android:padding="8dp" />
-    </android.support.design.widget.TextInputLayout>
+        android:layout_toLeftOf="@+id/ll_change_lang"
+        android:layout_toStartOf="@+id/ll_change_lang"
+        android:background="@android:color/transparent"
+        android:hint="Ввдте ткст"
+        android:padding="8dp"
+        tools:text="Sometext" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/ll_change_lang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_margin="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_target_lang"

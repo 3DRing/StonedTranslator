@@ -49,6 +49,7 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
+        setRetainInstance(true);
     }
 
     @Override
@@ -61,6 +62,8 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        mPresenter.detachView();
+        mPresenter = null;
     }
 
     @Override
