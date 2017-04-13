@@ -6,7 +6,9 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ringov.yatrnsltr.R;
@@ -32,10 +34,17 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     RecyclerView mRvOutput;
     @BindView(R.id.cv_output_field)
     CardView mCvOutputCard;
+    @BindView(R.id.inc_more_options)
+    ViewGroup mLlMoreOptions;
 
     @OnClick(R.id.ll_change_lang)
     void onChangeLangClick() {
         Toast.makeText(getContext(), "Changed", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.im_more_options)
+    void onMoreOptionsClick() {
+        mPresenter.onMoreOptionsClicked();
     }
 
     TranslationAdapter mAdapter;
@@ -70,9 +79,19 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showTranslation(UITranslation translation) {
-        if(!translation.isEmpty()) {
+        if (!translation.isEmpty()) {
             mCvOutputCard.setVisibility(View.VISIBLE);
             mAdapter.setTranslation(translation);
         }
+    }
+
+    @Override
+    public void showMoreOptions() {
+        mLlMoreOptions.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideMoreOptions() {
+        mLlMoreOptions.setVisibility(View.GONE);
     }
 }

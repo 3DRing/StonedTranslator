@@ -15,11 +15,22 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
         super(router, interactor);
     }
 
+    private boolean moreOptionsShown;
+
     public void translateClicked(String text) {
         getInteractor().translate(text)
                 .compose(Utils.setRxSchedulers())
                 .doOnSubscribe(getView()::showLoading)
                 .doOnTerminate(getView()::hideLoading)
                 .subscribe(getView()::showTranslation, this::handleError);
+    }
+
+    public void onMoreOptionsClicked() {
+        if (moreOptionsShown) {
+            getView().hideMoreOptions();
+        } else {
+            getView().showMoreOptions();
+        }
+        moreOptionsShown = !moreOptionsShown;
     }
 }

@@ -9,4 +9,8 @@ import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
 
 public interface TranslationView extends BaseView {
     void showTranslation(UITranslation translation);
+
+    void showMoreOptions();
+
+    void hideMoreOptions();
 }

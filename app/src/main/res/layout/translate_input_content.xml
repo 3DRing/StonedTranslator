@@ -25,10 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="12dp">
 
         <TextView
             android:id="@+id/tv_target_lang"
@@ -51,5 +50,21 @@
             android:layout_weight="1"
             android:text="RU" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/im_more_options"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ll_change_lang"
+        android:layout_alignStart="@+id/ll_change_lang"
+        android:layout_below="@+id/ll_change_lang"
+        android:paddingBottom="8dp"
+        android:paddingEnd="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        app:srcCompat="@drawable/ic_more_black_24dp" />
 
 </RelativeLayout>
