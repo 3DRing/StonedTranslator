@@ -5,12 +5,21 @@ package com.ringov.yatrnsltr.translation_module.view.ui_entity;
  */
 
 public class UILangPair {
+    public static final UILangPair EMPTY = new UILangPair();
     private String sourceLang;
     private String targetLang;
 
     public UILangPair(String sourceLang, String targetLang) {
         this.sourceLang = sourceLang;
         this.targetLang = targetLang;
+    }
+
+    /**
+     * service constructor
+     */
+    public UILangPair() {
+        this.sourceLang = "";
+        this.targetLang = "";
     }
 
     public String getSourceLang() {

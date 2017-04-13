@@ -2,6 +2,7 @@ package com.ringov.yatrnsltr.base.implementations;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.BasePresenter;
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
 
@@ -22,9 +22,8 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Fragment implements BaseView {
 
-    private Unbinder unbinder;
-
     protected PRESENTER mPresenter;
+    private Unbinder unbinder;
 
     protected abstract PRESENTER providePresenter();
 
@@ -49,8 +48,21 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
+        initializeViewsBeforeRestoreState();
         setRetainInstance(true);
+        restoreState(savedInstanceState);
     }
+
+    protected abstract void initializeViewsBeforeRestoreState();
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(saveState(outState));
+    }
+
+    protected abstract void restoreState(Bundle bundle);
+
+    protected abstract Bundle saveState(Bundle bundle);
 
     @Override
     public void onDetach() {
@@ -75,6 +87,7 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
         // todo implement
     }
 
+
     @Override
     public void showKnownException(String message) {
         // todo implement
@@ -88,5 +101,21 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     @Override
     public void showUnknownException(String message) {
         // todo implement
+    }
+
+    protected static abstract class BaseViewState implements Parcelable {
+
+        public static class Builder<STATE extends BaseViewState, BUILDER extends BaseViewState.Builder> {
+
+            protected STATE state;
+
+            public BUILDER getThis() {
+                return (BUILDER) this;
+            }
+
+            public STATE build() {
+                return state;
+            }
+        }
     }
 }
