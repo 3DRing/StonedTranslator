@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_storage"
+        android:title="История" />
+
+    <item
+        android:id="@+id/navigation_translation"
+        android:checked="true"
+        android:title="Перевод" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:title="Настройки" />
+
+</menu>
