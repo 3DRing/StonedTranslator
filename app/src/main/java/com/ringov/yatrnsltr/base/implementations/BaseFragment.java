@@ -56,14 +56,13 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     public void onDetach() {
         super.onDetach();
         mPresenter.detachView();
+        mPresenter = null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        mPresenter.detachView();
-        mPresenter = null;
     }
 
     @Override

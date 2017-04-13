@@ -1,6 +1,8 @@
 package com.ringov.yatrnsltr.data;
 
+import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
+import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
 
 import rx.Observable;
 
@@ -9,5 +11,9 @@ import rx.Observable;
  */
 
 public interface TranslationRepository {
-    Observable<TranslationData> translate(String text);
+    Observable<TranslationData> translate(String text, LangPairData langPair);
+
+    Observable<LangPairData> loadLastLangPair();
+
+    void saveLastLangPair(LangPairData langPair);
 }

@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr.base;
 
+import com.ringov.yatrnsltr.Utils;
 import com.ringov.yatrnsltr.base.interfaces.BaseInteractor;
 import com.ringov.yatrnsltr.base.interfaces.BaseRouter;
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
@@ -8,7 +9,7 @@ import com.ringov.yatrnsltr.base.interfaces.BaseView;
  * Created by Sergey Koltsov on 11.04.2017.
  */
 
-public class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRouter, INTERACTOR extends BaseInteractor> {
+public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRouter, INTERACTOR extends BaseInteractor> {
 
     private VIEW mView;
     private ROUTER mRouter;
@@ -26,6 +27,10 @@ public class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRouter, INT
     public void detachView(){
         mView = null;
     }
+
+    public abstract void onViewResumed();
+
+    public abstract void onViewPaused();
 
     public VIEW getView() {
         return mView;

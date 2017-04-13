@@ -11,11 +11,24 @@ import com.ringov.yatrnsltr.translation_module.view.TranslationView;
  */
 
 public class TranslationPresenter extends BasePresenter<TranslationView, TranslationRouter, TranslationInteractor> {
+
+    private boolean moreOptionsShown;
+
     public TranslationPresenter(TranslationRouter router, TranslationInteractor interactor) {
         super(router, interactor);
     }
 
-    private boolean moreOptionsShown;
+    @Override
+    public void onViewResumed() {
+        getInteractor().loadLastLangPair()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::showLanguagePair, this::handleError);
+    }
+
+    @Override
+    public void onViewPaused() {
+        getInteractor().saveLastLangPair();
+    }
 
     public void translateClicked(String text) {
         getInteractor().translate(text)
@@ -32,5 +45,15 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
             getView().showMoreOptions();
         }
         moreOptionsShown = !moreOptionsShown;
+    }
+
+    public void onDeleteClicked() {
+        getView().clearInputField();
+    }
+
+    public void onSwapLangClicked() {
+        getInteractor().swapLanguage()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::showLanguagePair, this::handleError);
     }
 }
