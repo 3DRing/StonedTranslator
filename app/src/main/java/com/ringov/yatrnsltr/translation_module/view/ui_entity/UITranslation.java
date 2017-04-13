@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr.translation_module.view.ui_entity;
 
+import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
 
 import java.util.List;
@@ -12,10 +13,12 @@ public class UITranslation {
 
     private List<String> translations;
     private String originalText;
+    private UILangPair langPair;
 
-    public UITranslation(TranslationData translationData) {
+    public UITranslation(TranslationData translationData, LangPairData langPair) {
         this.originalText = translationData.getOriginal();
         this.translations = translationData.getTranslation();
+        this.langPair = langPair.toUILangPair();
     }
 
     public List<String> getTranslations() {
@@ -26,7 +29,7 @@ public class UITranslation {
         return originalText;
     }
 
-    public boolean isEmpty(){
-        return translations.size() == 0;
+    public UILangPair getLangPair() {
+        return langPair;
     }
 }

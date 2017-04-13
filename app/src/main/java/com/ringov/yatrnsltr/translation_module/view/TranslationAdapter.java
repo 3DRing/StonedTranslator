@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
+import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
+import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
 import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
 
 import java.util.ArrayList;
@@ -57,6 +59,8 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
         TextView mTvOriginal;
         @BindView(R.id.tv_translation)
         TextView mTvTranslation;
+        @BindView(R.id.tv_lang_pair)
+        TextView mTvLangPair;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +70,9 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
         public void bindView(int position) {
             mTvOriginal.setText(item.getOriginalText());
             mTvTranslation.setText(translations.get(position));
+            UILangPair langPair = item.getLangPair();
+            mTvLangPair.setText(String.format(itemView.getContext().getString(R.string.lang_pair_item),
+                    langPair.getSourceLang(), langPair.getTargetLang()));
         }
     }
 }

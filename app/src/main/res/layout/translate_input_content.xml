@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="beforeDescendants"
@@ -23,10 +22,9 @@
         android:layout_toStartOf="@+id/frameLayout"
         android:background="@android:color/transparent"
         android:gravity="top"
-        android:hint="Ввдте ткст"
+        android:hint="@string/input_hint_text"
         android:minLines="5"
-        android:padding="8dp"
-        tools:text="Sometext" />
+        android:padding="8dp" />
 
     <FrameLayout
         android:id="@+id/frameLayout"

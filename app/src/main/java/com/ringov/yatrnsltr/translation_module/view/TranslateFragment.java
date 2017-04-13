@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr.translation_module.view;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -101,10 +103,10 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showTranslation(UITranslation translation) {
-        if (!translation.isEmpty()) {
-            mCvOutputCard.setVisibility(View.VISIBLE);
-            mAdapter.setTranslation(translation);
-        }
+        mCvOutputCard.setVisibility(View.VISIBLE);
+        mCvOutputCard.requestFocus();
+        mAdapter.setTranslation(translation);
+        hideKeyboard();
     }
 
     @Override
@@ -126,5 +128,14 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     public void showLanguagePair(UILangPair langPair) {
         mTvSourceLang.setText(langPair.getSourceLang());
         mTvTargetLang.setText(langPair.getTargetLang());
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = getActivity().getCurrentFocus();
+        if (view == null) {
+            view = new View(getActivity());
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

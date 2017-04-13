@@ -27,7 +27,7 @@ public class TranslationInteractorImpl extends BaseInteractorImpl implements Tra
     public Observable<UILangPair> swapLanguage() {
         crtLangPair.swap();
         return Observable.just(crtLangPair)
-                .map(langPairData -> new UILangPair(langPairData.getSourceLang(), langPairData.getTargetLang()));
+                .map(LangPairData::toUILangPair);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class TranslationInteractorImpl extends BaseInteractorImpl implements Tra
         return TranslationRepositoryProvider.getTranslationRepository().loadLastLangPair()
                 .map(langPairData -> {
                     crtLangPair = langPairData;
-                    return new UILangPair(crtLangPair.getSourceLang(), crtLangPair.getTargetLang());
+                    return crtLangPair.toUILangPair();
                 });
     }
 
@@ -45,7 +45,7 @@ public class TranslationInteractorImpl extends BaseInteractorImpl implements Tra
     }
 
     private UITranslation convertTranslation(TranslationData translationData) {
-        return new UITranslation(translationData);
+        return new UITranslation(translationData, crtLangPair);
     }
 
 }

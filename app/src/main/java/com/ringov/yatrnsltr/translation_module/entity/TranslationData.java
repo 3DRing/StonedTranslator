@@ -1,5 +1,7 @@
 package com.ringov.yatrnsltr.translation_module.entity;
 
+import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,4 +25,5 @@ public class TranslationData {
     public List<String> getTranslation() {
         return translations;
     }
+
 }
