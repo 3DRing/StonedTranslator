@@ -7,4 +7,5 @@ import com.ringov.yatrnsltr.base.interfaces.BaseRouter;
  */
 
 public interface TranslationRouter extends BaseRouter {
+    void openYandexTranslatePage();
 }

@@ -14,9 +14,11 @@ import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
+import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.presenter.TranslationPresenter;
 import com.ringov.yatrnsltr.translation_module.router.TranslationRouter;
+import com.ringov.yatrnsltr.translation_module.router.TranslationRouterImpl;
 import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
 import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
 
@@ -35,7 +37,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.rv_output)
     RecyclerView mRvOutput;
     @BindView(R.id.fl_output_field)
-    ViewGroup mCvOutputCard;
+    ViewGroup mFlOutputField;
     @BindView(R.id.inc_more_options)
     ViewGroup mLlMoreOptions;
 
@@ -68,8 +70,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     protected TranslationPresenter providePresenter() {
-        return new TranslationPresenter(new TranslationRouter() {
-        }, new TranslationInteractorImpl());
+        return new TranslationPresenter(new TranslationRouterImpl(new ContextAdapter(getContext())),
+                new TranslationInteractorImpl());
     }
 
     @Override
@@ -119,7 +121,17 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     private void initializeRecycler() {
         mRvOutput.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new TranslationAdapter();
+        mAdapter = new TranslationAdapter(new TranslationAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(UITranslation translation, String translatingOption) {
+                // todo open separate screen with full size text and translation
+            }
+
+            @Override
+            public void onFooterClick() {
+                mPresenter.onTranslationFooterClicked();
+            }
+        });
         mRvOutput.setAdapter(mAdapter);
     }
 
@@ -131,8 +143,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @Override
     public void showTranslation(UITranslation translation) {
         crtTranslation = translation;
-        mCvOutputCard.setVisibility(View.VISIBLE);
-        mCvOutputCard.requestFocus();
+        mFlOutputField.setVisibility(View.VISIBLE);
+        mFlOutputField.requestFocus();
         mAdapter.setTranslation(crtTranslation);
         hideKeyboard();
     }

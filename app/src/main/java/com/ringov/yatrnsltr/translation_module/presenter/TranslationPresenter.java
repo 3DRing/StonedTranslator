@@ -59,4 +59,8 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .compose(Utils.setRxSchedulers())
                 .subscribe(getView()::showLanguagePair, this::handleError);
     }
+
+    public void onTranslationFooterClicked() {
+        getRouter().openYandexTranslatePage();
+    }
 }

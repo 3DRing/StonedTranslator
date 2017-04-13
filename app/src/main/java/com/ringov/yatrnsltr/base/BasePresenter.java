@@ -27,6 +27,7 @@ public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRo
 
     public void detachView() {
         mView = null;
+        getRouter().detachContext();
     }
 
     public abstract void onViewResumed();

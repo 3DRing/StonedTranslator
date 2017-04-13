@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
-import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
 import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
 import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,13 +20,18 @@ import butterknife.ButterKnife;
  * Created by Sergey Koltsov on 13.04.2017.
  */
 
-public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.ViewHolder> {
+public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.BaseViewHolder> {
+
+    private static final int NORMAL_VIEW = 0;
+    private static final int FOOTER_VIEW = 1;
 
     private UITranslation item;
     private List<String> translations;
+    private OnItemClickListener mListener;
 
-    public TranslationAdapter() {
+    public TranslationAdapter(OnItemClickListener listener) {
         translations = new ArrayList<>();
+        mListener = listener;
     }
 
     public void setTranslation(UITranslation items) {
@@ -38,23 +41,54 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.translate_list_item, parent, false);
-        return new ViewHolder(v);
+    public int getItemViewType(int position) {
+        if (position == translations.size()) {
+            return FOOTER_VIEW;
+        }
+        return NORMAL_VIEW;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v;
+        BaseViewHolder vh = null;
+        switch (viewType) {
+            case FOOTER_VIEW:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.translate_list_footer, parent, false);
+                vh = new FooterViewHolder(v);
+                break;
+            case NORMAL_VIEW:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.translate_list_item, parent, false);
+                vh = new NormalViewHolder(v);
+                break;
+        }
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.bindView(position);
     }
 
     @Override
     public int getItemCount() {
-        return translations.size();
+        return translations.size() + 1; // one additional room for footer
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
+        BaseViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        protected abstract void bindView(int position);
+    }
+
+    class NormalViewHolder extends BaseViewHolder {
+
+        @BindView(R.id.ll_item_layout)
+        ViewGroup mLlItemLayout;
         @BindView(R.id.tv_original)
         TextView mTvOriginal;
         @BindView(R.id.tv_translation)
@@ -62,17 +96,39 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
         @BindView(R.id.tv_lang_pair)
         TextView mTvLangPair;
 
-        public ViewHolder(View itemView) {
+        NormalViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
         }
 
-        public void bindView(int position) {
+        @Override
+        protected void bindView(int position) {
             mTvOriginal.setText(item.getOriginalText());
             mTvTranslation.setText(translations.get(position));
             UILangPair langPair = item.getLangPair();
             mTvLangPair.setText(String.format(itemView.getContext().getString(R.string.lang_pair_item),
                     langPair.getSourceLang(), langPair.getTargetLang()));
+            mLlItemLayout.setOnClickListener(v -> mListener.onItemClick(item, item.getTranslations().get(position)));
         }
+    }
+
+    class FooterViewHolder extends BaseViewHolder {
+
+        @BindView(R.id.tv_yandex_badge)
+        View mTvYandexBadge;
+
+        public FooterViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        protected void bindView(int position) {
+            mTvYandexBadge.setOnClickListener(v -> mListener.onFooterClick());
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(UITranslation translation, String translatingOption);
+
+        void onFooterClick();
     }
 }
