@@ -59,17 +59,18 @@
             android:id="@+id/fl_options"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@+id/linearLayout"
             android:layout_marginLeft="111dp"
-            android:layout_marginStart="111dp">
+            android:layout_marginStart="111dp"
+            android:visibility="gone">
 
             <include
                 android:id="@+id/include_options"
                 layout="@layout/trnsltn_options"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </FrameLayout>
 
         <TextView
