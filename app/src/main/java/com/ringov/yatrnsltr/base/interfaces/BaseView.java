@@ -7,4 +7,7 @@ package com.ringov.yatrnsltr.base.interfaces;
 public interface BaseView {
     void showLoading();
     void hideLoading();
+    void showKnownException(String message);
+    void showInternalException(String message);
+    void showUnknownException(String message);
 }

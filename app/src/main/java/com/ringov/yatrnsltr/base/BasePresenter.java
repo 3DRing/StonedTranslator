@@ -1,6 +1,5 @@
 package com.ringov.yatrnsltr.base;
 
-import com.ringov.yatrnsltr.Utils;
 import com.ringov.yatrnsltr.base.interfaces.BaseInteractor;
 import com.ringov.yatrnsltr.base.interfaces.BaseRouter;
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
@@ -14,6 +13,7 @@ public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRo
     private VIEW mView;
     private ROUTER mRouter;
     private INTERACTOR mInteractor;
+    private ExceptionHandler mExceptionHandler;
 
     public BasePresenter(ROUTER router, INTERACTOR interactor){
         mRouter = router;
@@ -45,6 +45,6 @@ public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRo
     }
 
     public void handleError(Throwable throwable) {
-        // todo implement
+        mExceptionHandler.handleError(throwable);
     }
 }

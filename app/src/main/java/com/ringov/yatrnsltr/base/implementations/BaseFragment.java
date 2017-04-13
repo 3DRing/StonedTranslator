@@ -74,4 +74,19 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     public void hideLoading() {
         // todo implement
     }
+
+    @Override
+    public void showKnownException(String message) {
+        // todo implement
+    }
+
+    @Override
+    public void showInternalException(String message) {
+        // todo implement
+    }
+
+    @Override
+    public void showUnknownException(String message) {
+        // todo implement
+    }
 }
