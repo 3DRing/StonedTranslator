@@ -2,8 +2,8 @@ package com.ringov.yatrnsltr.translation_module.view;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -43,6 +43,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     TextView mTvSourceLang;
     @BindView(R.id.tv_target_lang)
     TextView mTvTargetLang;
+    TranslationAdapter mAdapter;
+    private UITranslation crtTranslation;
 
     @OnClick(R.id.ll_swap_lang)
     void onSwapLangClick() {
@@ -59,8 +61,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mPresenter.onMoreOptionsClicked();
     }
 
-    TranslationAdapter mAdapter;
-
     @OnClick(R.id.tv_translate)
     void onTranslateClick() {
         mPresenter.translateClicked(mEtOriginalText.getText().toString());
@@ -75,6 +75,10 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    protected void initializeViewsBeforeRestoreState() {
         initializeRecycler();
     }
 
@@ -90,6 +94,29 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mPresenter.onViewPaused();
     }
 
+    @Override
+    protected void restoreState(Bundle bundle) {
+        if (bundle != null) {
+            ViewState state = bundle.getParcelable(ViewState.class.getCanonicalName());
+            if (state != null) {
+                mEtOriginalText.setText(state.getInputText());
+                if (!state.getTranslation().getTranslations().isEmpty()) {
+                    showTranslation(state.getTranslation());
+                }
+            }
+        }
+    }
+
+    @Override
+    protected Bundle saveState(Bundle bundle) {
+        ViewState state = new ViewState.Builder()
+                .setInputText(mEtOriginalText.getText().toString())
+                .setCrtUITranslation(crtTranslation)
+                .build();
+        bundle.putParcelable(ViewState.class.getCanonicalName(), state);
+        return bundle;
+    }
+
     private void initializeRecycler() {
         mRvOutput.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new TranslationAdapter();
@@ -103,9 +130,10 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showTranslation(UITranslation translation) {
+        crtTranslation = translation;
         mCvOutputCard.setVisibility(View.VISIBLE);
         mCvOutputCard.requestFocus();
-        mAdapter.setTranslation(translation);
+        mAdapter.setTranslation(crtTranslation);
         hideKeyboard();
     }
 
@@ -137,5 +165,65 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
             view = new View(getActivity());
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private static class ViewState extends BaseViewState {
+        public static final Creator<ViewState> CREATOR = new Creator<ViewState>() {
+            @Override
+            public ViewState createFromParcel(Parcel in) {
+                return new ViewState(in);
+            }
+
+            @Override
+            public ViewState[] newArray(int size) {
+                return new ViewState[size];
+            }
+        };
+        private String inputText;
+        private UITranslation crtTranslation;
+
+        public ViewState() {
+
+        }
+
+        protected ViewState(Parcel in) {
+            inputText = in.readString();
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(inputText);
+        }
+
+        public String getInputText() {
+            return inputText;
+        }
+
+        public UITranslation getTranslation() {
+            return crtTranslation;
+        }
+
+        public static class Builder extends BaseViewState.Builder<ViewState, ViewState.Builder> {
+            public Builder() {
+                state = new ViewState();
+                state.inputText = "";
+                state.crtTranslation = UITranslation.EMPTY;
+            }
+
+            public Builder setInputText(String text) {
+                state.inputText = text;
+                return this;
+            }
+
+            public Builder setCrtUITranslation(UITranslation translation) {
+                state.crtTranslation = translation != null ? translation : UITranslation.EMPTY;
+                return this;
+            }
+        }
     }
 }

@@ -52,7 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.content, f, f.getClass().getSimpleName()).commit();
+        if (f != null) {
+            FragmentManager fm = getSupportFragmentManager();
+            if (fm.findFragmentByTag(f.getClass().getSimpleName()) != null) {
+                // do not commit another instance of a fragment
+                // if there already is the same one in manager
+                return;
+            }
+            fm.beginTransaction().replace(R.id.content, f, f.getClass().getSimpleName()).commit();
+        }
     }
 }
