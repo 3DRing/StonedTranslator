@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="EN" />
+            android:text="EN" />
 
         <ImageView
             android:id="@+id/iv_arrow"
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="RU" />
+            android:text="RU" />
     </LinearLayout>
 
 </RelativeLayout>
