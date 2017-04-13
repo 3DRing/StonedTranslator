@@ -87,6 +87,22 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
         // todo implement
     }
 
+
+    @Override
+    public void showKnownException(String message) {
+        // todo implement
+    }
+
+    @Override
+    public void showInternalException(String message) {
+        // todo implement
+    }
+
+    @Override
+    public void showUnknownException(String message) {
+        // todo implement
+    }
+
     protected static abstract class BaseViewState implements Parcelable {
 
         public static class Builder<STATE extends BaseViewState, BUILDER extends BaseViewState.Builder> {

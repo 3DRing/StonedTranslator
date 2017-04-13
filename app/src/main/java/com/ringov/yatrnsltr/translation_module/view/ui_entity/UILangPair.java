@@ -15,8 +15,8 @@ public class UILangPair {
     }
 
     /**
-     *  service constructor
-      */
+     * service constructor
+     */
     public UILangPair() {
         this.sourceLang = "";
         this.targetLang = "";

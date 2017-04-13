@@ -24,4 +24,8 @@ public class TranslationResponse {
     public List<String> getText() {
         return text;
     }
+
+    public String getMessage() {
+        return message;
+    }
 }
