@@ -61,7 +61,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     TranslationAdapter mAdapter;
 
-    @OnClick(R.id.btn_translate)
+    @OnClick(R.id.tv_translate)
     void onTranslateClick() {
         mPresenter.translateClicked(mEtOriginalText.getText().toString());
     }
