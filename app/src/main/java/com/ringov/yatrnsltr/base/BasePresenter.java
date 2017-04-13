@@ -15,16 +15,17 @@ public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRo
     private INTERACTOR mInteractor;
     private ExceptionHandler mExceptionHandler;
 
-    public BasePresenter(ROUTER router, INTERACTOR interactor){
+    public BasePresenter(ROUTER router, INTERACTOR interactor) {
         mRouter = router;
         mInteractor = interactor;
+        mExceptionHandler = new ExceptionHandler(this::getView);
     }
 
-    public void attachView(VIEW view){
+    public void attachView(VIEW view) {
         mView = view;
     }
 
-    public void detachView(){
+    public void detachView() {
         mView = null;
     }
 

@@ -14,7 +14,7 @@ public class ExceptionHandler {
 
     private Func0<BaseView> mViewProvider;
 
-    private ExceptionHandler(Func0<BaseView> viewProvider) {
+    ExceptionHandler(Func0<BaseView> viewProvider) {
         mViewProvider = viewProvider;
     }
 
