@@ -17,7 +17,12 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:paddingBottom="4dp"
+        android:paddingEnd="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp">
 
         <TextView
             android:id="@+id/tv_target_lang"
@@ -49,12 +54,12 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:paddingBottom="8dp"
-        android:paddingEnd="12dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingStart="12dp"
-        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:paddingEnd="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
         app:srcCompat="@drawable/ic_delete_black_24dp" />
 
     <ImageView
@@ -65,11 +70,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:paddingBottom="8dp"
-        android:paddingEnd="12dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingStart="12dp"
-        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:paddingEnd="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
         app:srcCompat="@drawable/ic_more_black_24dp" />
 </LinearLayout>

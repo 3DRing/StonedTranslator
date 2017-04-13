@@ -32,8 +32,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     EditText mEtOriginalText;
     @BindView(R.id.rv_output)
     RecyclerView mRvOutput;
-    @BindView(R.id.cv_output_field)
-    CardView mCvOutputCard;
+    @BindView(R.id.fl_output_field)
+    ViewGroup mCvOutputCard;
     @BindView(R.id.inc_more_options)
     ViewGroup mLlMoreOptions;
 

@@ -5,7 +5,12 @@
     android:layout_height="wrap_content"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    android:padding="8dp">
+    android:paddingBottom="8dp"
+    android:paddingEnd="4dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="4dp"
+    android:paddingStart="8dp"
+    android:paddingTop="8dp">
 
     <EditText
         android:id="@+id/et_input"
@@ -19,7 +24,7 @@
         android:background="@android:color/transparent"
         android:gravity="top"
         android:hint="Ввдте ткст"
-        android:minLines="7"
+        android:minLines="5"
         android:padding="8dp"
         tools:text="Sometext" />
 
