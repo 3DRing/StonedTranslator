@@ -7,4 +7,7 @@ import com.ringov.yatrnsltr.exceptions.base.InternalException;
  */
 
 public class StonedServiceException extends InternalException {
+    public StonedServiceException(String message) {
+        super(message);
+    }
 }

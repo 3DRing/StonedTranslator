@@ -1,7 +1,8 @@
-package com.ringov.trnsltr_service;
+package com.ringov.yatrnsltr.data.trnsltr_service;
 
-import com.ringov.LangPairData;
-import com.ringov.TranslationData;
+import com.ringov.yatrnsltr.data.lang.Language;
+import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
+import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,13 @@ import java.util.List;
  */
 public class StonedConvertingService {
 
-    public static String convert(String string, String lang) {
+    public static String convert(String string, Language lang) {
         return ConverterFactory.getConverter(lang).convert(string);
     }
 
     public static TranslationData convert(TranslationData translation, LangPairData langPair) {
         // converting source lang
-        String convertedOriginalText = convert(langPair.getSourceLang(), translation.getOriginal());
+        String convertedOriginalText = convert(translation.getOriginal(), langPair.getSourceLang());
 
         // converting translations
         StonedConverter converter = ConverterFactory.getConverter(langPair.getTargetLang());

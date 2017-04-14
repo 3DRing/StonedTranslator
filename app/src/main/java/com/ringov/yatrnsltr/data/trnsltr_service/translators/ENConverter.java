@@ -1,6 +1,7 @@
-package com.ringov.trnsltr_service.translators;
+package com.ringov.yatrnsltr.data.trnsltr_service.translators;
 
-import com.ringov.trnsltr_service.StonedConverter;
+
+import com.ringov.yatrnsltr.data.trnsltr_service.StonedConverter;
 
 /**
  * Created by Сергей on 14.04.2017.

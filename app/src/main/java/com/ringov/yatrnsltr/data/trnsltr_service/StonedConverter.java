@@ -1,4 +1,4 @@
-package com.ringov.trnsltr_service;
+package com.ringov.yatrnsltr.data.trnsltr_service;
 
 /**
  * Created by Сергей on 14.04.2017.

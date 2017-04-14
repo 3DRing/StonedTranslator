@@ -1,21 +1,33 @@
-package com.ringov.trnsltr_service;
+package com.ringov.yatrnsltr.data.trnsltr_service;
 
-import com.ringov.trnsltr_service.translators.ENConverter;
-import com.ringov.trnsltr_service.translators.RUConverter;
+import com.ringov.yatrnsltr.data.lang.Language;
+import com.ringov.yatrnsltr.data.trnsltr_service.translators.DefaultConverter;
+import com.ringov.yatrnsltr.data.trnsltr_service.translators.ENConverter;
+import com.ringov.yatrnsltr.data.trnsltr_service.translators.RUConverter;
 
 /**
  * Created by Сергей on 14.04.2017.
  */
 class ConverterFactory {
 
-    static StonedConverter getConverter(String lang) {
-        // todo implement
-        if (lang.equals("ru")) {
-            return new RUConverter();
-        } else if (lang.equals("en")) {
-            return new ENConverter();
-        } else {
-            return new RUConverter();
+    static StonedConverter getConverter(Language lang) {
+        Language.SupportedLanguage sLang = lang.getSupported();
+
+        StonedConverter converter = null;
+        switch (sLang){
+            case RU:
+                converter = new RUConverter();
+                break;
+            case EN:
+                converter = new ENConverter();
+                break;
+            case NOT:
+                // break missed intentionally
+            default:
+                converter = new DefaultConverter(); // throws StonedServiceException on convert() call
+                break;
         }
+
+        return converter;
     }
 }
