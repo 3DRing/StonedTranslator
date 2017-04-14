@@ -16,26 +16,29 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    // not used, keeping just in case of changing architecture back to the bottom menu
+
+    @Deprecated
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
+    @Deprecated
     @IdRes
     int defaultMenu = R.id.navigation_translation;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-
+    /**
+     * Should be called from onCreate after views initialization
+     */
+    @Deprecated
+    private void initializeBottomMenu() {
         navigation.setSelectedItemId(defaultMenu);
-        switchFragment(defaultMenu);
         navigation.setOnNavigationItemSelectedListener(item -> {
-            switchFragment(item.getItemId());
+            changeFragment(item.getItemId());
             return true;
         });
     }
 
-    private void switchFragment(@IdRes int menuId) {
+    @Deprecated
+    private void changeFragment(@IdRes int menuId) {
         Fragment f = null;
         switch (menuId) {
             case R.id.navigation_storage:
@@ -59,7 +62,34 @@ public class MainActivity extends AppCompatActivity {
                 // if there already is the same one in manager
                 return;
             }
-            fm.beginTransaction().replace(R.id.content, f, f.getClass().getSimpleName()).commit();
+            fm.beginTransaction().replace(R.id.translate_content, f, f.getClass().getSimpleName()).commit();
         }
     }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        initializeFragments();
+    }
+
+    private void initializeFragments() {
+        commitFragmentIfNotExist(getSupportFragmentManager(), new TranslateFragment(), R.id.translate_content);
+        commitFragmentIfNotExist(getSupportFragmentManager(), new StorageFragment(), R.id.storage_content);
+    }
+
+    private boolean commitFragmentIfNotExist(FragmentManager fm, Fragment fragment, @IdRes int fragmentContainer) {
+        if (fm.findFragmentByTag(fragment.getClass().getSimpleName()) == null) {
+            fm.beginTransaction().replace(fragmentContainer, fragment, fragment.getClass().getSimpleName()).commit();
+            return true;
+        } else {
+            // do not commit another instance of a fragment
+            // if there already is the same one in manager
+            return false;
+        }
+    }
+
 }
