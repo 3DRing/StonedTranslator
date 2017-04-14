@@ -4,4 +4,6 @@
     <string name="translate_button_text">Првсти</string>
     <string name="input_hint_text">Ввдте ткст</string>
     <string name="yandex_badge_text">Переведено сервисом «Яндекс.Переводчик»</string>
+    <string name="translation_title">Перевод</string>
+    <string name="original_title">Оригинал</string>
 </resources>
