@@ -10,15 +10,6 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/tv_original_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/original_title"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/tv_original"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,17 +19,6 @@
         tools:text="Очень очень длинный перевод прям длиннее
                 некуда не влезает в строку ни в первую ни во вторую
                  и вот здесь даж уже третью сейчас займет всю ой мамочки что ж это такое" />
-
-    <TextView
-        android:id="@+id/tv_translation_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:text="@string/translation_title"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_translation"
