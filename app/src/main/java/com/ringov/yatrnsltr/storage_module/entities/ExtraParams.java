@@ -1,4 +1,4 @@
-package com.ringov.yatrnsltr.storage_module.entity;
+package com.ringov.yatrnsltr.storage_module.entities;
 
 /**
  * Created by Sergey Koltsov on 14.04.2017.

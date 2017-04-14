@@ -1,8 +1,8 @@
 package com.ringov.yatrnsltr.data.trnsltr_service;
 
 import com.ringov.yatrnsltr.data.lang.Language;
-import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
-import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
+import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
 import java.util.ArrayList;
 import java.util.List;

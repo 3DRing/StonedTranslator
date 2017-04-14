@@ -5,8 +5,8 @@ import com.ringov.yatrnsltr.api.ApiFactory;
 import com.ringov.yatrnsltr.api.TranslationRetrofitService;
 import com.ringov.yatrnsltr.api.raw_entity.TranslationResponse;
 import com.ringov.yatrnsltr.data.SharedPreferencesStorage;
-import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
-import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
+import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
 import java.util.Locale;
 

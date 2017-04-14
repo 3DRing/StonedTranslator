@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 import com.ringov.yatrnsltr.App;
 import com.ringov.yatrnsltr.data.lang.Language;
-import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 
 /**
  * Created by Sergey Koltsov on 13.04.2017.

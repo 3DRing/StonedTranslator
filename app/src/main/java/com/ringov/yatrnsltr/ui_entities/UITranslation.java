@@ -1,7 +1,7 @@
-package com.ringov.yatrnsltr.ui_entity;
+package com.ringov.yatrnsltr.ui_entities;
 
-import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
-import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
+import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
 import java.util.ArrayList;
 import java.util.List;

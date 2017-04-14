@@ -1,4 +1,4 @@
-package com.ringov.yatrnsltr.translation_module.entity;
+package com.ringov.yatrnsltr.translation_module.entities;
 
 import java.util.ArrayList;
 import java.util.List;

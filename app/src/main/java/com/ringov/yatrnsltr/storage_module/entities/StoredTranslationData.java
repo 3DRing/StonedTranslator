@@ -1,6 +1,6 @@
-package com.ringov.yatrnsltr.storage_module.entity;
+package com.ringov.yatrnsltr.storage_module.entities;
 
-import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
+import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
 import java.util.List;
 
