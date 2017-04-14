@@ -1,13 +1,12 @@
-package com.ringov.yatrnsltr.data;
+package com.ringov.yatrnsltr.data.translation_repo;
 
 import com.ringov.yatrnsltr.Config;
 import com.ringov.yatrnsltr.api.ApiFactory;
 import com.ringov.yatrnsltr.api.TranslationRetrofitService;
 import com.ringov.yatrnsltr.api.raw_entity.TranslationResponse;
-import com.ringov.yatrnsltr.data.lang.Language;
+import com.ringov.yatrnsltr.data.SharedPreferencesStorage;
 import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
 
 import java.util.Locale;
 
