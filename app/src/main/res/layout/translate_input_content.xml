@@ -23,9 +23,9 @@
         android:background="@android:color/transparent"
         android:gravity="top"
         android:hint="@string/input_hint_text"
+        android:inputType="textMultiLine"
         android:minLines="5"
-        android:padding="8dp"
-        android:inputType="textImeMultiLine"/>
+        android:padding="8dp" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
