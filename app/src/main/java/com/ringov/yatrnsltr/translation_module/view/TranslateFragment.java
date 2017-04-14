@@ -46,8 +46,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @BindView(R.id.fl_output_field)
     ViewGroup mFlOutputField;
-    @BindView(R.id.ll_item_layout)
-    ViewGroup mLlItemLayout;
     @BindView(R.id.tv_original)
     TextView mTvOriginal;
     @BindView(R.id.tv_translation)
@@ -149,9 +147,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         UILangPair langPair = translation.getLangPair();
         mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
                 langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
-        mLlItemLayout.setOnClickListener(v -> {
-        });
-
         mFb.setChecked(translation.isFavorite());
         mTmbMode.setChecked(translation.isChanged());
 
