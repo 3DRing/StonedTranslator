@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ringov.yatrnsltr.settings.SettingsFragment;
-import com.ringov.yatrnsltr.storage_module.StorageFragment;
+import com.ringov.yatrnsltr.storage_module.view.StorageFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
 
 import butterknife.BindView;

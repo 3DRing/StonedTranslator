@@ -14,8 +14,8 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
 
     private boolean moreOptionsShown;
 
-    public TranslationPresenter(TranslationRouter router, TranslationInteractor interactor) {
-        super(router, interactor);
+    public TranslationPresenter(TranslationView view, TranslationRouter router, TranslationInteractor interactor) {
+        super(view, router, interactor);
     }
 
     @Override

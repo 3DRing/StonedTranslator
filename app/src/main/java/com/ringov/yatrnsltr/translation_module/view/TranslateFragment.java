@@ -76,7 +76,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     protected TranslationPresenter providePresenter() {
-        return new TranslationPresenter(new TranslationRouterImpl(new ContextAdapter(getContext())),
+        return new TranslationPresenter(this, new TranslationRouterImpl(new ContextAdapter(getContext())),
                 new TranslationInteractorImpl());
     }
 
