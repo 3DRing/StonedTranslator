@@ -18,8 +18,8 @@ import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.presenter.TranslationPresenter;
 import com.ringov.yatrnsltr.translation_module.router.TranslationRouterImpl;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
+import com.ringov.yatrnsltr.ui_entity.UILangPair;
+import com.ringov.yatrnsltr.ui_entity.UITranslation;
 
 import butterknife.BindView;
 import butterknife.OnClick;

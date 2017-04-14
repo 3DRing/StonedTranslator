@@ -4,8 +4,8 @@ import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
 import com.ringov.yatrnsltr.data.translation_repo.TranslationRepositoryProvider;
 import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
+import com.ringov.yatrnsltr.ui_entity.UILangPair;
+import com.ringov.yatrnsltr.ui_entity.UITranslation;
 
 import rx.Observable;
 

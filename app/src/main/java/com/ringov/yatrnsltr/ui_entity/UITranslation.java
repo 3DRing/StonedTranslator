@@ -1,4 +1,4 @@
-package com.ringov.yatrnsltr.translation_module.view.ui_entity;
+package com.ringov.yatrnsltr.ui_entity;
 
 import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entity.TranslationData;

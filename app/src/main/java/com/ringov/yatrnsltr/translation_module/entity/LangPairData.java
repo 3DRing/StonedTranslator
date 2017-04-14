@@ -1,7 +1,7 @@
 package com.ringov.yatrnsltr.translation_module.entity;
 
 import com.ringov.yatrnsltr.data.lang.Language;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
+import com.ringov.yatrnsltr.ui_entity.UILangPair;
 
 /**
  * Created by Sergey Koltsov on 13.04.2017.

@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
+import com.ringov.yatrnsltr.ui_entity.UILangPair;
+import com.ringov.yatrnsltr.ui_entity.UITranslation;
 
 import java.util.ArrayList;
 import java.util.List;

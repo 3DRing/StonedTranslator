@@ -1,8 +1,8 @@
 package com.ringov.yatrnsltr.translation_module.interactor;
 
 import com.ringov.yatrnsltr.base.interfaces.BaseInteractor;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
+import com.ringov.yatrnsltr.ui_entity.UILangPair;
+import com.ringov.yatrnsltr.ui_entity.UITranslation;
 
 import rx.Observable;
 
