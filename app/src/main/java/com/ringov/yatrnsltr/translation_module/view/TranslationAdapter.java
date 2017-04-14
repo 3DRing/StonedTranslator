@@ -74,7 +74,7 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
 
     @Override
     public int getItemCount() {
-        return translations.size() + 1; // one additional room for footer
+        return translations.size();// + 1; // one additional room for footer
     }
 
     abstract class BaseViewHolder extends RecyclerView.ViewHolder {

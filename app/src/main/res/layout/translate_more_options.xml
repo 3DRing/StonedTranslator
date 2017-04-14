@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="4dp">
 
     <Button
         android:id="@+id/button3"
