@@ -41,7 +41,7 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .subscribe(getView()::showTranslation, this::handleError);
     }
 
-    public void onMoreOptionsClicked() {
+    public void moreOptionsClicked() {
         if (moreOptionsShown) {
             getView().hideMoreOptions();
         } else {
@@ -50,11 +50,11 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
         moreOptionsShown = !moreOptionsShown;
     }
 
-    public void onDeleteClicked() {
+    public void deleteClicked() {
         getView().clearInputField();
     }
 
-    public void onSwapLangClicked() {
+    public void swapLangClicked() {
         getInteractor().swapLanguage()
                 .compose(Utils.setRxSchedulers())
                 .subscribe(getView()::showLanguagePair, this::handleError);

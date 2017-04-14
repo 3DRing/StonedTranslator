@@ -23,6 +23,7 @@ import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.
@@ -47,19 +48,25 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     TranslationAdapter mAdapter;
     private UITranslation crtTranslation;
 
+    @OnEditorAction(R.id.et_input)
+    boolean onInputDoneClick() {
+        mPresenter.translateClicked(mEtOriginalText.getText().toString());
+        return true;
+    }
+
     @OnClick(R.id.ll_swap_lang)
     void onSwapLangClick() {
-        mPresenter.onSwapLangClicked();
+        mPresenter.swapLangClicked();
     }
 
     @OnClick(R.id.iv_delete)
     void onDeleteClick() {
-        mPresenter.onDeleteClicked();
+        mPresenter.deleteClicked();
     }
 
     @OnClick(R.id.iv_more_options)
     void onMoreOptionsClick() {
-        mPresenter.onMoreOptionsClicked();
+        mPresenter.moreOptionsClicked();
     }
 
     @OnClick(R.id.tv_translate)

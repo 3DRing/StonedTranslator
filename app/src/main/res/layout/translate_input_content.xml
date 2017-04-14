@@ -24,7 +24,8 @@
         android:gravity="top"
         android:hint="@string/input_hint_text"
         android:minLines="5"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:inputType="textImeMultiLine"/>
 
     <FrameLayout
         android:id="@+id/frameLayout"
