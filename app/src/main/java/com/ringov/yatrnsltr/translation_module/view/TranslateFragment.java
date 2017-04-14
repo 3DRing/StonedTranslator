@@ -17,7 +17,6 @@ import com.ringov.yatrnsltr.base.implementations.BaseFragment;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.presenter.TranslationPresenter;
-import com.ringov.yatrnsltr.translation_module.router.TranslationRouter;
 import com.ringov.yatrnsltr.translation_module.router.TranslationRouterImpl;
 import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
 import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
@@ -166,8 +165,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showLanguagePair(UILangPair langPair) {
-        mTvSourceLang.setText(langPair.getSourceLang());
-        mTvTargetLang.setText(langPair.getTargetLang());
+        mTvSourceLang.setText(langPair.getSourceLangShortName());
+        mTvTargetLang.setText(langPair.getTargetLangShortName());
     }
 
     public void hideKeyboard() {

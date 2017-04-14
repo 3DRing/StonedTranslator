@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr.translation_module.entity;
 
+import com.ringov.yatrnsltr.data.lang.Language;
 import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
 
 /**
@@ -7,24 +8,24 @@ import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
  */
 
 public class LangPairData {
-    private String sourceLang;
-    private String targetLang;
+    private Language sourceLang;
+    private Language targetLang;
 
-    public LangPairData(String sourceLang, String targetLang) {
+    public LangPairData(Language sourceLang, Language targetLang) {
         this.sourceLang = sourceLang;
         this.targetLang = targetLang;
     }
 
-    public String getSourceLang() {
+    public Language getSourceLang() {
         return sourceLang;
     }
 
-    public String getTargetLang() {
+    public Language getTargetLang() {
         return targetLang;
     }
 
     public void swap() {
-        String tmp = this.sourceLang;
+        Language tmp = this.sourceLang;
         this.sourceLang = this.targetLang;
         this.targetLang = tmp;
     }

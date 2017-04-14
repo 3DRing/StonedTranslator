@@ -1,15 +1,17 @@
 package com.ringov.yatrnsltr.translation_module.view.ui_entity;
 
+import com.ringov.yatrnsltr.data.lang.Language;
+
 /**
  * Created by Sergey Koltsov on 13.04.2017.
  */
 
 public class UILangPair {
     public static final UILangPair EMPTY = new UILangPair();
-    private String sourceLang;
-    private String targetLang;
+    private Language sourceLang;
+    private Language targetLang;
 
-    public UILangPair(String sourceLang, String targetLang) {
+    public UILangPair(Language sourceLang, Language targetLang) {
         this.sourceLang = sourceLang;
         this.targetLang = targetLang;
     }
@@ -18,15 +20,15 @@ public class UILangPair {
      * service constructor
      */
     public UILangPair() {
-        this.sourceLang = "";
-        this.targetLang = "";
+        this.sourceLang = Language.EMPTY;
+        this.targetLang = Language.EMPTY;
     }
 
-    public String getSourceLang() {
-        return sourceLang;
+    public String getSourceLangShortName() {
+        return sourceLang.getShortName();
     }
 
-    public String getTargetLang() {
-        return targetLang;
+    public String getTargetLangShortName() {
+        return targetLang.getShortName();
     }
 }

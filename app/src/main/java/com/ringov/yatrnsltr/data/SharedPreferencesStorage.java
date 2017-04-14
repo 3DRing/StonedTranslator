@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.ringov.yatrnsltr.App;
+import com.ringov.yatrnsltr.data.lang.Language;
 import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
 
 /**
@@ -41,13 +42,13 @@ public class SharedPreferencesStorage {
         if (targetLang.equals("")) {
             targetLang = DEFAULT_TARGET_LANG;
         }
-        return new LangPairData(sourceLang, targetLang);
+        return new LangPairData(new Language(sourceLang), new Language(targetLang));
     }
 
     public static void saveLastLangPair(LangPairData langPair) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(LAST_SOURCE_LANG, langPair.getSourceLang());
-        editor.putString(LAST_TARGET_LANG, langPair.getTargetLang());
+        editor.putString(LAST_SOURCE_LANG, langPair.getSourceLang().getShortName());
+        editor.putString(LAST_TARGET_LANG, langPair.getTargetLang().getShortName());
         editor.apply();
     }
 

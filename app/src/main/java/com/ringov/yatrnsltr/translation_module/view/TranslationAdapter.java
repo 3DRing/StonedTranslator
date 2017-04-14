@@ -106,7 +106,7 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
             mTvTranslation.setText(translations.get(position));
             UILangPair langPair = item.getLangPair();
             mTvLangPair.setText(String.format(itemView.getContext().getString(R.string.lang_pair_item),
-                    langPair.getSourceLang(), langPair.getTargetLang()));
+                    langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
             mLlItemLayout.setOnClickListener(v -> mListener.onItemClick(item, item.getTranslations().get(position)));
         }
     }
