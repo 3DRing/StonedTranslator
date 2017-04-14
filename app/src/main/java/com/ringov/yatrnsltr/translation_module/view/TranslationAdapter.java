@@ -60,7 +60,7 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
                 vh = new FooterViewHolder(v);
                 break;
             case NORMAL_VIEW:
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.translate_list_item, parent, false);
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.translate_view_item, parent, false);
                 vh = new NormalViewHolder(v);
                 break;
         }
