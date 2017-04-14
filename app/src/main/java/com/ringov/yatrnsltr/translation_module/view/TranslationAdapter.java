@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
+import com.ringov.yatrnsltr.custom_views.FavoriteButton;
+import com.ringov.yatrnsltr.custom_views.TrnsltrModeButton;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
@@ -95,6 +97,10 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
         TextView mTvTranslation;
         @BindView(R.id.tv_lang_pair)
         TextView mTvLangPair;
+        @BindView(R.id.fb_favorite)
+        FavoriteButton mFb;
+        @BindView(R.id.tmb_changed)
+        TrnsltrModeButton mTmbMode;
 
         NormalViewHolder(View itemView) {
             super(itemView);
@@ -108,6 +114,9 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
             mTvLangPair.setText(String.format(itemView.getContext().getString(R.string.lang_pair_item),
                     langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
             mLlItemLayout.setOnClickListener(v -> mListener.onItemClick(item, item.getTranslations().get(position)));
+
+            mFb.setChecked(item.isFavorite());
+            mTmbMode.setChecked(item.isChanged());
         }
     }
 

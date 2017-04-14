@@ -1,6 +1,10 @@
 package com.ringov.yatrnsltr.data.storage_repo;
 
+import com.ringov.yatrnsltr.data.lang.Language;
+import com.ringov.yatrnsltr.storage_module.entities.ExtraParams;
 import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
+import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +23,18 @@ public class StorageRepositoryImpl implements StorageRepository {
 
     StorageRepositoryImpl() {
         history = new ArrayList<>();
+
+        // fake history
+
+        List<String> translations = new ArrayList<>();
+        translations.add("hi");
+        LangPairData langPair = new LangPairData(new Language(Language.SupportedLanguage.RU),
+                new Language(Language.SupportedLanguage.EN));
+        ExtraParams ep = new ExtraParams(true, true);
+        StoredTranslationData std = new StoredTranslationData(new TranslationData("привет", translations, langPair),
+                langPair, ep);
+
+        history.add(std);
     }
 
     /**

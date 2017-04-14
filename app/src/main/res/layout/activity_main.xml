@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/translate_content"
@@ -32,5 +33,5 @@
             android:visibility="gone"
             app:menu="@menu/navigation" />
 
-    </FrameLayout>
+    </LinearLayout>
 </ScrollView>

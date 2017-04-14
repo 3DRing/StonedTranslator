@@ -8,7 +8,7 @@ public class ExtraParams {
     private boolean favorite;
     private boolean changed;
 
-    ExtraParams(boolean favorite, boolean changed) {
+    public ExtraParams(boolean favorite, boolean changed) {
         this.favorite = favorite;
         this.changed = changed;
     }

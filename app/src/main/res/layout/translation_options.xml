@@ -5,12 +5,12 @@
     android:orientation="horizontal">
 
     <com.ringov.yatrnsltr.custom_views.FavoriteButton
-        android:id="@+id/fb"
+        android:id="@+id/fb_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <com.ringov.yatrnsltr.custom_views.TrnsltrModeButton
-        android:id="@+id/tmb"
+        android:id="@+id/tmb_changed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

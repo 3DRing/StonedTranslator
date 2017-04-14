@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr.storage_module.entities;
 
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
 import java.util.List;
@@ -12,20 +13,16 @@ public class StoredTranslationData extends TranslationData {
 
     private ExtraParams params;
 
-    protected StoredTranslationData(String original, List<String> translation) {
-        super(original, translation);
-    }
-
-    public StoredTranslationData(TranslationData translation, ExtraParams params) {
-        super(translation.getOriginal(), translation.getTranslation());
+    public StoredTranslationData(TranslationData translation, LangPairData langPair, ExtraParams params) {
+        super(translation.getOriginal(), translation.getTranslation(), langPair);
         this.params = params;
     }
 
-    public boolean isFavorite(){
+    public boolean isFavorite() {
         return params.isFavorite();
     }
 
-    public boolean isChanged(){
+    public boolean isChanged() {
         return params.isChanged();
     }
 }

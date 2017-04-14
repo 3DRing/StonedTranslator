@@ -10,10 +10,12 @@ import java.util.List;
 public class TranslationData {
     private String originalText;
     private List<String> translations;
+    private LangPairData langPair;
 
-    public TranslationData(String original, List<String> translation) {
+    public TranslationData(String original, List<String> translation, LangPairData langPair) {
         this.originalText = original;
         this.translations = translation != null ? translation : new ArrayList<>();
+        this.langPair = langPair;
     }
 
     public String getOriginal() {
@@ -24,4 +26,7 @@ public class TranslationData {
         return translations;
     }
 
+    public LangPairData getLangPair() {
+        return langPair;
+    }
 }

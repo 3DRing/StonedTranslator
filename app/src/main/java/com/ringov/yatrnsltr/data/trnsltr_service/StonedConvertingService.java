@@ -28,7 +28,7 @@ public class StonedConvertingService {
                 translation.getTranslation()) {
             convertedTranslations.add(converter.convert(s));
         }
-        return new TranslationData(convertedOriginalText, convertedTranslations);
+        return new TranslationData(convertedOriginalText, convertedTranslations, langPair);
     }
 
 }

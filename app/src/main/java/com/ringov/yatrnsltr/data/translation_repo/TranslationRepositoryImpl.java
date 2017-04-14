@@ -25,7 +25,7 @@ public class TranslationRepositoryImpl implements TranslationRepository {
     @Override
     public Observable<TranslationData> translate(String text, LangPairData langPair) {
         return getService().translate(Config.API_KEY, apiLangFormat(langPair), text)
-                .map(response -> convertResponse(text, response));
+                .map(response -> convertResponse(text, langPair, response));
     }
 
     @Override
@@ -38,8 +38,8 @@ public class TranslationRepositoryImpl implements TranslationRepository {
         SharedPreferencesStorage.saveLastLangPair(langPair);
     }
 
-    private TranslationData convertResponse(String originalText, TranslationResponse response) {
-        return new TranslationData(originalText, response.getText());
+    private TranslationData convertResponse(String originalText, LangPairData langPair, TranslationResponse response) {
+        return new TranslationData(originalText, response.getText(), langPair);
     }
 
     private String apiLangFormat(LangPairData langPair) {

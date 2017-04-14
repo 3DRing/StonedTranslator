@@ -17,6 +17,8 @@ public class UITranslation {
     private List<String> translations;
     private String originalText;
     private UILangPair langPair;
+    private boolean favorite;
+    private boolean changed;
 
     public UITranslation(TranslationData translationData, LangPairData langPair) {
         this.originalText = translationData.getOriginal();
@@ -43,5 +45,21 @@ public class UITranslation {
 
     public UILangPair getLangPair() {
         return langPair;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public boolean isChanged() {
+        return changed;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
     }
 }
