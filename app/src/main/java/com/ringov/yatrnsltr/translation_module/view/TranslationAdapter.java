@@ -60,7 +60,7 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
                 vh = new FooterViewHolder(v);
                 break;
             case NORMAL_VIEW:
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.translate_list_item, parent, false);
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item, parent, false);
                 vh = new NormalViewHolder(v);
                 break;
         }
@@ -74,7 +74,7 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
 
     @Override
     public int getItemCount() {
-        return translations.size() + 1; // one additional room for footer
+        return translations.size();// + 1; // one additional room for footer
     }
 
     public void addTransaction(UITranslation transaction) {

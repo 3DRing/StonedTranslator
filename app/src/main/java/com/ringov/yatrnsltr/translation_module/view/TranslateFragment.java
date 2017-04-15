@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
+import com.ringov.yatrnsltr.custom_views.FavoriteButton;
+import com.ringov.yatrnsltr.custom_views.TrnsltrModeButton;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.presenter.TranslationPresenter;
 import com.ringov.yatrnsltr.translation_module.router.TranslationRouterImpl;
@@ -34,18 +36,27 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @BindView(R.id.et_input)
     EditText mEtOriginalText;
-    @BindView(R.id.rv_output)
-    RecyclerView mRvOutput;
-    @BindView(R.id.fl_output_field)
-    ViewGroup mFlOutputField;
     @BindView(R.id.inc_more_options)
     ViewGroup mLlMoreOptions;
-
     @BindView(R.id.tv_source_lang)
     TextView mTvSourceLang;
     @BindView(R.id.tv_target_lang)
     TextView mTvTargetLang;
-    TranslationAdapter mAdapter;
+
+
+    @BindView(R.id.fl_output_field)
+    ViewGroup mFlOutputField;
+    @BindView(R.id.tv_original)
+    TextView mTvOriginal;
+    @BindView(R.id.tv_translation)
+    TextView mTvTranslation;
+    @BindView(R.id.tv_lang_pair)
+    TextView mTvLangPair;
+    @BindView(R.id.fb_favorite)
+    FavoriteButton mFb;
+    @BindView(R.id.tmb_changed)
+    TrnsltrModeButton mTmbMode;
+
     private UITranslation crtTranslation;
 
     @OnEditorAction(R.id.et_input)
@@ -86,11 +97,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     }
 
     @Override
-    protected void initializeViewsBeforeRestoreState() {
-        initializeRecycler();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mPresenter.onViewResumed();
@@ -125,22 +131,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         return bundle;
     }
 
-    private void initializeRecycler() {
-        mRvOutput.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new TranslationAdapter(new TranslationAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(UITranslation translation, String translatingOption) {
-                // todo open separate screen with full size text and translation
-            }
-
-            @Override
-            public void onFooterClick() {
-                mPresenter.onTranslationFooterClicked();
-            }
-        });
-        mRvOutput.setAdapter(mAdapter);
-    }
-
     @Override
     protected int getLayoutRes() {
         return R.layout.translate_fragment;
@@ -151,7 +141,15 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         crtTranslation = translation;
         mFlOutputField.setVisibility(View.VISIBLE);
         mFlOutputField.requestFocus();
-        mAdapter.setTranslation(crtTranslation);
+
+        mTvOriginal.setText(translation.getOriginalText());
+        mTvTranslation.setText(translation.getTranslations().get(0));
+        UILangPair langPair = translation.getLangPair();
+        mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
+                langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
+        mFb.setChecked(translation.isFavorite());
+        mTmbMode.setChecked(translation.isChanged());
+
         hideKeyboard();
     }
 
