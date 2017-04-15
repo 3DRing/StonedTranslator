@@ -31,13 +31,14 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
     }
 
     public void translateClicked(String text) {
-        if(text == null || text.equals("")){
+        if (text == null || text.equals("")) {
             return;
         }
         getInteractor().translate(text)
                 .compose(Utils.setRxSchedulers())
                 .doOnSubscribe(getView()::showLoading)
                 .doOnTerminate(getView()::hideLoading)
+                .doOnTerminate(getView()::hideKeyboard)
                 .subscribe(getView()::showTranslation, this::handleError);
     }
 

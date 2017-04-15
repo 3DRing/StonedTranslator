@@ -18,4 +18,6 @@ public interface TranslationView extends BaseView {
     void clearInputField();
 
     void showLanguagePair(UILangPair langPair);
+
+    void hideKeyboard();
 }

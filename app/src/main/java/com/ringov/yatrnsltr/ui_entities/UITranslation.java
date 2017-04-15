@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr.ui_entities;
 
+import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
 import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
@@ -22,7 +23,13 @@ public class UITranslation {
 
     public UITranslation(TranslationData translationData, LangPairData langPair) {
         this.originalText = translationData.getOriginal();
-        this.translations = translationData.getTranslation();
+        this.translations = translationData.getTranslations();
+        this.langPair = langPair.toUILangPair();
+    }
+
+    public UITranslation(StoredTranslationData translationData, LangPairData langPair) {
+        this.originalText = translationData.getOriginal();
+        this.translations = translationData.getTranslations();
         this.langPair = langPair.toUILangPair();
     }
 

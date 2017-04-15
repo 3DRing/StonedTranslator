@@ -14,6 +14,7 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
     public StoragePresenter(StorageView view, StorageRouter router, StorageInteractor interactor) {
         super(view, router, interactor);
         loadHistory();
+        subscribeToItemsInsertion();
     }
 
     private void loadHistory() {
@@ -22,6 +23,12 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
                 .doOnSubscribe(getView()::showLoading)
                 .doOnTerminate(getView()::hideLoading)
                 .subscribe(getView()::showHistory, this::handleError);
+    }
+
+    private void subscribeToItemsInsertion(){
+        getInteractor().itemInserted()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::addToHistory, this::handleError);
     }
 
     @Override

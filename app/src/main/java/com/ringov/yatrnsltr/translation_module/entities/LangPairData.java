@@ -3,11 +3,14 @@ package com.ringov.yatrnsltr.translation_module.entities;
 import com.ringov.yatrnsltr.data.lang.Language;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+
 /**
  * Created by Sergey Koltsov on 13.04.2017.
  */
 
-public class LangPairData {
+public class LangPairData implements RealmModel {
     private Language sourceLang;
     private Language targetLang;
 

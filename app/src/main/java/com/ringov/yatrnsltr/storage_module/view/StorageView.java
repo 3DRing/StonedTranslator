@@ -11,4 +11,6 @@ import java.util.List;
 
 public interface StorageView extends BaseView {
     void showHistory(List<UITranslation> translations);
+
+    void addToHistory(UITranslation transaction);
 }

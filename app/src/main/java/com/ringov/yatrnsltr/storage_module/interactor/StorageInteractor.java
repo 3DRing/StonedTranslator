@@ -1,10 +1,12 @@
 package com.ringov.yatrnsltr.storage_module.interactor;
 
 import com.ringov.yatrnsltr.base.interfaces.BaseInteractor;
+import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
 import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import java.util.List;
 
+import rx.Completable;
 import rx.Observable;
 
 /**
@@ -13,4 +15,6 @@ import rx.Observable;
 
 public interface StorageInteractor extends BaseInteractor {
     Observable<List<UITranslation>> loadHistory();
+
+    Observable<UITranslation>  itemInserted();
 }

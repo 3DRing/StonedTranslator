@@ -1,5 +1,6 @@
 package com.ringov.yatrnsltr;
 
+import rx.Completable;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -11,6 +12,12 @@ import rx.schedulers.Schedulers;
 public class Utils {
     public static <T> Observable.Transformer<T, T> setRxSchedulers() {
         return tObservable -> tObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Completable.Transformer setRxSchedulersForCompletable() {
+        return completable -> completable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
