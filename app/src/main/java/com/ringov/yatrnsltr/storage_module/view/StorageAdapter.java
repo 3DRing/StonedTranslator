@@ -44,8 +44,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v;
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list_item, parent, false);
         return new BaseViewHolder(v);
     }
 
