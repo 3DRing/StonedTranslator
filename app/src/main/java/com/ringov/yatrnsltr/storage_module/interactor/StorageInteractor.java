@@ -1,7 +1,6 @@
 package com.ringov.yatrnsltr.storage_module.interactor;
 
 import com.ringov.yatrnsltr.base.interfaces.BaseInteractor;
-import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
 import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import java.util.List;
@@ -19,4 +18,6 @@ public interface StorageInteractor extends BaseInteractor {
     Observable<UITranslation>  itemInserted();
 
     Completable deleteItem(int position);
+
+    Observable<UITranslation> undoLastDeletion();
 }

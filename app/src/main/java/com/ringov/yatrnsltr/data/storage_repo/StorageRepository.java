@@ -17,4 +17,6 @@ public interface StorageRepository {
     StoredTranslationData addHistoryItem(TranslationData translation);
 
     Completable deleteItem(StoredTranslationData data);
+
+    Observable<StoredTranslationData> undoLastDeletion(StoredTranslationData lastRemovedItem);
 }

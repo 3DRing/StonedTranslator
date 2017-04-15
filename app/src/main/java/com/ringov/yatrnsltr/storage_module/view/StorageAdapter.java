@@ -63,18 +63,13 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
         notifyItemRemoved(position);
     }
 
-    public UITranslation getTranslation(int position) {
-        if(position >= items.size()){
-            // impossible case, this check just in case
-            return UITranslation.EMPTY;
-        }
-        return items.get(position);
+    public void insertTranslation(UITranslation translation, int position) {
+        items.add(position, translation);
+        notifyItemInserted(position);
     }
 
     public interface OnItemClickListener {
         void onItemClick(UITranslation translation);
-
-        void onFooterClick();
     }
 
     class BaseViewHolder extends RecyclerView.ViewHolder {

@@ -5,4 +5,6 @@
     <string name="input_hint_text">Ввдте ткст</string>
     <string name="yandex_badge_text">Переведено сервисом «Яндекс.Переводчик»</string>
     <string name="history_title">История</string>
+    <string name="deleted_from_history">Удалено из истории</string>
+    <string name="restore_item">Восстановить</string>
 </resources>

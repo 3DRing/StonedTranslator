@@ -24,7 +24,6 @@ import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnEditorAction;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.
@@ -58,12 +57,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     TrnsltrModeButton mTmbMode;
 
     private UITranslation crtTranslation;
-
-    @OnEditorAction(R.id.et_input)
-    boolean onInputDoneClick() {
-        mPresenter.translateClicked(mEtOriginalText.getText().toString());
-        return true;
-    }
 
     @OnClick(R.id.ll_swap_lang)
     void onSwapLangClick() {

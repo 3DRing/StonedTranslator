@@ -1,11 +1,11 @@
 package com.ringov.yatrnsltr.storage_module.view;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -57,17 +57,9 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
                 llm.getOrientation());
         mRvStorage.addItemDecoration(divider);
 
-        mAdapter = new StorageAdapter(new StorageAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(UITranslation translation) {
-                // todo open separate screen with full size text and translation
-                Toast.makeText(getContext(), translation.getOriginalText(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFooterClick() {
-
-            }
+        mAdapter = new StorageAdapter(translation -> {
+            // todo open separate screen with full size text and translation
+            Toast.makeText(getContext(), translation.getOriginalText(), Toast.LENGTH_SHORT).show();
         });
         mRvStorage.setAdapter(mAdapter);
 
@@ -75,6 +67,9 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         DoubleSideSwipeItemTouchHelper swipeHelper = new DoubleSideSwipeItemTouchHelper(itemPosition -> {
             mPresenter.onItemsSwiped(itemPosition);
             mAdapter.remove(itemPosition);
+            Snackbar.make(mStorageContainer, R.string.deleted_from_history, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.restore_item, v -> mPresenter.onUndoDeletion(itemPosition))
+                    .show();
         });
         swipeHelper.attachToRecyclerView(mRvStorage);
     }
@@ -109,10 +104,8 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
     @Override
     public void addToHistory(UITranslation transaction) {
-        if (transaction != null) {
-            showHistoryField();
-            mAdapter.addTransaction(transaction);
-        }
+        showHistoryField();
+        mAdapter.addTransaction(transaction);
     }
 
     @Override
@@ -120,6 +113,12 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         if (mAdapter.getItemCount() == 0) {
             hideHistoryField();
         }
+    }
+
+    @Override
+    public void returnItemBack(UITranslation translation, int position) {
+        showHistoryField();
+        mAdapter.insertTranslation(translation, position);
     }
 
     private void hideHistoryField() {

@@ -34,7 +34,8 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mPresenter = providePresenter();
+        // if presenter already exists do not provide a new one (in case of screen rotation)
+        mPresenter = mPresenter != null ? mPresenter : providePresenter();
     }
 
     @Nullable
@@ -57,7 +58,6 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
      * Method called from onViewCreated right after views initialization
      * Should be used by children of {@link BaseFragment} if some views (e.x. RecyclerView)
      * needs to be initialized before restoring {@link BaseViewState}
-     *
      */
     protected void initializeViewsBeforeRestoreState() {
         // to override

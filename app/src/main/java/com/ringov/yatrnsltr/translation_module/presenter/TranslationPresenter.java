@@ -20,9 +20,9 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
 
     @Override
     public void onViewResumed() {
-        getInteractor().loadLastLangPair()
+        mSubscription.add(getInteractor().loadLastLangPair()
                 .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::showLanguagePair, this::handleError);
+                .subscribe(getView()::showLanguagePair, this::handleError));
     }
 
     @Override
@@ -34,12 +34,12 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
         if (text == null || text.equals("")) {
             return;
         }
-        getInteractor().translate(text)
+        mSubscription.add(getInteractor().translate(text)
                 .compose(Utils.setRxSchedulers())
                 .doOnSubscribe(getView()::showLoading)
                 .doOnTerminate(getView()::hideLoading)
                 .doOnTerminate(getView()::hideKeyboard)
-                .subscribe(getView()::showTranslation, this::handleError);
+                .subscribe(getView()::showTranslation, this::handleError));
     }
 
     public void moreOptionsClicked() {
@@ -56,9 +56,9 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
     }
 
     public void swapLangClicked() {
-        getInteractor().swapLanguage()
+        mSubscription.add(getInteractor().swapLanguage()
                 .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::showLanguagePair, this::handleError);
+                .subscribe(getView()::showLanguagePair, this::handleError));
     }
 
     public void onTranslationFooterClicked() {

@@ -5,13 +5,10 @@ import com.ringov.yatrnsltr.storage_module.entities.ExtraParams;
 import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
 import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
-import io.realm.exceptions.RealmException;
 import rx.Completable;
 import rx.Observable;
 
@@ -59,6 +56,12 @@ public class StorageRepositoryImpl implements StorageRepository {
                     .findAll().deleteAllFromRealm();
         });
         return Completable.complete();
+    }
+
+    @Override
+    public Observable<StoredTranslationData> undoLastDeletion(StoredTranslationData lastRemovedItem) {
+        Realm.getDefaultInstance().executeTransaction(realm -> realm.insert(lastRemovedItem));
+        return Observable.just(lastRemovedItem);
     }
 
 }

@@ -5,22 +5,26 @@ import com.ringov.yatrnsltr.base.interfaces.BaseRouter;
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
 import com.ringov.yatrnsltr.exceptions.ViewMissingException;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Created by Sergey Koltsov on 11.04.2017.
  */
 
 public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRouter, INTERACTOR extends BaseInteractor> {
 
+    protected CompositeSubscription mSubscription;
     private VIEW mView;
     private ROUTER mRouter;
     private INTERACTOR mInteractor;
     private ExceptionHandler mExceptionHandler;
 
     public BasePresenter(VIEW view, ROUTER router, INTERACTOR interactor) {
+        attachView(view);
         mRouter = router;
         mInteractor = interactor;
-        attachView(view);
         mExceptionHandler = new ExceptionHandler(this::getView);
+        mSubscription = new CompositeSubscription();
     }
 
     private void attachView(VIEW view) {
@@ -34,6 +38,7 @@ public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRo
 
     public void onDestroy() {
         detachView();
+        mSubscription.clear();
     }
 
     public abstract void onViewResumed();

@@ -5,7 +5,6 @@ import com.ringov.yatrnsltr.base.BasePresenter;
 import com.ringov.yatrnsltr.storage_module.interactor.StorageInteractor;
 import com.ringov.yatrnsltr.storage_module.router.StorageRouter;
 import com.ringov.yatrnsltr.storage_module.view.StorageView;
-import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 /**
  * Created by Sergey Koltsov on 14.04.2017.
@@ -20,17 +19,17 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
     }
 
     private void loadHistory() {
-        getInteractor().loadHistory()
+        mSubscription.add(getInteractor().loadHistory()
                 .compose(Utils.setRxSchedulers())
                 .doOnSubscribe(getView()::showLoading)
                 .doOnTerminate(getView()::hideLoading)
-                .subscribe(getView()::showHistory, this::handleError);
+                .subscribe(getView()::showHistory, this::handleError));
     }
 
-    private void subscribeToItemsInsertion(){
-        getInteractor().itemInserted()
+    private void subscribeToItemsInsertion() {
+        mSubscription.add(getInteractor().itemInserted()
                 .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::addToHistory, this::handleError);
+                .subscribe(getView()::addToHistory, this::handleError));
     }
 
     @Override
@@ -44,8 +43,15 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
     }
 
     public void onItemsSwiped(int position) {
-        getInteractor().deleteItem(position)
+        mSubscription.add(getInteractor().deleteItem(position)
                 .compose(Utils.setRxSchedulersForCompletable())
-                .subscribe(getView()::itemDeleted);
+                .subscribe(getView()::itemDeleted, this::handleError));
+    }
+
+    public void onUndoDeletion(int position) {
+        mSubscription.add(getInteractor().undoLastDeletion()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(translation -> getView().returnItemBack(translation, position),
+                        this::handleError));
     }
 }
