@@ -77,6 +77,10 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
         return translations.size() + 1; // one additional room for footer
     }
 
+    public void addTransaction(UITranslation transaction) {
+
+    }
+
     abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
         BaseViewHolder(View itemView) {

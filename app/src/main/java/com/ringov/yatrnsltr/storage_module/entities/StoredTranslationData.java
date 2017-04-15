@@ -13,8 +13,8 @@ public class StoredTranslationData extends TranslationData {
 
     private ExtraParams params;
 
-    public StoredTranslationData(TranslationData translation, LangPairData langPair, ExtraParams params) {
-        super(translation.getOriginal(), translation.getTranslation(), langPair);
+    public StoredTranslationData(TranslationData translation, ExtraParams params) {
+        super(translation.getOriginal(), translation.getTranslation(), translation.getLangPair());
         this.params = params;
     }
 

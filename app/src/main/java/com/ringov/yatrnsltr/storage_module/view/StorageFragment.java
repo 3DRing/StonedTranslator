@@ -86,4 +86,11 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
             mAdapter.setTranslation(translations.get(0));
         }
     }
+
+    @Override
+    public void addToHistory(UITranslation transaction) {
+        if(transaction != null){
+            mAdapter.addTransaction(transaction);
+        }
+    }
 }

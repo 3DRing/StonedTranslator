@@ -2,6 +2,8 @@ package com.ringov.yatrnsltr.storage_module.interactor;
 
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
 import com.ringov.yatrnsltr.data.storage_repo.StorageRepositoryProvider;
+import com.ringov.yatrnsltr.data.translation_repo.TranslationRepositoryProvider;
+import com.ringov.yatrnsltr.storage_module.entities.ExtraParams;
 import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
 import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
@@ -32,6 +34,18 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
                 .flatMap(Observable::from)
                 .map(this::convertToUITranslation)
                 .toList();
+    }
+
+    @Override
+    public Observable<UITranslation> itemInserted() {
+        return TranslationRepositoryProvider.getTranslationRepository()
+                .subscribeToTranslation()
+                .map(translation -> new StoredTranslationData(translation, new ExtraParams(false, false)))
+                .map(this::convertToUITranslation);
+    }
+
+    public Observable<UITranslation> insertNewHistoryItemToUI(StoredTranslationData translation) {
+        return Observable.just(convertToUITranslation(translation));
     }
 
     private UITranslation convertToUITranslation(StoredTranslationData storedTranslationData) {

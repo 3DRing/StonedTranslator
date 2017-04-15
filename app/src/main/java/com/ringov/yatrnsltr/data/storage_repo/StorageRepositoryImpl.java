@@ -31,8 +31,7 @@ public class StorageRepositoryImpl implements StorageRepository {
         LangPairData langPair = new LangPairData(new Language(Language.SupportedLanguage.RU),
                 new Language(Language.SupportedLanguage.EN));
         ExtraParams ep = new ExtraParams(true, true);
-        StoredTranslationData std = new StoredTranslationData(new TranslationData("привет", translations, langPair),
-                langPair, ep);
+        StoredTranslationData std = new StoredTranslationData(new TranslationData("привет", translations, langPair), ep);
 
         history.add(std);
     }
@@ -54,7 +53,7 @@ public class StorageRepositoryImpl implements StorageRepository {
     }
 
     @Override
-    public Completable saveHistoryItem(StoredTranslationData translation) {
+    public Completable addHistoryItem(StoredTranslationData translation) {
         history.add(translation);
         return Completable.complete();
     }
