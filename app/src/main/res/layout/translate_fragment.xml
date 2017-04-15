@@ -78,7 +78,7 @@
 
             <include
                 android:id="@+id/include_output_field"
-                layout="@layout/translate_view_item"
+                layout="@layout/history_list_item"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

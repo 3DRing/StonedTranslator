@@ -4,5 +4,5 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
 
-    <include layout="@layout/translate_view_item" />
+    <include layout="@layout/list_item" />
 </android.support.v7.widget.CardView>

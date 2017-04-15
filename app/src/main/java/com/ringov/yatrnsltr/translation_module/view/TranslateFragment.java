@@ -138,7 +138,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showTranslation(UITranslation translation) {
-        crtTranslation = translation;
+/*        crtTranslation = translation;
         mFlOutputField.setVisibility(View.VISIBLE);
         mFlOutputField.requestFocus();
 
@@ -148,7 +148,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
                 langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
         mFb.setChecked(translation.isFavorite());
-        mTmbMode.setChecked(translation.isChanged());
+        mTmbMode.setChecked(translation.isChanged());*/
 
         hideKeyboard();
     }
