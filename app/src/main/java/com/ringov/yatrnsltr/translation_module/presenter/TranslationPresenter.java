@@ -42,9 +42,9 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .compose(Utils.setRxSchedulers())
                 .doOnSubscribe(() -> loading = true)
                 .doOnSubscribe(getView()::showLoading)
-                .doOnTerminate(() -> loading = false)
                 .doOnTerminate(getView()::hideLoading)
                 .doOnTerminate(getView()::hideKeyboard)
+                .doOnTerminate(() -> loading = false)
                 .subscribe(getView()::showTranslation, this::handleError));
     }
 
