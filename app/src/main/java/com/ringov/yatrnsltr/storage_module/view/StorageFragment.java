@@ -5,6 +5,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -69,24 +70,13 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
             }
         });
         mRvStorage.setAdapter(mAdapter);
-        ItemTouchHelper ith = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-            @Override
-            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                return 0;
-            }
 
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                int swipedItem = viewHolder.getAdapterPosition();
-                mAdapter.remove(swipedItem);
-            }
+        // swipe for deleting works with both sides
+        DoubleSideSwipeItemTouchHelper swipeHelper = new DoubleSideSwipeItemTouchHelper(itemPosition -> {
+            mPresenter.onItemsSwiped(itemPosition);
+            mAdapter.remove(itemPosition);
         });
-        ith.attachToRecyclerView(mRvStorage);
+        swipeHelper.attachToRecyclerView(mRvStorage);
     }
 
     @Override
@@ -105,7 +95,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         return bundle;
     }
 
-    private void showHistoryField(){
+    private void showHistoryField() {
         mStorageContainer.setVisibility(View.VISIBLE);
     }
 
@@ -122,6 +112,59 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         if (transaction != null) {
             showHistoryField();
             mAdapter.addTransaction(transaction);
+        }
+    }
+
+    @Override
+    public void itemDeleted() {
+        if (mAdapter.getItemCount() == 0) {
+            hideHistoryField();
+        }
+    }
+
+    private void hideHistoryField() {
+        mStorageContainer.setVisibility(View.GONE);
+    }
+
+    private static class DoubleSideSwipeItemTouchHelper {
+
+        ItemTouchHelper itmLeft;
+        ItemTouchHelper itmRight;
+
+        DoubleSideSwipeItemTouchHelper(DoubleSideSwipeItemTouchHelper.Callback callback) {
+            itmLeft = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                      RecyclerView.ViewHolder target) {
+                    return false;
+                }
+
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    callback.onSwiped(viewHolder.getAdapterPosition());
+                }
+            });
+            itmRight = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                      RecyclerView.ViewHolder target) {
+                    return false;
+                }
+
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    callback.onSwiped(viewHolder.getAdapterPosition());
+                }
+            });
+        }
+
+        void attachToRecyclerView(RecyclerView rv) {
+            itmRight.attachToRecyclerView(rv);
+            itmLeft.attachToRecyclerView(rv);
+        }
+
+        public interface Callback {
+            void onSwiped(int itemPosition);
         }
     }
 }

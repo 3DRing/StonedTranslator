@@ -11,13 +11,16 @@ import java.util.List;
 import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Sergey Koltsov on 14.04.2017.
  */
 
-// todo create general interface for any Translation representation on the model side
 public class StoredTranslationData extends RealmObject {
+
+    @PrimaryKey
+    private long timestamp;
 
     private String originalText;
     private RealmList<RealmString> translations;
@@ -47,7 +50,8 @@ public class StoredTranslationData extends RealmObject {
 
     }
 
-    public StoredTranslationData(TranslationData translation, ExtraParams params) {
+    public StoredTranslationData(long timestamp, TranslationData translation, ExtraParams params) {
+        this.timestamp = timestamp;
         this.originalText = translation.getOriginal();
         this.translations = new RealmList<>();
         for (String s :
@@ -66,5 +70,9 @@ public class StoredTranslationData extends RealmObject {
 
     public boolean isChanged() {
         return changed;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 }

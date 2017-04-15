@@ -3,6 +3,7 @@ package com.ringov.yatrnsltr.base;
 import com.ringov.yatrnsltr.base.interfaces.BaseInteractor;
 import com.ringov.yatrnsltr.base.interfaces.BaseRouter;
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
+import com.ringov.yatrnsltr.exceptions.ViewMissingException;
 
 /**
  * Created by Sergey Koltsov on 11.04.2017.
@@ -40,6 +41,9 @@ public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRo
     public abstract void onViewPaused();
 
     public VIEW getView() {
+        if (mView == null) {
+            throw new ViewMissingException("View " + mView.getClass().getName() + " was missing on a call");
+        }
         return mView;
     }
 

@@ -11,6 +11,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmException;
 import rx.Completable;
 import rx.Observable;
 
@@ -19,6 +20,8 @@ import rx.Observable;
  */
 
 public class StorageRepositoryImpl implements StorageRepository {
+
+    private static final String PRIMARY_LEY = "timestamp";
 
     @Override
     public Observable<List<StoredTranslationData>> loadHistory() {
@@ -42,9 +45,20 @@ public class StorageRepositoryImpl implements StorageRepository {
 
     @Override
     public StoredTranslationData addHistoryItem(TranslationData translation) {
-        StoredTranslationData storedTranslation = new StoredTranslationData(translation, new ExtraParams(false, false));
+        StoredTranslationData storedTranslation =
+                new StoredTranslationData(System.currentTimeMillis(), translation, new ExtraParams(false, false));
         Realm.getDefaultInstance().executeTransaction(realm -> realm.insert(storedTranslation));
         return storedTranslation;
+    }
+
+    @Override
+    public Completable deleteItem(StoredTranslationData data) {
+        Realm.getDefaultInstance().executeTransaction(realm -> {
+            realm.where(StoredTranslationData.class)
+                    .equalTo(PRIMARY_LEY, data.getTimestamp())
+                    .findAll().deleteAllFromRealm();
+        });
+        return Completable.complete();
     }
 
 }

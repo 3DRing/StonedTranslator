@@ -17,4 +17,6 @@ public interface StorageInteractor extends BaseInteractor {
     Observable<List<UITranslation>> loadHistory();
 
     Observable<UITranslation>  itemInserted();
+
+    Completable deleteItem(int position);
 }

@@ -15,4 +15,6 @@ import rx.Observable;
 public interface StorageRepository {
     Observable<List<StoredTranslationData>> loadHistory();
     StoredTranslationData addHistoryItem(TranslationData translation);
+
+    Completable deleteItem(StoredTranslationData data);
 }

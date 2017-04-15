@@ -13,4 +13,6 @@ public interface StorageView extends BaseView {
     void showHistory(List<UITranslation> translations);
 
     void addToHistory(UITranslation transaction);
+
+    void itemDeleted();
 }

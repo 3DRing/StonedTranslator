@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ringov.yatrnsltr.base.BasePresenter;
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
@@ -98,16 +99,19 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     @Override
     public void showKnownException(String message) {
         // todo implement
+        Toast.makeText(getContext(), "Exception: " + message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showInternalException(String message) {
         // todo implement
+        Toast.makeText(getContext(), "Internal exception: " + message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showUnknownException(String message) {
         // todo implement
+        Toast.makeText(getContext(), "Internal exception: " + message, Toast.LENGTH_SHORT).show();
     }
 
     protected static abstract class BaseViewState implements Parcelable {
