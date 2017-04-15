@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -138,7 +136,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showTranslation(UITranslation translation) {
-/*        crtTranslation = translation;
+        crtTranslation = translation;
         mFlOutputField.setVisibility(View.VISIBLE);
         mFlOutputField.requestFocus();
 
@@ -148,9 +146,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
                 langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
         mFb.setChecked(translation.isFavorite());
-        mTmbMode.setChecked(translation.isChanged());*/
-
-        hideKeyboard();
+        mTmbMode.setChecked(translation.isChanged());
     }
 
     @Override
@@ -174,6 +170,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mTvTargetLang.setText(langPair.getTargetLangShortName());
     }
 
+    @Override
     public void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         View view = getActivity().getCurrentFocus();

@@ -44,7 +44,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         return new BaseViewHolder(v);
     }
 
@@ -56,6 +56,12 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(UITranslation translation);
+
+        void onFooterClick();
     }
 
     class BaseViewHolder extends RecyclerView.ViewHolder {
@@ -90,11 +96,5 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
 
             mLlItemLayout.setOnClickListener(v -> mListener.onItemClick(crtTranslation));
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(UITranslation translation);
-
-        void onFooterClick();
     }
 }
