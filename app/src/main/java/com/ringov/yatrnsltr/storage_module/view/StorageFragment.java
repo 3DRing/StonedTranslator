@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
@@ -59,7 +58,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
         mAdapter = new StorageAdapter(translation -> {
             // todo open separate screen with full size text and translation
-            Toast.makeText(getContext(), translation.getOriginalText(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getContext(), translation.getOriginalText(), Toast.LENGTH_SHORT).show();
         });
         mRvStorage.setAdapter(mAdapter);
 
