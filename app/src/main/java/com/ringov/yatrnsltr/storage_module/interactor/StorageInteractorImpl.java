@@ -65,7 +65,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
     }
 
     @Override
-    public Observable<UITranslation> undoLastDeletion() {
+    public Observable<UITranslation> undoLastDeletion(int position) {
         if (lastRemovedItem == null) {
             return Observable.error(
                     new InternalException("undo of deletion was called from inappropriate place"));
@@ -73,6 +73,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         }
         return StorageRepositoryProvider.getStorageRepository()
                 .undoLastDeletion(lastRemovedItem)
+                .doOnNext(translation -> crtHistoryRecords.add(position, translation))
                 .map(this::convertToUITranslation);
     }
 

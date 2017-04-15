@@ -58,6 +58,11 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     private UITranslation crtTranslation;
 
+    @OnClick(R.id.tv_yandex_badge)
+    void onYandexClick() {
+        mPresenter.onYandexClicked();
+    }
+
     @OnClick(R.id.ll_swap_lang)
     void onSwapLangClick() {
         mPresenter.swapLangClicked();

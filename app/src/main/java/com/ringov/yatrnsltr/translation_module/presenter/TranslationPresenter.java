@@ -61,7 +61,7 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .subscribe(getView()::showLanguagePair, this::handleError));
     }
 
-    public void onTranslationFooterClicked() {
+    public void onYandexClicked() {
         getRouter().openYandexTranslatePage();
     }
 }

@@ -33,9 +33,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true">
 
-        <include
-            layout="@layout/translate_base_options"
-            android:layout_height="131dp" />
+        <include layout="@layout/translate_base_options" />
     </FrameLayout>
 
     <TextView

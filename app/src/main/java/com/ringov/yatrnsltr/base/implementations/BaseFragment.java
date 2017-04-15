@@ -35,7 +35,7 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     public void onAttach(Context context) {
         super.onAttach(context);
         // if presenter already exists do not provide a new one (in case of screen rotation)
-        mPresenter = mPresenter != null ? mPresenter : providePresenter();
+        mPresenter = providePresenter();
     }
 
     @Nullable

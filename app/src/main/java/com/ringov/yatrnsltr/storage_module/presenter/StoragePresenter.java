@@ -49,7 +49,7 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
     }
 
     public void onUndoDeletion(int position) {
-        mSubscription.add(getInteractor().undoLastDeletion()
+        mSubscription.add(getInteractor().undoLastDeletion(position)
                 .compose(Utils.setRxSchedulers())
                 .subscribe(translation -> getView().returnItemBack(translation, position),
                         this::handleError));
