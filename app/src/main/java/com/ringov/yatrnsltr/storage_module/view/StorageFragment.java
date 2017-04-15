@@ -3,6 +3,8 @@ package com.ringov.yatrnsltr.storage_module.view;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ringov.yatrnsltr.R;
@@ -25,6 +27,8 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
     @BindView(R.id.rv_storage)
     RecyclerView mRvStorage;
+    @BindView(R.id.cv_storage_container)
+    ViewGroup mCvStorageContainer;
 
     StorageAdapter mAdapter;
 
@@ -79,6 +83,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
     @Override
     public void showHistory(List<UITranslation> translations) {
         if (translations.size() != 0) {
+            mCvStorageContainer.setVisibility(View.VISIBLE);
             mAdapter.setTranslations(translations);
         }
     }
@@ -86,6 +91,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
     @Override
     public void addToHistory(UITranslation transaction) {
         if (transaction != null) {
+            mCvStorageContainer.setVisibility(View.VISIBLE);
             mAdapter.addTransaction(transaction);
         }
     }

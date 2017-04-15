@@ -1,5 +1,7 @@
 package com.ringov.yatrnsltr.storage_module.entities;
 
+import io.realm.RealmModel;
+
 /**
  * Created by Sergey Koltsov on 14.04.2017.
  */

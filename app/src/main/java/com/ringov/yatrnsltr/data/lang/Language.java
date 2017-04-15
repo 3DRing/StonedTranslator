@@ -3,11 +3,14 @@ package com.ringov.yatrnsltr.data.lang;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+
 /**
  * Created by Sergey Koltsov on 14.04.2017.
  */
 
-public class Language {
+public class Language implements RealmModel {
 
     public static final Language EMPTY = new Language();
     private String shortName;

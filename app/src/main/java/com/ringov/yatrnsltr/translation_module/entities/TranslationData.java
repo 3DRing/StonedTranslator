@@ -3,6 +3,9 @@ package com.ringov.yatrnsltr.translation_module.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+
 /**
  * Created by Sergey Koltsov on 11.04.2017.
  */
@@ -22,7 +25,7 @@ public class TranslationData {
         return originalText;
     }
 
-    public List<String> getTranslation() {
+    public List<String> getTranslations() {
         return translations;
     }
 

@@ -23,6 +23,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
     private int crtTo;
 
     public StorageInteractorImpl() {
+        // not used, declared for future needs
         crtFrom = 0;
         crtTo = DEFAULT_NUMBER_OF_LOADINGS;
     }
@@ -30,7 +31,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
     @Override
     public Observable<List<UITranslation>> loadHistory() {
         return StorageRepositoryProvider.getStorageRepository()
-                .loadHistory(crtFrom, crtTo)
+                .loadHistory()
                 .flatMap(Observable::from)
                 .map(this::convertToUITranslation)
                 .toList();
@@ -40,12 +41,8 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
     public Observable<UITranslation> itemInserted() {
         return TranslationRepositoryProvider.getTranslationRepository()
                 .subscribeToTranslation()
-                .map(translation -> new StoredTranslationData(translation, new ExtraParams(false, false)))
+                .map(StorageRepositoryProvider.getStorageRepository()::addHistoryItem)
                 .map(this::convertToUITranslation);
-    }
-
-    public Observable<UITranslation> insertNewHistoryItemToUI(StoredTranslationData translation) {
-        return Observable.just(convertToUITranslation(translation));
     }
 
     private UITranslation convertToUITranslation(StoredTranslationData storedTranslationData) {

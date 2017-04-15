@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.data.storage_repo;
 
 import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
+import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ import rx.Observable;
  */
 
 public interface StorageRepository {
-    Observable<List<StoredTranslationData>> loadHistory(int from, int to);
-    Completable addHistoryItem(StoredTranslationData translation);
+    Observable<List<StoredTranslationData>> loadHistory();
+    StoredTranslationData addHistoryItem(TranslationData translation);
 }

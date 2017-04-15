@@ -25,7 +25,7 @@ public class StonedConvertingService {
         List<String> convertedTranslations = new ArrayList<>();
 
         for (String s :
-                translation.getTranslation()) {
+                translation.getTranslations()) {
             convertedTranslations.add(converter.convert(s));
         }
         return new TranslationData(convertedOriginalText, convertedTranslations, langPair);

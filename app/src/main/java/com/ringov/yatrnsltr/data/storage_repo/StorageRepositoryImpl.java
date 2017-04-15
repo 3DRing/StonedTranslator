@@ -1,14 +1,16 @@
 package com.ringov.yatrnsltr.data.storage_repo;
 
-import com.ringov.yatrnsltr.data.lang.Language;
+import com.google.common.annotations.Beta;
 import com.ringov.yatrnsltr.storage_module.entities.ExtraParams;
 import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
-import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 import rx.Completable;
 import rx.Observable;
 
@@ -18,44 +20,31 @@ import rx.Observable;
 
 public class StorageRepositoryImpl implements StorageRepository {
 
-    // mock history db
-    private List<StoredTranslationData> history;
-
-    StorageRepositoryImpl() {
-        history = new ArrayList<>();
-
-        // fake history
-
-        List<String> translations = new ArrayList<>();
-        translations.add("hi");
-        LangPairData langPair = new LangPairData(new Language(Language.SupportedLanguage.RU),
-                new Language(Language.SupportedLanguage.EN));
-        ExtraParams ep = new ExtraParams(true, true);
-        StoredTranslationData std = new StoredTranslationData(new TranslationData("привет", translations, langPair), ep);
-
-        history.add(std);
+    @Override
+    public Observable<List<StoredTranslationData>> loadHistory() {
+        RealmResults<StoredTranslationData> results =
+                Realm.getDefaultInstance().where(StoredTranslationData.class).findAll();
+        return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
     }
 
     /**
+     * Params are not used so far
+     * Created for future improvements and potential internet requests
+     *
      * @param from (inclusive)
      * @param to   (exclusive)
      * @return
      */
-    @Override
-    public Observable<List<StoredTranslationData>> loadHistory(int from, int to) {
-        if (from >= history.size()) {
-            return Observable.just(new ArrayList<>());
-        }
-        if (to >= history.size()) {
-            to = history.size();
-        }
-        return Observable.just(history.subList(from, to));
+    @Beta
+    private Observable<List<StoredTranslationData>> loadHistory(int from, int to) {
+        return loadHistory();
     }
 
     @Override
-    public Completable addHistoryItem(StoredTranslationData translation) {
-        history.add(translation);
-        return Completable.complete();
+    public StoredTranslationData addHistoryItem(TranslationData translation) {
+        StoredTranslationData storedTranslation = new StoredTranslationData(translation, new ExtraParams(false, false));
+        Realm.getDefaultInstance().executeTransaction(realm -> realm.insert(storedTranslation));
+        return storedTranslation;
     }
 
 }
