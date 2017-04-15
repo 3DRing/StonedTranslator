@@ -24,9 +24,6 @@ import butterknife.ButterKnife;
 
 public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseViewHolder> {
 
-    private static final int HEADER_VIEW = 0;
-    private static final int NORMAL_VIEW = 1;
-
     private List<UITranslation> items;
     private OnItemClickListener mListener;
 
@@ -46,28 +43,10 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return HEADER_VIEW;
-        }
-        return NORMAL_VIEW;
-    }
-
-    @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-        BaseViewHolder vh = null;
-        switch (viewType) {
-            case HEADER_VIEW:
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.crt_translation_item, parent, false);
-                vh = new HeaderViewHolder(v);
-                break;
-            case NORMAL_VIEW:
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list_item, parent, false);
-                vh = new NormalViewHolder(v);
-                break;
-        }
-        return vh;
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list_item, parent, false);
+        return new BaseViewHolder(v);
     }
 
     @Override
@@ -80,7 +59,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
         return items.size();
     }
 
-    abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+    class BaseViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.ll_item_layout)
         ViewGroup mLlItemLayout;
@@ -112,22 +91,6 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
 
             mLlItemLayout.setOnClickListener(v -> mListener.onItemClick(crtTranslation));
         }
-    }
-
-    class NormalViewHolder extends BaseViewHolder {
-
-        NormalViewHolder(View itemView) {
-            super(itemView);
-        }
-
-    }
-
-    class HeaderViewHolder extends BaseViewHolder {
-
-        public HeaderViewHolder(View itemView) {
-            super(itemView);
-        }
-
     }
 
     public interface OnItemClickListener {
