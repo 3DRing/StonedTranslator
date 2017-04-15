@@ -1,10 +1,11 @@
-package com.ringov.yatrnsltr.data;
+package com.ringov.yatrnsltr.data.translation_repo;
 
 /**
  * Created by Sergey Koltsov on 11.04.2017.
  */
 
 public class TranslationRepositoryProvider {
+
     static TranslationRepository translationRepository;
 
     public static TranslationRepository getTranslationRepository() {

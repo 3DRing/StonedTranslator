@@ -13,16 +13,17 @@ import com.ringov.yatrnsltr.translation_module.view.TranslationView;
 public class TranslationPresenter extends BasePresenter<TranslationView, TranslationRouter, TranslationInteractor> {
 
     private boolean moreOptionsShown;
+    private boolean loading;
 
-    public TranslationPresenter(TranslationRouter router, TranslationInteractor interactor) {
-        super(router, interactor);
+    public TranslationPresenter(TranslationView view, TranslationRouter router, TranslationInteractor interactor) {
+        super(view, router, interactor);
     }
 
     @Override
     public void onViewResumed() {
-        getInteractor().loadLastLangPair()
+        mSubscription.add(getInteractor().loadLastLangPair()
                 .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::showLanguagePair, this::handleError);
+                .subscribe(getView()::showLanguagePair, this::handleError));
     }
 
     @Override
@@ -31,17 +32,23 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
     }
 
     public void translateClicked(String text) {
-        if(text == null || text.equals("")){
+        if (text == null || text.equals("")) {
             return;
         }
-        getInteractor().translate(text)
+        if (loading) {
+            return;
+        }
+        mSubscription.add(getInteractor().translate(text)
                 .compose(Utils.setRxSchedulers())
+                .doOnSubscribe(() -> loading = true)
                 .doOnSubscribe(getView()::showLoading)
                 .doOnTerminate(getView()::hideLoading)
-                .subscribe(getView()::showTranslation, this::handleError);
+                .doOnTerminate(getView()::hideKeyboard)
+                .doOnTerminate(() -> loading = false)
+                .subscribe(getView()::showTranslation, this::handleError));
     }
 
-    public void onMoreOptionsClicked() {
+    public void moreOptionsClicked() {
         if (moreOptionsShown) {
             getView().hideMoreOptions();
         } else {
@@ -50,13 +57,17 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
         moreOptionsShown = !moreOptionsShown;
     }
 
-    public void onDeleteClicked() {
+    public void deleteClicked() {
         getView().clearInputField();
     }
 
-    public void onSwapLangClicked() {
-        getInteractor().swapLanguage()
+    public void swapLangClicked() {
+        mSubscription.add(getInteractor().swapLanguage()
                 .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::showLanguagePair, this::handleError);
+                .subscribe(getView()::showLanguagePair, this::handleError));
+    }
+
+    public void onYandexClicked() {
+        getRouter().openYandexTranslatePage();
     }
 }

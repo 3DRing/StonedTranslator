@@ -1,11 +1,11 @@
 package com.ringov.yatrnsltr.translation_module.interactor;
 
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
-import com.ringov.yatrnsltr.data.TranslationRepositoryProvider;
-import com.ringov.yatrnsltr.translation_module.entity.LangPairData;
-import com.ringov.yatrnsltr.translation_module.entity.TranslationData;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
+import com.ringov.yatrnsltr.data.translation_repo.TranslationRepositoryProvider;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
+import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
+import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import rx.Observable;
 

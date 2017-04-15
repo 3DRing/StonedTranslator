@@ -4,21 +4,24 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.widget.Space;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
+import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
+import com.ringov.yatrnsltr.custom_views.FavoriteButton;
+import com.ringov.yatrnsltr.custom_views.TrnsltrModeButton;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.presenter.TranslationPresenter;
-import com.ringov.yatrnsltr.translation_module.router.TranslationRouter;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UILangPair;
-import com.ringov.yatrnsltr.translation_module.view.ui_entity.UITranslation;
+import com.ringov.yatrnsltr.translation_module.router.TranslationRouterImpl;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
+import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,33 +35,51 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @BindView(R.id.et_input)
     EditText mEtOriginalText;
-    @BindView(R.id.rv_output)
-    RecyclerView mRvOutput;
-    @BindView(R.id.fl_output_field)
-    ViewGroup mCvOutputCard;
     @BindView(R.id.inc_more_options)
     ViewGroup mLlMoreOptions;
-
     @BindView(R.id.tv_source_lang)
     TextView mTvSourceLang;
     @BindView(R.id.tv_target_lang)
     TextView mTvTargetLang;
-    TranslationAdapter mAdapter;
+    @BindView(R.id.space_near_output)
+    Space mSpace;
+
+    @BindView(R.id.fl_output_field)
+    ViewGroup mFlOutputField;
+    @BindView(R.id.tv_original)
+    TextView mTvOriginal;
+    @BindView(R.id.tv_translation)
+    TextView mTvTranslation;
+    @BindView(R.id.tv_lang_pair)
+    TextView mTvLangPair;
+    @BindView(R.id.fb_favorite)
+    FavoriteButton mFb;
+    @BindView(R.id.tmb_changed)
+    TrnsltrModeButton mTmbMode;
+
+    @BindView(R.id.pb_loading)
+    ProgressBar mPbLoading;
+
     private UITranslation crtTranslation;
+
+    @OnClick(R.id.tv_yandex_badge)
+    void onYandexClick() {
+        mPresenter.onYandexClicked();
+    }
 
     @OnClick(R.id.ll_swap_lang)
     void onSwapLangClick() {
-        mPresenter.onSwapLangClicked();
+        mPresenter.swapLangClicked();
     }
 
     @OnClick(R.id.iv_delete)
     void onDeleteClick() {
-        mPresenter.onDeleteClicked();
+        mPresenter.deleteClicked();
     }
 
     @OnClick(R.id.iv_more_options)
     void onMoreOptionsClick() {
-        mPresenter.onMoreOptionsClicked();
+        mPresenter.moreOptionsClicked();
     }
 
     @OnClick(R.id.tv_translate)
@@ -68,18 +89,13 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     protected TranslationPresenter providePresenter() {
-        return new TranslationPresenter(new TranslationRouter() {
-        }, new TranslationInteractorImpl());
+        return new TranslationPresenter(this, new TranslationRouterImpl(new ContextAdapter(getContext())),
+                new TranslationInteractorImpl());
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    protected void initializeViewsBeforeRestoreState() {
-        initializeRecycler();
     }
 
     @Override
@@ -117,12 +133,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         return bundle;
     }
 
-    private void initializeRecycler() {
-        mRvOutput.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new TranslationAdapter();
-        mRvOutput.setAdapter(mAdapter);
-    }
-
     @Override
     protected int getLayoutRes() {
         return R.layout.translate_fragment;
@@ -131,10 +141,21 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @Override
     public void showTranslation(UITranslation translation) {
         crtTranslation = translation;
-        mCvOutputCard.setVisibility(View.VISIBLE);
-        mCvOutputCard.requestFocus();
-        mAdapter.setTranslation(crtTranslation);
-        hideKeyboard();
+        showOutputField();
+
+        mTvOriginal.setText(translation.getOriginalText());
+        mTvTranslation.setText(translation.getTranslations().get(0));
+        UILangPair langPair = translation.getLangPair();
+        mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
+                langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
+        mFb.setChecked(translation.isFavorite());
+        mTmbMode.setChecked(translation.isChanged());
+    }
+
+    private void showOutputField() {
+        mFlOutputField.setVisibility(View.VISIBLE);
+        mSpace.setVisibility(View.VISIBLE);
+        mFlOutputField.requestFocus();
     }
 
     @Override
@@ -154,10 +175,11 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showLanguagePair(UILangPair langPair) {
-        mTvSourceLang.setText(langPair.getSourceLang());
-        mTvTargetLang.setText(langPair.getTargetLang());
+        mTvSourceLang.setText(langPair.getSourceLangShortName());
+        mTvTargetLang.setText(langPair.getTargetLangShortName());
     }
 
+    @Override
     public void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         View view = getActivity().getCurrentFocus();
@@ -165,6 +187,18 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
             view = new View(getActivity());
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        mPbLoading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mPbLoading.setVisibility(View.GONE);
     }
 
     private static class ViewState extends BaseViewState {
