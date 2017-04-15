@@ -13,6 +13,7 @@ import com.ringov.yatrnsltr.translation_module.view.TranslationView;
 public class TranslationPresenter extends BasePresenter<TranslationView, TranslationRouter, TranslationInteractor> {
 
     private boolean moreOptionsShown;
+    private boolean loading;
 
     public TranslationPresenter(TranslationView view, TranslationRouter router, TranslationInteractor interactor) {
         super(view, router, interactor);
@@ -34,9 +35,14 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
         if (text == null || text.equals("")) {
             return;
         }
+        if (loading) {
+            return;
+        }
         mSubscription.add(getInteractor().translate(text)
                 .compose(Utils.setRxSchedulers())
+                .doOnSubscribe(() -> loading = true)
                 .doOnSubscribe(getView()::showLoading)
+                .doOnTerminate(() -> loading = false)
                 .doOnTerminate(getView()::hideLoading)
                 .doOnTerminate(getView()::hideKeyboard)
                 .subscribe(getView()::showTranslation, this::handleError));
