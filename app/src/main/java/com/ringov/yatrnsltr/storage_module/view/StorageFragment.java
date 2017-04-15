@@ -1,8 +1,10 @@
 package com.ringov.yatrnsltr.storage_module.view;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -27,8 +29,8 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
     @BindView(R.id.rv_storage)
     RecyclerView mRvStorage;
-    @BindView(R.id.cv_storage_container)
-    ViewGroup mCvStorageContainer;
+    @BindView(R.id.storage_container)
+    ViewGroup mStorageContainer;
 
     StorageAdapter mAdapter;
 
@@ -48,6 +50,12 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setReverseLayout(true);
         mRvStorage.setLayoutManager(llm);
+
+        // adding divider for list
+        DividerItemDecoration divider = new DividerItemDecoration(mRvStorage.getContext(),
+                llm.getOrientation());
+        mRvStorage.addItemDecoration(divider);
+
         mAdapter = new StorageAdapter(new StorageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(UITranslation translation) {
@@ -61,7 +69,24 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
             }
         });
         mRvStorage.setAdapter(mAdapter);
+        ItemTouchHelper ith = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return 0;
+            }
 
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int swipedItem = viewHolder.getAdapterPosition();
+                mAdapter.remove(swipedItem);
+            }
+        });
+        ith.attachToRecyclerView(mRvStorage);
     }
 
     @Override
@@ -80,10 +105,14 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         return bundle;
     }
 
+    private void showHistoryField(){
+        mStorageContainer.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void showHistory(List<UITranslation> translations) {
         if (translations.size() != 0) {
-            mCvStorageContainer.setVisibility(View.VISIBLE);
+            showHistoryField();
             mAdapter.setTranslations(translations);
         }
     }
@@ -91,7 +120,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
     @Override
     public void addToHistory(UITranslation transaction) {
         if (transaction != null) {
-            mCvStorageContainer.setVisibility(View.VISIBLE);
+            showHistoryField();
             mAdapter.addTransaction(transaction);
         }
     }

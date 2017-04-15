@@ -4,13 +4,16 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <com.ringov.yatrnsltr.custom_views.FavoriteButton
-        android:id="@+id/fb_favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <com.ringov.yatrnsltr.custom_views.TrnsltrModeButton
         android:id="@+id/tmb_changed"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:scaleType="fitCenter"
+        android:scaleX="1.1"
+        android:scaleY="1.1" />
+
+    <com.ringov.yatrnsltr.custom_views.FavoriteButton
+        android:id="@+id/fb_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

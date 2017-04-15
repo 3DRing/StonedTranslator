@@ -58,6 +58,11 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
         return items.size();
     }
 
+    public void remove(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public interface OnItemClickListener {
         void onItemClick(UITranslation translation);
 

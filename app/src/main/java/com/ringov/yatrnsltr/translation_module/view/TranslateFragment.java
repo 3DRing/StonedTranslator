@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.Space;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -40,7 +41,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     TextView mTvSourceLang;
     @BindView(R.id.tv_target_lang)
     TextView mTvTargetLang;
-
+    @BindView(R.id.space_near_output)
+    Space mSpace;
 
     @BindView(R.id.fl_output_field)
     ViewGroup mFlOutputField;
@@ -137,8 +139,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @Override
     public void showTranslation(UITranslation translation) {
         crtTranslation = translation;
-        mFlOutputField.setVisibility(View.VISIBLE);
-        mFlOutputField.requestFocus();
+        showOutputField();
 
         mTvOriginal.setText(translation.getOriginalText());
         mTvTranslation.setText(translation.getTranslations().get(0));
@@ -147,6 +148,12 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
                 langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
         mFb.setChecked(translation.isFavorite());
         mTmbMode.setChecked(translation.isChanged());
+    }
+
+    private void showOutputField() {
+        mFlOutputField.setVisibility(View.VISIBLE);
+        mSpace.setVisibility(View.VISIBLE);
+        mFlOutputField.requestFocus();
     }
 
     @Override

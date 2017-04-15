@@ -24,11 +24,11 @@ public class TrnsltrModeButton extends ToggleImageButton {
 
     @Override
     protected int getOnImageRes() {
-        return R.drawable.ic_trnsltr_on;
+        return R.drawable.ic_stoned_bear_true;
     }
 
     @Override
     protected int getOffImageRes() {
-        return R.drawable.ic_trnsltr_off;
+        return R.drawable.ic_stoned_bear_false;
     }
 }
