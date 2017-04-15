@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="8dp"
@@ -58,8 +59,25 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_toLeftOf="@+id/progressBar"
+        android:layout_toStartOf="@+id/progressBar"
         android:background="?attr/selectableItemBackground"
         android:text="@string/yandex_badge_text"
         android:textSize="14sp" />
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_yandex_badge"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/frameLayout"
+        android:layout_toEndOf="@+id/et_input"
+        android:layout_toRightOf="@+id/et_input"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </RelativeLayout>

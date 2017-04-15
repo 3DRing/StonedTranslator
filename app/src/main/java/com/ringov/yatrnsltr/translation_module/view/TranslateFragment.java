@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
@@ -55,6 +56,9 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     FavoriteButton mFb;
     @BindView(R.id.tmb_changed)
     TrnsltrModeButton mTmbMode;
+
+    @BindView(R.id.pb_loading)
+    ProgressBar mPbLoading;
 
     private UITranslation crtTranslation;
 
@@ -183,6 +187,18 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
             view = new View(getActivity());
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        mPbLoading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mPbLoading.setVisibility(View.GONE);
     }
 
     private static class ViewState extends BaseViewState {
