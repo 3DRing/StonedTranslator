@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.translation_module.interactor;
 
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
+import com.ringov.yatrnsltr.data.stoned_service.StonedConvertingService;
 import com.ringov.yatrnsltr.data.translation_repo.TranslationRepositoryProvider;
 import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
@@ -45,7 +46,10 @@ public class TranslationInteractorImpl extends BaseInteractorImpl implements Tra
     }
 
     private UITranslation convertTranslation(TranslationData translationData) {
-        return new UITranslation(translationData, crtLangPair);
+        UITranslation translation = new UITranslation(translationData, crtLangPair);
+        TranslationData stoned = StonedConvertingService.convert(translationData);
+        translation.setChangedData(stoned.getOriginal(), stoned.getTranslations());
+        return translation;
     }
 
 }

@@ -65,6 +65,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.pb_loading)
     ProgressBar mPbLoading;
 
+    private boolean stonedModeEnabled;
+
     private UITranslation crtTranslation;
 
     @OnClick(R.id.tv_yandex_badge)
@@ -148,8 +150,9 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         crtTranslation = translation;
         showOutputField();
 
-        mTvOriginal.setText(translation.getOriginalText());
-        mTvTranslation.setText(translation.getTranslations().get(0));
+        mTvOriginal.setText(stonedModeEnabled ? translation.getChangedOriginal() : translation.getOriginalText());
+        mTvTranslation.setText(stonedModeEnabled ? translation.getChangedTranslations().get(0)
+                : translation.getTranslations().get(0));
         UILangPair langPair = translation.getLangPair();
         mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
                 langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
@@ -208,10 +211,16 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void setStonedMode(boolean enable) {
-        // different captions on the button depending on mode
+        stonedModeEnabled = enable;
+
         mBtnTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
         mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
         mYandexBedge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
+
+        // refresh output field
+        if (crtTranslation != null) {
+            showTranslation(crtTranslation);
+        }
     }
 
     private static class ViewState extends BaseViewState {

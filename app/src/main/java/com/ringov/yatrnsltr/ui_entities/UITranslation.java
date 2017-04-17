@@ -28,13 +28,21 @@ public class UITranslation {
 
     public UITranslation(TranslationData translationData, LangPairData langPair) {
         this.originalText = translationData.getOriginal();
+        this.changedOriginal = this.originalText;
+
         this.translations = translationData.getTranslations();
+        this.changedTranslations = translationData.getTranslations();
+
         this.langPair = langPair.toUILangPair();
     }
 
     public UITranslation(StoredTranslationData translationData, LangPairData langPair) {
         this.originalText = translationData.getOriginal();
+        this.changedOriginal = this.originalText;
+
         this.translations = translationData.getTranslations();
+        this.changedTranslations = translationData.getTranslations();
+
         this.langPair = langPair.toUILangPair();
     }
 
