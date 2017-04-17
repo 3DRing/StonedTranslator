@@ -17,4 +17,7 @@ public interface StorageView extends BaseView {
     void itemDeleted();
 
     void returnItemBack(UITranslation translation, int position);
+
+    // todo create a new parent class StonedView and move this method there
+    void setStonedMode(boolean enable);
 }

@@ -8,6 +8,8 @@ import com.ringov.yatrnsltr.App;
 import com.ringov.yatrnsltr.data.lang.Language;
 import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 
+import rx.Observable;
+
 /**
  * Created by Sergey Koltsov on 13.04.2017.
  */
@@ -17,10 +19,7 @@ public class SharedPreferencesStorage {
     private static final String SHARED_PREFERENCES_TAG = "yatrnsltr_shared_preferences";
     private static final String LAST_SOURCE_LANG = "last_source_lang";
     private static final String LAST_TARGET_LANG = "last_target_lang";
-
-    // todo improve dealing with languages (not simply strings)
-    private static final String DEFAULT_SOURCE_LANG = "ru";
-    private static final String DEFAULT_TARGET_LANG = "en";
+    private static final String STONED_MODE = "stoned_mode";
 
     private static SharedPreferences sp;
 
@@ -37,10 +36,10 @@ public class SharedPreferencesStorage {
         String sourceLang = sp.getString(LAST_SOURCE_LANG, "");
         String targetLang = sp.getString(LAST_TARGET_LANG, "");
         if (sourceLang.equals("")) {
-            sourceLang = DEFAULT_SOURCE_LANG;
+            sourceLang = new Language(Language.SupportedLanguage.RU).getShortName();
         }
         if (targetLang.equals("")) {
-            targetLang = DEFAULT_TARGET_LANG;
+            targetLang = new Language(Language.SupportedLanguage.EN).getShortName();
         }
         return new LangPairData(new Language(sourceLang), new Language(targetLang));
     }
@@ -52,4 +51,14 @@ public class SharedPreferencesStorage {
         editor.apply();
     }
 
+    public static Observable<Boolean> saveStonedMode(boolean stonedMode) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(STONED_MODE, stonedMode);
+        editor.apply();
+        return Observable.just(stonedMode);
+    }
+
+    public static Observable<Boolean> loadStonedMode() {
+        return Observable.just(sp.getBoolean(STONED_MODE, false));
+    }
 }

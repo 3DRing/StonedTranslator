@@ -9,16 +9,16 @@ import com.ringov.yatrnsltr.R;
  * Created by Sergey Koltsov on 10.04.2017.
  */
 
-public class TrnsltrModeButton extends ToggleImageButton {
-    public TrnsltrModeButton(Context context) {
+public class StonedModeButton extends ToggleImageButton {
+    public StonedModeButton(Context context) {
         super(context);
     }
 
-    public TrnsltrModeButton(Context context, AttributeSet attrs) {
+    public StonedModeButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TrnsltrModeButton(Context context, AttributeSet attrs, int defStyle) {
+    public StonedModeButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

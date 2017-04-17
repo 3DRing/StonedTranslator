@@ -9,8 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.ringov.yatrnsltr.MessageDialogHelper;
+import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.BasePresenter;
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
 
@@ -34,8 +35,6 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        // if presenter already exists do not provide a new one (in case of screen rotation)
-        mPresenter = providePresenter();
     }
 
     @Nullable
@@ -52,6 +51,7 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
         initializeViewsBeforeRestoreState();
         setRetainInstance(true);
         restoreState(savedInstanceState);
+        mPresenter = providePresenter();
     }
 
     /**
@@ -75,43 +75,42 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     @Override
     public void onDetach() {
         super.onDetach();
-        mPresenter.onDestroy();
-        mPresenter = null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mPresenter.onDestroy();
+        mPresenter = null;
         unbinder.unbind();
     }
 
     @Override
     public void showLoading() {
-        // todo implement
+        // implemented by children
     }
 
     @Override
     public void hideLoading() {
-        // todo implement
+        // implemented by children
     }
 
 
     @Override
     public void showKnownException(String message) {
-        // todo implement
-        Toast.makeText(getContext(), "Exception: " + message, Toast.LENGTH_SHORT).show();
+        MessageDialogHelper.getErrorDialog(getActivity(), getString(R.string.exception), message).show();
     }
 
     @Override
     public void showInternalException(String message) {
-        // todo implement
-        Toast.makeText(getContext(), "Internal exception: " + message, Toast.LENGTH_SHORT).show();
+        MessageDialogHelper.getErrorDialog(getActivity(), getString(R.string.exception),
+                getString(R.string.internal_exception_appeared)).show();
     }
 
     @Override
     public void showUnknownException(String message) {
-        // todo implement
-        Toast.makeText(getContext(), "Internal exception: " + message, Toast.LENGTH_SHORT).show();
+        MessageDialogHelper.getErrorDialog(getActivity(), getString(R.string.exception),
+                getString(R.string.unknown_exception_appeared)).show();
     }
 
     protected static abstract class BaseViewState implements Parcelable {

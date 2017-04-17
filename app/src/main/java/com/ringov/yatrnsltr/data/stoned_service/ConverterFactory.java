@@ -1,9 +1,9 @@
-package com.ringov.yatrnsltr.data.trnsltr_service;
+package com.ringov.yatrnsltr.data.stoned_service;
 
 import com.ringov.yatrnsltr.data.lang.Language;
-import com.ringov.yatrnsltr.data.trnsltr_service.translators.DefaultConverter;
-import com.ringov.yatrnsltr.data.trnsltr_service.translators.ENConverter;
-import com.ringov.yatrnsltr.data.trnsltr_service.translators.RUConverter;
+import com.ringov.yatrnsltr.data.stoned_service.translators.DefaultConverter;
+import com.ringov.yatrnsltr.data.stoned_service.translators.ENConverter;
+import com.ringov.yatrnsltr.data.stoned_service.translators.RUConverter;
 
 /**
  * Created by Сергей on 14.04.2017.

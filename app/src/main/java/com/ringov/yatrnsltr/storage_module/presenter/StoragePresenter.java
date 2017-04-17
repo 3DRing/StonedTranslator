@@ -2,6 +2,7 @@ package com.ringov.yatrnsltr.storage_module.presenter;
 
 import com.ringov.yatrnsltr.Utils;
 import com.ringov.yatrnsltr.base.BasePresenter;
+import com.ringov.yatrnsltr.data.common_repo.CommonRepositoryProvider;
 import com.ringov.yatrnsltr.storage_module.interactor.StorageInteractor;
 import com.ringov.yatrnsltr.storage_module.router.StorageRouter;
 import com.ringov.yatrnsltr.storage_module.view.StorageView;
@@ -15,7 +16,9 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
     public StoragePresenter(StorageView view, StorageRouter router, StorageInteractor interactor) {
         super(view, router, interactor);
         loadHistory();
+
         subscribeToItemsInsertion();
+        subscribeToModeChangedCommon();
     }
 
     private void loadHistory() {
@@ -53,5 +56,11 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
                 .compose(Utils.setRxSchedulers())
                 .subscribe(translation -> getView().returnItemBack(translation, position),
                         this::handleError));
+    }
+
+    protected void subscribeToModeChangedCommon() {
+        mSubscription.add(CommonRepositoryProvider.getCommonRepository().subscribeToModeChanging()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::setStonedMode));
     }
 }

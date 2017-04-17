@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
@@ -31,8 +32,12 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
     RecyclerView mRvStorage;
     @BindView(R.id.storage_container)
     ViewGroup mStorageContainer;
+    @BindView(R.id.tv_history_title)
+    TextView mTvHistoryTitle;
 
     StorageAdapter mAdapter;
+
+    private boolean stonedModeEnabled;
 
     @Override
     protected StoragePresenter providePresenter() {
@@ -57,7 +62,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         mRvStorage.addItemDecoration(divider);
 
         mAdapter = new StorageAdapter(translation -> {
-            // todo open separate screen with full size text and translation
+            // todo open separate screen with full size text and translation (?)
             // Toast.makeText(getContext(), translation.getOriginalText(), Toast.LENGTH_SHORT).show();
         });
         mRvStorage.setAdapter(mAdapter);
@@ -66,8 +71,13 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         DoubleSideSwipeItemTouchHelper swipeHelper = new DoubleSideSwipeItemTouchHelper(itemPosition -> {
             mPresenter.onItemsSwiped(itemPosition);
             mAdapter.remove(itemPosition);
-            Snackbar.make(mStorageContainer, R.string.deleted_from_history, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.restore_item, v -> mPresenter.onUndoDeletion(itemPosition))
+
+            // what strings will be pick depends on mode
+            Snackbar.make(mStorageContainer,
+                    stonedModeEnabled ? R.string.deleted_from_history_stoned : R.string.deleted_from_history,
+                    Snackbar.LENGTH_LONG)
+                    .setAction(stonedModeEnabled ? R.string.restore_item_stoned : R.string.restore_item,
+                            v -> mPresenter.onUndoDeletion(itemPosition))
                     .show();
         });
         swipeHelper.attachToRecyclerView(mRvStorage);
@@ -80,12 +90,12 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
     @Override
     protected void restoreState(Bundle bundle) {
-        // todo restore ViewState
+        // no need to save this view, it restores from presenter
     }
 
     @Override
     protected Bundle saveState(Bundle bundle) {
-        // todo save ViewState
+        // no need to save this view, it restores from presenter
         return bundle;
     }
 
@@ -122,6 +132,14 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
     private void hideHistoryField() {
         mStorageContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setStonedMode(boolean enable) {
+        stonedModeEnabled = enable;
+
+        mAdapter.setStonedMode(enable);
+        mTvHistoryTitle.setText(enable ? R.string.history_title_stoned : R.string.history_title);
     }
 
     private static class DoubleSideSwipeItemTouchHelper {
