@@ -67,6 +67,5 @@
         android:paddingRight="8dp"
         android:paddingStart="8dp"
         android:paddingTop="4dp"
-        android:visibility="gone"
         app:srcCompat="@drawable/ic_more_black_24dp" />
 </LinearLayout>

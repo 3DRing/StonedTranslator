@@ -79,4 +79,8 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .compose(Utils.setRxSchedulers())
                 .subscribe(getView()::setStonedMode));
     }
+
+    public void swapLangLongClicked() {
+
+    }
 }

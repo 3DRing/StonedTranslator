@@ -25,6 +25,7 @@ import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.
@@ -79,6 +80,12 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @OnClick(R.id.ll_swap_lang)
     void onSwapLangClick() {
         mPresenter.swapLangClicked();
+    }
+
+    @OnLongClick(R.id.ll_swap_lang)
+    boolean onSwapLangLongClick() {
+        mPresenter.swapLangLongClicked();
+        return true;
     }
 
     @OnClick(R.id.iv_delete)

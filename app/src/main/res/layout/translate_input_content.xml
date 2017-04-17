@@ -31,8 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentRight="true">
 
         <include layout="@layout/translate_base_options" />
     </FrameLayout>
@@ -53,12 +52,9 @@
         android:id="@+id/pb_loading_stoned"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_yandex_badge"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/frameLayout"
-        android:layout_toEndOf="@+id/et_input"
-        android:layout_toRightOf="@+id/et_input"
+        android:layout_above="@+id/tv_yandex_badge"
+        android:layout_toLeftOf="@+id/frameLayout"
+        android:layout_toStartOf="@+id/frameLayout"
         android:alpha="0.4"
         android:indeterminateDrawable="@drawable/loading_bear"
         android:indeterminateDuration="1"
@@ -71,12 +67,9 @@
         android:id="@+id/pb_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_yandex_badge"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/frameLayout"
-        android:layout_toEndOf="@+id/et_input"
-        android:layout_toRightOf="@+id/et_input"
+        android:layout_alignTop="@+id/pb_loading_stoned"
+        android:layout_toLeftOf="@+id/frameLayout"
+        android:layout_toStartOf="@+id/frameLayout"
         android:alpha="0.4"
         android:indeterminateDuration="1"
         android:scaleX="0.7"
