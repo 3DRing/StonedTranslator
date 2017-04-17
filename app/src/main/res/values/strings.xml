@@ -19,4 +19,5 @@
     <string name="exception_stoned">Ошбк</string>
     <string name="internal_exception_appeared">Произошла внутренняя ошибка</string>
     <string name="unknown_exception_appeared">Произошла неизвестная ошибка</string>
+    <string name="hello_stoned">првет</string>
 </resources>

@@ -62,6 +62,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.tv_yandex_badge)
     TextView mYandexBedge;
 
+    @BindView(R.id.pb_loading_stoned)
+    ProgressBar mPbLoadingStoned;
     @BindView(R.id.pb_loading)
     ProgressBar mPbLoading;
 
@@ -200,13 +202,26 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @Override
     public void showLoading() {
         super.showLoading();
-        mPbLoading.setVisibility(View.VISIBLE);
+        // two views for the sake of not using deprecated or not supported methods for getting drawables
+        if (stonedModeEnabled) {
+            mPbLoadingStoned.setVisibility(View.VISIBLE);
+            mPbLoading.setVisibility(View.GONE);
+        } else {
+            mPbLoadingStoned.setVisibility(View.GONE);
+            mPbLoading.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void hideLoading() {
         super.hideLoading();
-        mPbLoading.setVisibility(View.GONE);
+        if (stonedModeEnabled) {
+            mPbLoadingStoned.setVisibility(View.GONE);
+            mPbLoading.setVisibility(View.GONE);
+        } else {
+            mPbLoadingStoned.setVisibility(View.GONE);
+            mPbLoading.setVisibility(View.GONE);
+        }
     }
 
     @Override

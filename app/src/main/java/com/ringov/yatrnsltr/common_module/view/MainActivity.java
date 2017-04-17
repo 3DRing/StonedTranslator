@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
@@ -26,8 +25,8 @@ import butterknife.OnClick;
 // todo create parent-base-class (?)
 public class MainActivity extends AppCompatActivity implements CommonView {
 
-    @BindView(R.id.iv_bear)
-    ImageView mIvBear;
+    @BindView(R.id.ll_stoned_bear)
+    View mStonedBear;
     CommonPresenter mPresenter;
 
     private boolean stonedModeEnabled;
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements CommonView {
     @Override
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
-        mIvBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
+        mStonedBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
 
         invalidateOptionsMenu(); // redraw options menu in top-right corner
     }

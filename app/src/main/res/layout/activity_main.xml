@@ -15,13 +15,31 @@
         app:fabSize="normal"
         app:srcCompat="@mipmap/mipmap_stoned_bear_white_true" />
 
-    <ImageView
-        android:id="@+id/iv_bear"
+    <LinearLayout
+        android:id="@+id/ll_stoned_bear"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="32dp"
-        app:srcCompat="@drawable/pic_stoned_bear" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <ImageView
+            android:id="@+id/iv_bear"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/pic_stoned_bear" />
+
+        <TextView
+            android:id="@+id/tv_bear_monolog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:text="@string/hello_stoned"
+            android:textAlignment="center"
+            android:textAllCaps="false" />
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
