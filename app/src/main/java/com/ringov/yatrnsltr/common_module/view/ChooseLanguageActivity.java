@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.common_module.view;
 
 
+import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseActivity;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
@@ -24,6 +25,6 @@ public class ChooseLanguageActivity extends BaseActivity<CommonPresenter> implem
 
     @Override
     protected int getLayout() {
-        return 0; // todo layout
+        return R.layout.choose_language_layout;
     }
 }
