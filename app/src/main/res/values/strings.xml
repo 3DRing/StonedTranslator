@@ -7,4 +7,8 @@
     <string name="history_title">История</string>
     <string name="deleted_from_history">Удалено из истории</string>
     <string name="restore_item">Восстановить</string>
+    <string name="ok">Ок</string>
+    <string name="exception">Ошибка</string>
+    <string name="internal_exception_appeared">Произошла внутренняя ошибка</string>
+    <string name="unknown_exception_appeared">Произошла неизвестная ошибка</string>
 </resources>
