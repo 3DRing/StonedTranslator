@@ -18,4 +18,9 @@ public class TranslationRouterImpl extends BaseRouterImpl implements Translation
     public void openYandexTranslatePage() {
         context.start(StoryBoard.yandexTranslateLink());
     }
+
+    @Override
+    public void openChooseLanguageScreen() {
+        context.start(StoryBoard.chooseLanguageScreen());
+    }
 }

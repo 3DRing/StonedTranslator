@@ -81,6 +81,6 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
     }
 
     public void swapLangLongClicked() {
-
+        getRouter().openChooseLanguageScreen();
     }
 }

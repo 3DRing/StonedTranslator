@@ -32,11 +32,6 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     @LayoutRes
     protected abstract int getLayoutRes();
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,11 +66,6 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     protected abstract void restoreState(Bundle bundle);
 
     protected abstract Bundle saveState(Bundle bundle);
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 
     @Override
     public void onDestroy() {
