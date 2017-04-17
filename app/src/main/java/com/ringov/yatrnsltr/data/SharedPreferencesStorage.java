@@ -59,6 +59,6 @@ public class SharedPreferencesStorage {
     }
 
     public static Observable<Boolean> loadStonedMode() {
-        return Observable.just(sp.getBoolean(STONED_MODE, true));
+        return Observable.just(sp.getBoolean(STONED_MODE, false));
     }
 }
