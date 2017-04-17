@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_trnsltr_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@mipmap/mipmap_stoned_bear_white_true" />
 
     <ImageView
         android:id="@+id/iv_bear"
@@ -11,6 +21,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="32dp"
         app:srcCompat="@drawable/pic_stoned_bear" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        android:visibility="gone"
+        app:menu="@menu/navigation" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,13 +59,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        android:visibility="gone"
-        app:menu="@menu/navigation" />
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Ya Trnsltr</string>
     <string name="lang_pair_item">%1$s-%2$s</string>
-    <string name="translate_button_text">Првсти</string>
-    <string name="input_hint_text">Ввдте ткст</string>
+    <string name="translate_button_text">Перевести</string>
+    <string name="input_hint_text">Введите текст</string>
     <string name="yandex_badge_text">Переведено сервисом «Яндекс.Переводчик»</string>
     <string name="history_title">История</string>
     <string name="deleted_from_history">Удалено из истории</string>
