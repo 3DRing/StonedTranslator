@@ -1,14 +1,23 @@
 <resources>
     <string name="app_name">Ya Trnsltr</string>
     <string name="lang_pair_item">%1$s-%2$s</string>
-    <string name="translate_button_text">Првсти</string>
-    <string name="input_hint_text">Ввдте ткст</string>
+    <string name="translate_button_text">Перевести</string>
+    <string name="translate_button_text_stoned">Првсти</string>
+    <string name="input_hint_text">Введите текст</string>
+    <string name="input_hint_text_stoned">Ввдте ткст</string>
     <string name="yandex_badge_text">Переведено сервисом «Яндекс.Переводчик»</string>
+    <string name="yandex_badge_text_stoned">Првдно срвсм «Яндкс.Првдчк»</string>
     <string name="history_title">История</string>
+    <string name="history_title_stoned">Истря</string>
     <string name="deleted_from_history">Удалено из истории</string>
+    <string name="deleted_from_history_stoned">Удлно з истри</string>
     <string name="restore_item">Восстановить</string>
+    <string name="restore_item_stoned">Всстнвть</string>
     <string name="ok">Ок</string>
+    <string name="ok_stoned">Kк</string>
     <string name="exception">Ошибка</string>
+    <string name="exception_stoned">Ошбк</string>
     <string name="internal_exception_appeared">Произошла внутренняя ошибка</string>
     <string name="unknown_exception_appeared">Произошла неизвестная ошибка</string>
+    <string name="hello_stoned">првет</string>
 </resources>

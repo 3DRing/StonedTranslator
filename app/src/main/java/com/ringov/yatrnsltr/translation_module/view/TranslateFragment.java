@@ -16,7 +16,7 @@ import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
 import com.ringov.yatrnsltr.custom_views.FavoriteButton;
-import com.ringov.yatrnsltr.custom_views.TrnsltrModeButton;
+import com.ringov.yatrnsltr.custom_views.StonedModeButton;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.presenter.TranslationPresenter;
 import com.ringov.yatrnsltr.translation_module.router.TranslationRouterImpl;
@@ -55,10 +55,19 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.fb_favorite)
     FavoriteButton mFb;
     @BindView(R.id.tmb_changed)
-    TrnsltrModeButton mTmbMode;
+    StonedModeButton mTmbMode;
 
+    @BindView(R.id.tv_translate)
+    TextView mBtnTranslate;
+    @BindView(R.id.tv_yandex_badge)
+    TextView mYandexBedge;
+
+    @BindView(R.id.pb_loading_stoned)
+    ProgressBar mPbLoadingStoned;
     @BindView(R.id.pb_loading)
     ProgressBar mPbLoading;
+
+    private boolean stonedModeEnabled;
 
     private UITranslation crtTranslation;
 
@@ -143,8 +152,9 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         crtTranslation = translation;
         showOutputField();
 
-        mTvOriginal.setText(translation.getOriginalText());
-        mTvTranslation.setText(translation.getTranslations().get(0));
+        mTvOriginal.setText(stonedModeEnabled ? translation.getChangedOriginal() : translation.getOriginalText());
+        mTvTranslation.setText(stonedModeEnabled ? translation.getChangedTranslations().get(0)
+                : translation.getTranslations().get(0));
         UILangPair langPair = translation.getLangPair();
         mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
                 langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
@@ -192,13 +202,40 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @Override
     public void showLoading() {
         super.showLoading();
-        mPbLoading.setVisibility(View.VISIBLE);
+        // two views for the sake of not using deprecated or not supported methods for getting drawables
+        if (stonedModeEnabled) {
+            mPbLoadingStoned.setVisibility(View.VISIBLE);
+            mPbLoading.setVisibility(View.GONE);
+        } else {
+            mPbLoadingStoned.setVisibility(View.GONE);
+            mPbLoading.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void hideLoading() {
         super.hideLoading();
-        mPbLoading.setVisibility(View.GONE);
+        if (stonedModeEnabled) {
+            mPbLoadingStoned.setVisibility(View.GONE);
+            mPbLoading.setVisibility(View.GONE);
+        } else {
+            mPbLoadingStoned.setVisibility(View.GONE);
+            mPbLoading.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setStonedMode(boolean enable) {
+        stonedModeEnabled = enable;
+
+        mBtnTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
+        mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
+        mYandexBedge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
+
+        // refresh output field
+        if (crtTranslation != null) {
+            showTranslation(crtTranslation);
+        }
     }
 
     private static class ViewState extends BaseViewState {

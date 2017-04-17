@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.custom_views.FavoriteButton;
-import com.ringov.yatrnsltr.custom_views.TrnsltrModeButton;
+import com.ringov.yatrnsltr.custom_views.StonedModeButton;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
@@ -26,6 +26,8 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
 
     private List<UITranslation> items;
     private OnItemClickListener mListener;
+
+    private boolean stonedMode;
 
     public StorageAdapter(OnItemClickListener listener) {
         items = new ArrayList<>();
@@ -68,6 +70,13 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
         notifyItemInserted(position);
     }
 
+    public void setStonedMode(boolean enable) {
+        if (this.stonedMode != enable) {
+            this.stonedMode = enable;
+            notifyDataSetChanged();
+        }
+    }
+
     public interface OnItemClickListener {
         void onItemClick(UITranslation translation);
     }
@@ -85,7 +94,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
         @BindView(R.id.fb_favorite)
         FavoriteButton mFb;
         @BindView(R.id.tmb_changed)
-        TrnsltrModeButton mTmbMode;
+        StonedModeButton mTmbMode;
 
         BaseViewHolder(View itemView) {
             super(itemView);
@@ -94,8 +103,12 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
 
         protected void bindView(int position) {
             UITranslation crtTranslation = items.get(position);
-            mTvOriginal.setText(crtTranslation.getOriginalText());
-            mTvTranslation.setText(crtTranslation.getTranslations().get(0)); // todo handle many translation case
+
+            // if stoned mode is enabled, show stoned original and translated text
+            mTvOriginal.setText(stonedMode ? crtTranslation.getChangedOriginal() : crtTranslation.getOriginalText());
+            mTvTranslation.setText(stonedMode ? crtTranslation.getChangedTranslations().get(0)
+                    : crtTranslation.getTranslations().get(0)); // todo handle many translation case
+
             UILangPair langPair = crtTranslation.getLangPair();
             mTvLangPair.setText(String.format(itemView.getContext().getString(R.string.lang_pair_item),
                     langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));

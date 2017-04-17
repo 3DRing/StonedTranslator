@@ -20,4 +20,7 @@ public interface TranslationView extends BaseView {
     void showLanguagePair(UILangPair langPair);
 
     void hideKeyboard();
+
+    // todo create a new parent class StonedView and move this method there
+    void setStonedMode(boolean enable);
 }
