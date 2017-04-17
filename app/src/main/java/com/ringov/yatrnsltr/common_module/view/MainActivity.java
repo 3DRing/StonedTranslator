@@ -2,7 +2,6 @@ package com.ringov.yatrnsltr.common_module.view;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -28,15 +27,14 @@ public class MainActivity extends AppCompatActivity implements CommonView {
 
     @BindView(R.id.iv_bear)
     ImageView mIvBear;
-    @BindView(R.id.fab_stoned_mode)
-    FloatingActionButton mFabStonedMode;
     CommonPresenter mPresenter;
 
     private boolean stonedModeEnabled;
 
+    @Deprecated // button will be used for other reasons
     @OnClick(R.id.fab_stoned_mode)
-    void onStonedModeChangeClick() {
-        mPresenter.onStonedModeChangedClicked();
+    void onFloatingButtonClick() {
+
     }
 
     protected CommonPresenter providePresenter() {
@@ -117,8 +115,6 @@ public class MainActivity extends AppCompatActivity implements CommonView {
     @Override
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
-        mFabStonedMode.setImageResource(enable ? R.mipmap.mipmap_stoned_bear_white_true
-                : R.mipmap.mipmap_stoned_bear_white_false);
         mIvBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
 
         invalidateOptionsMenu(); // redraw options menu in top-right corner
