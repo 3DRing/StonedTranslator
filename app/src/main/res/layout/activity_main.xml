@@ -11,6 +11,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:clickable="true"
+        android:visibility="gone"
         app:fabSize="normal"
         app:srcCompat="@mipmap/mipmap_stoned_bear_white_true" />
 

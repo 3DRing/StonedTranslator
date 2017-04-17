@@ -6,6 +6,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements CommonView {
     FloatingActionButton mFabStonedMode;
     CommonPresenter mPresenter;
 
+    private boolean stonedModeEnabled;
+
     @OnClick(R.id.fab_stoned_mode)
     void onStonedModeChangeClick() {
         mPresenter.onStonedModeChangedClicked();
@@ -46,6 +51,26 @@ public class MainActivity extends AppCompatActivity implements CommonView {
 
         initializeFragments();
         mPresenter = providePresenter();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        if (stonedModeEnabled) {
+            inflater.inflate(R.menu.stoned_menu_true, menu);
+        } else {
+            inflater.inflate(R.menu.stoned_menu_false, menu);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_stoned_mode) {
+            mPresenter.onStonedModeChangedClicked();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initializeFragments() {
@@ -91,8 +116,11 @@ public class MainActivity extends AppCompatActivity implements CommonView {
 
     @Override
     public void setStonedMode(boolean enable) {
+        stonedModeEnabled = enable;
         mFabStonedMode.setImageResource(enable ? R.mipmap.mipmap_stoned_bear_white_true
                 : R.mipmap.mipmap_stoned_bear_white_false);
         mIvBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
+
+        invalidateOptionsMenu(); // redraw options menu in top-right corner
     }
 }
