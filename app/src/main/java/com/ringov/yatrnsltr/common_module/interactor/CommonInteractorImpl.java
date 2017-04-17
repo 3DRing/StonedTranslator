@@ -2,6 +2,9 @@ package com.ringov.yatrnsltr.common_module.interactor;
 
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
 import com.ringov.yatrnsltr.data.common_repo.CommonRepositoryProvider;
+import com.ringov.yatrnsltr.data.lang.Language;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -25,5 +28,18 @@ public class CommonInteractorImpl extends BaseInteractorImpl implements CommonIn
         return CommonRepositoryProvider.getCommonRepository()
                 .loadStonedMode()
                 .doOnNext(stonedMode -> this.stonedMode = stonedMode);
+    }
+
+    @Override
+    public Observable<List<String>> loadAllLanguages() {
+        return CommonRepositoryProvider.getCommonRepository()
+                .loadAllLanguages()
+                .flatMap(Observable::from)
+                .map(this::convertToUILanguage)
+                .toList();
+    }
+
+    private String convertToUILanguage(Language languages) {
+        return languages.getFullOriginalName();
     }
 }

@@ -2,6 +2,8 @@ package com.ringov.yatrnsltr.common_module.interactor;
 
 import com.ringov.yatrnsltr.base.interfaces.BaseInteractor;
 
+import java.util.List;
+
 import rx.Observable;
 
 /**
@@ -12,4 +14,6 @@ public interface CommonInteractor extends BaseInteractor {
     Observable<Boolean> changeStonedMode();
 
     Observable<Boolean> loadStonedMode();
+
+    Observable<List<String>> loadAllLanguages();
 }

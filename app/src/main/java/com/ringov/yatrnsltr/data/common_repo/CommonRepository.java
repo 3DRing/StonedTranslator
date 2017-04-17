@@ -1,5 +1,9 @@
 package com.ringov.yatrnsltr.data.common_repo;
 
+import com.ringov.yatrnsltr.data.lang.Language;
+
+import java.util.List;
+
 import rx.Observable;
 
 /**
@@ -12,4 +16,6 @@ public interface CommonRepository {
     Observable<Boolean> loadStonedMode();
 
     Observable<Boolean> subscribeToModeChanging();
+
+    Observable<List<Language>> loadAllLanguages();
 }

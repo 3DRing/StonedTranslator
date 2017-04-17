@@ -18,6 +18,8 @@ import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
 import com.ringov.yatrnsltr.storage_module.view.StorageFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -93,5 +95,11 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         mStonedBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
 
         invalidateOptionsMenu(); // redraw options menu in top-right corner
+    }
+
+    @Override
+    public void showAllLanguages(List<String> languages) {
+        // nothing
+        // todo optimize in order not having these empty methods!
     }
 }

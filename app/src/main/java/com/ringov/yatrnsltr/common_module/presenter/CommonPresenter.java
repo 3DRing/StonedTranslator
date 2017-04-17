@@ -37,6 +37,17 @@ public class CommonPresenter extends BasePresenter<CommonView, CommonRouter, Com
                 .subscribe(getView()::setStonedMode, this::handleError));
     }
 
+    public void loadAllLanguages() {
+        mSubscription.add(getInteractor().loadAllLanguages()
+                .compose(Utils.setRxSchedulers())
+                .doOnSubscribe(getView()::showLoading)
+                .doOnTerminate(getView()::hideLoading)
+                .doOnError(throwable -> {
+                    getView().hideLoading();
+                })
+                .subscribe(getView()::showAllLanguages, this::handleError));
+    }
+
     @Override
     public void onViewResumed() {
 
