@@ -1,10 +1,12 @@
 package com.ringov.yatrnsltr.storage_module.interactor;
 
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
+import com.ringov.yatrnsltr.data.stoned_service.StonedConvertingService;
 import com.ringov.yatrnsltr.data.storage_repo.StorageRepositoryProvider;
 import com.ringov.yatrnsltr.data.translation_repo.TranslationRepositoryProvider;
 import com.ringov.yatrnsltr.exceptions.base.InternalException;
 import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
+import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
                 .loadHistory()
                 .doOnNext(crtHistoryRecords::addAll)
                 .flatMap(Observable::from)
-                .map(this::convertToUITranslation)
+                .map(this::applyStonedMode)
                 .toList();
     }
 
@@ -52,7 +54,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
                 .subscribeToTranslation()
                 .map(StorageRepositoryProvider.getStorageRepository()::addHistoryItem)
                 .doOnNext(crtHistoryRecords::add)
-                .map(this::convertToUITranslation);
+                .map(this::applyStonedMode);
     }
 
     @Override
@@ -74,13 +76,22 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         return StorageRepositoryProvider.getStorageRepository()
                 .undoLastDeletion(lastRemovedItem)
                 .doOnNext(translation -> crtHistoryRecords.add(position, translation))
-                .map(this::convertToUITranslation);
+                .map(this::applyStonedMode);
     }
 
-    private UITranslation convertToUITranslation(StoredTranslationData storedTranslationData) {
+    private UITranslation convertToUITranslation(StoredTranslationData storedTranslationData, TranslationData stonedTranslation) {
         UITranslation uiTranslation = new UITranslation(storedTranslationData, storedTranslationData.getLangPair());
+        uiTranslation.setChangedData(stonedTranslation.getOriginal(), stonedTranslation.getTranslations());
         uiTranslation.setFavorite(storedTranslationData.isFavorite());
         uiTranslation.setChanged(storedTranslationData.isChanged());
         return uiTranslation;
+    }
+
+    private UITranslation applyStonedMode(StoredTranslationData translation) {
+        TranslationData tmp = new TranslationData(translation.getOriginal(),
+                translation.getTranslations(),
+                translation.getLangPair());
+        TranslationData stoned = StonedConvertingService.convert(tmp);
+        return this.convertToUITranslation(translation, stoned);
     }
 }

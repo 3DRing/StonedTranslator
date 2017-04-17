@@ -63,4 +63,5 @@ public abstract class BasePresenter<VIEW extends BaseView, ROUTER extends BaseRo
     public void handleError(Throwable throwable) {
         mExceptionHandler.handleError(throwable);
     }
+
 }

@@ -1,6 +1,6 @@
-package com.ringov.yatrnsltr.data.trnsltr_service.translators;
+package com.ringov.yatrnsltr.data.stoned_service.translators;
 
-import com.ringov.yatrnsltr.data.trnsltr_service.StonedConverter;
+import com.ringov.yatrnsltr.data.stoned_service.StonedConverter;
 import com.ringov.yatrnsltr.exceptions.StonedServiceException;
 
 /**

@@ -16,7 +16,7 @@ import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
 import com.ringov.yatrnsltr.custom_views.FavoriteButton;
-import com.ringov.yatrnsltr.custom_views.TrnsltrModeButton;
+import com.ringov.yatrnsltr.custom_views.StonedModeButton;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.presenter.TranslationPresenter;
 import com.ringov.yatrnsltr.translation_module.router.TranslationRouterImpl;
@@ -55,7 +55,12 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.fb_favorite)
     FavoriteButton mFb;
     @BindView(R.id.tmb_changed)
-    TrnsltrModeButton mTmbMode;
+    StonedModeButton mTmbMode;
+
+    @BindView(R.id.tv_translate)
+    TextView mBtnTranslate;
+    @BindView(R.id.tv_yandex_badge)
+    TextView mYandexBedge;
 
     @BindView(R.id.pb_loading)
     ProgressBar mPbLoading;
@@ -199,6 +204,14 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     public void hideLoading() {
         super.hideLoading();
         mPbLoading.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setStonedMode(boolean enable) {
+        // different captions on the button depending on mode
+        mBtnTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
+        mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
+        mYandexBedge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
     }
 
     private static class ViewState extends BaseViewState {

@@ -35,8 +35,6 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        // if presenter already exists do not provide a new one (in case of screen rotation)
-        mPresenter = providePresenter();
     }
 
     @Nullable
@@ -53,6 +51,7 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
         initializeViewsBeforeRestoreState();
         setRetainInstance(true);
         restoreState(savedInstanceState);
+        mPresenter = providePresenter();
     }
 
     /**
@@ -76,13 +75,13 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     @Override
     public void onDetach() {
         super.onDetach();
-        mPresenter.onDestroy();
-        mPresenter = null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mPresenter.onDestroy();
+        mPresenter = null;
         unbinder.unbind();
     }
 

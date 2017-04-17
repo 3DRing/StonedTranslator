@@ -15,9 +15,14 @@ public class UITranslation {
 
     public static UITranslation EMPTY = new UITranslation();
 
-    private List<String> translations;
     private String originalText;
+    private String changedOriginal;
+
+    private List<String> translations;
+    private List<String> changedTranslations;
+
     private UILangPair langPair;
+
     private boolean favorite;
     private boolean changed;
 
@@ -42,6 +47,11 @@ public class UITranslation {
         this.langPair = UILangPair.EMPTY;
     }
 
+    public void setChangedData(String changedOriginal, List<String> changedTranslations) {
+        this.changedOriginal = changedOriginal;
+        this.changedTranslations = changedTranslations;
+    }
+
     public List<String> getTranslations() {
         return translations;
     }
@@ -58,15 +68,23 @@ public class UITranslation {
         return favorite;
     }
 
-    public boolean isChanged() {
-        return changed;
-    }
-
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
     }
 
+    public boolean isChanged() {
+        return changed;
+    }
+
     public void setChanged(boolean changed) {
         this.changed = changed;
+    }
+
+    public String getChangedOriginal() {
+        return changedOriginal;
+    }
+
+    public List<String> getChangedTranslations() {
+        return changedTranslations;
     }
 }
