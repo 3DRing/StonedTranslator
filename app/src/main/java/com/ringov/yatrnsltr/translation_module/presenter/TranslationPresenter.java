@@ -47,6 +47,7 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .doOnTerminate(getView()::hideLoading)
                 .doOnTerminate(getView()::hideKeyboard)
                 .doOnTerminate(() -> loading = false)
+                .doOnError(throwable -> getView().hideLoading())
                 .subscribe(getView()::showTranslation, this::handleError));
     }
 

@@ -25,6 +25,7 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
                 .compose(Utils.setRxSchedulers())
                 .doOnSubscribe(getView()::showLoading)
                 .doOnTerminate(getView()::hideLoading)
+                .doOnError(throwable -> getView().hideLoading())
                 .subscribe(getView()::showHistory, this::handleError));
     }
 
