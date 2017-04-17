@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+// todo create parent-base-class (?)
 public class MainActivity extends AppCompatActivity implements CommonView {
 
     @BindView(R.id.iv_bear)
