@@ -3,6 +3,7 @@ package com.ringov.yatrnsltr.common_module.view;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -68,7 +69,13 @@ public class ChooseLanguageActivity extends BaseActivity<CommonPresenter> implem
     }
 
     private void initializeRecyclerView() {
-        mRvLanguageList.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+
+        mRvLanguageList.setLayoutManager(llm);
+        DividerItemDecoration divider = new DividerItemDecoration(mRvLanguageList.getContext(),
+                llm.getOrientation());
+        mRvLanguageList.addItemDecoration(divider);
+
         mAdapter = new LanguagesAdapter(mPresenter::onLangPairChanged);
         mRvLanguageList.setAdapter(mAdapter);
     }

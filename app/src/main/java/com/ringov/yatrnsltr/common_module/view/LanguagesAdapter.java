@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.common_module.entities.UILanguage;
+import com.ringov.yatrnsltr.custom_views.ChooseLanguageButton;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.ArrayList;
@@ -76,14 +76,24 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
         @BindView(R.id.tv_language_name)
         TextView mTvLanguageName;
         @BindView(R.id.btn_from)
-        ToggleButton mBtnFrom;
+        ChooseLanguageButton mBtnFrom;
         @BindView(R.id.btn_to)
-        ToggleButton mBtnTo;
+        ChooseLanguageButton mBtnTo;
         private int position;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.left_click)
+        void onLeftClick() {
+            onFromClick();
+        }
+
+        @OnClick(R.id.right_click)
+        void onRightClick() {
+            onToClick();
         }
 
         @OnClick(R.id.btn_from)

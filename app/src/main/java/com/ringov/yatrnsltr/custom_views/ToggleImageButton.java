@@ -3,7 +3,6 @@ package com.ringov.yatrnsltr.custom_views;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
-import android.view.View;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.
@@ -11,7 +10,7 @@ import android.view.View;
 
 public abstract class ToggleImageButton extends android.support.v7.widget.AppCompatImageButton {
 
-    private boolean mChecked;
+    protected boolean mChecked;
     private OnToggleListener mListener;
 
     public ToggleImageButton(Context context) {
@@ -32,19 +31,6 @@ public abstract class ToggleImageButton extends android.support.v7.widget.AppCom
         initializeOnClickListener();
     }
 
-    public void setChecked(boolean checked) {
-        if (this.mChecked != checked) {
-            this.toggle();
-        }
-    }
-
-    protected void toggleAction(View v) {
-        toggle();
-        if (mListener != null) {
-            mListener.onToggled(v, mChecked);
-        }
-    }
-
     public void setOnToggleListener(OnToggleListener listener) {
         this.mListener = listener;
     }
@@ -52,6 +38,9 @@ public abstract class ToggleImageButton extends android.support.v7.widget.AppCom
     public void toggle() {
         this.mChecked = !mChecked;
         handleImageAndBackground();
+        if (mListener != null) {
+            mListener.onToggled(mChecked);
+        }
     }
 
     protected void handleImageAndBackground() {
@@ -59,9 +48,11 @@ public abstract class ToggleImageButton extends android.support.v7.widget.AppCom
         this.setBackgroundResource(0);
     }
 
+    // todo learn how to set attributes via xml and not create new child for different drawables
     @DrawableRes
     protected abstract int getOnImageRes();
 
+    // todo learn how to set attributes via xml and not create new child for different drawables
     @DrawableRes
     protected abstract int getOffImageRes();
 
@@ -69,12 +60,18 @@ public abstract class ToggleImageButton extends android.support.v7.widget.AppCom
         return mChecked;
     }
 
+    public void setChecked(boolean checked) {
+        if (this.mChecked != checked) {
+            this.toggle();
+        }
+    }
+
     private void initializeOnClickListener() {
-        this.setOnClickListener(v -> toggleAction(v));
+        this.setOnClickListener(v -> toggle());
     }
 
     public interface OnToggleListener {
-        void onToggled(View v, boolean newState);
+        void onToggled(boolean newState);
     }
 }
 
