@@ -66,4 +66,8 @@ public class CommonPresenter extends BasePresenter<CommonView, CommonRouter, Com
                 .compose(Utils.setRxSchedulers())
                 .subscribe(getView()::showLanguagePair, this::handleError));
     }
+
+    public void onLanguagesClicked() {
+        getRouter().openChooseLanguageScreen();
+    }
 }

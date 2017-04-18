@@ -69,8 +69,13 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_stoned_mode) {
-            mPresenter.onStonedModeChangedClicked();
+        switch (item.getItemId()) {
+            case R.id.menu_stoned_mode:
+                mPresenter.onStonedModeChangedClicked();
+                break;
+            case R.id.menu_languages:
+                mPresenter.onLanguagesClicked();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
