@@ -45,7 +45,7 @@ public class ChooseLanguageActivity extends BaseActivity<CommonPresenter> implem
 
     @Override
     public void showLanguagePair(UILangPair langPair) {
-
+        mAdapter.setLanguagePair(langPair);
     }
 
     @Override

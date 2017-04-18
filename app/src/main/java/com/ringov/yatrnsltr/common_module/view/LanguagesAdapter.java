@@ -9,6 +9,7 @@ import android.widget.ToggleButton;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.common_module.entities.UILanguage;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,10 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
     public void setLanguages(List<UILanguage> languages) {
         this.items = languages;
         notifyDataSetChanged();
+    }
+
+    public void setLanguagePair(UILangPair languagePair) {
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

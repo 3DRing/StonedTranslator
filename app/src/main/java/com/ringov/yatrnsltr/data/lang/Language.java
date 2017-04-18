@@ -1,10 +1,11 @@
 package com.ringov.yatrnsltr.data.lang;
 
+import com.ringov.yatrnsltr.common_module.entities.UILanguage;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 
 /**
  * Created by Sergey Koltsov on 14.04.2017.
@@ -56,6 +57,10 @@ public class Language implements RealmModel {
 
     public SupportedLanguage getSupported() {
         return SupportedLanguage.fromString(shortName);
+    }
+
+    public UILanguage toUILanguage() {
+        return new UILanguage(this);
     }
 
     public enum SupportedLanguage {
