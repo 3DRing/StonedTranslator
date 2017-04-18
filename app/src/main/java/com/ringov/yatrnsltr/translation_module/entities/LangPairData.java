@@ -18,6 +18,11 @@ public class LangPairData implements RealmModel {
         this.targetLang = targetLang;
     }
 
+    public LangPairData(UILangPair langPair) {
+        this.sourceLang = new Language(langPair.getSourceLang().getShortName());
+        this.targetLang = new Language(langPair.getTargetLang().getShortName());
+    }
+
     public Language getSourceLang() {
         return sourceLang;
     }

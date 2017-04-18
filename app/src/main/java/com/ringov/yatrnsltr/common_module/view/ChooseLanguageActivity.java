@@ -69,7 +69,7 @@ public class ChooseLanguageActivity extends BaseActivity<CommonPresenter> implem
 
     private void initializeRecyclerView() {
         mRvLanguageList.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new LanguagesAdapter();
+        mAdapter = new LanguagesAdapter(mPresenter::onLangPairChanged);
         mRvLanguageList.setAdapter(mAdapter);
     }
 

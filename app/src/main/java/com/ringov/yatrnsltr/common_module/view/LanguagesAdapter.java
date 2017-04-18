@@ -24,6 +24,7 @@ import butterknife.OnClick;
 
 public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.ViewHolder> {
 
+    private OnLangPairChangedListener mListener;
     private List<UILanguage> items;
 
     private ViewHolder crtFromHolder;
@@ -31,8 +32,9 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
 
     private UILangPair crtLangPair;
 
-    LanguagesAdapter() {
+    LanguagesAdapter(OnLangPairChangedListener listener) {
         items = new ArrayList<>();
+        this.mListener = listener;
     }
 
     @Override
@@ -60,6 +62,15 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
         this.crtLangPair = languagePair;
     }
 
+    public UILangPair getCrtLangPair() {
+        return crtLangPair;
+    }
+
+    interface OnLangPairChangedListener {
+        void onLangChanged(UILangPair langPair);
+    }
+
+    // todo refactor this mess
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_language_name)
@@ -68,6 +79,7 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
         ToggleButton mBtnFrom;
         @BindView(R.id.btn_to)
         ToggleButton mBtnTo;
+        private int position;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -83,6 +95,11 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
             crtFromHolder = this;
             mBtnFrom.setChecked(true);
             mBtnTo.setEnabled(false);
+
+            if (!items.get(position).equals(crtLangPair.getSourceLang())) {
+                crtLangPair.setSourceLang(items.get(position));
+                mListener.onLangChanged(crtLangPair);
+            }
         }
 
         @OnClick(R.id.btn_to)
@@ -94,16 +111,36 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
             crtToHolder = this;
             mBtnTo.setChecked(true);
             mBtnFrom.setEnabled(false);
+
+            if (!items.get(position).equals(crtLangPair.getTargetLang())) {
+                crtLangPair.setTargetLang(items.get(position));
+                mListener.onLangChanged(crtLangPair);
+            }
         }
 
-        public void bindView(int position) {
-            mTvLanguageName.setText(items.get(position).getFullName());
+        // todo rewrite logic in a more neat way
+        void bindView(int position) {
+            this.position = position;
 
-            if (crtLangPair.getSourceLang().equals(items.get(position))) {
+            UILanguage crtLang = items.get(position);
+
+            mTvLanguageName.setText(crtLang.getFullName());
+
+            if (crtLang.equals(crtLangPair.getSourceLang())) {
+                mBtnFrom.setChecked(true);
                 mBtnTo.setEnabled(false);
+                crtFromHolder = this;
+            } else {
+                mBtnFrom.setChecked(false);
+                mBtnTo.setEnabled(true);
             }
-            if (crtLangPair.getTargetLang().equals(items.get(position))) {
+            if (crtLang.equals(crtLangPair.getTargetLang())) {
                 mBtnFrom.setEnabled(false);
+                mBtnTo.setChecked(true);
+                crtToHolder = this;
+            } else {
+                mBtnFrom.setEnabled(true);
+                mBtnTo.setChecked(false);
             }
         }
     }

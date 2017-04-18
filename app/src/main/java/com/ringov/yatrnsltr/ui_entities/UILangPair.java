@@ -28,7 +28,15 @@ public class UILangPair {
         return sourceLang;
     }
 
+    public void setSourceLang(UILanguage sourceLang) {
+        this.sourceLang = sourceLang;
+    }
+
     public UILanguage getTargetLang() {
         return targetLang;
+    }
+
+    public void setTargetLang(UILanguage targetLang) {
+        this.targetLang = targetLang;
     }
 }

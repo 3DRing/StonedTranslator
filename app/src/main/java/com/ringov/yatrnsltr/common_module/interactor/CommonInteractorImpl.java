@@ -31,6 +31,13 @@ public class CommonInteractorImpl extends BaseInteractorImpl implements CommonIn
     }
 
     @Override
+    public Observable<UILangPair> changeLangPair(UILangPair langPair) {
+        return CommonRepositoryProvider.getCommonRepository()
+                .changeLangPair(new LangPairData(langPair))
+                .map(LangPairData::toUILangPair);
+    }
+
+    @Override
     public Observable<Boolean> changeStonedMode() {
         return CommonRepositoryProvider.getCommonRepository()
                 .changeStonedMode(!stonedMode)

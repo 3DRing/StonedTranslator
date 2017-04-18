@@ -23,4 +23,6 @@ public interface CommonInteractor extends BaseInteractor {
     Observable<UILangPair> loadLastLangPair();
 
     void saveLastLangPair();
+
+    Observable<UILangPair> changeLangPair(UILangPair langPair);
 }
