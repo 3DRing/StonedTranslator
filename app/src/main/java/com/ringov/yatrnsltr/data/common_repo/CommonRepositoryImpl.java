@@ -19,21 +19,28 @@ import rx.subjects.BehaviorSubject;
 
 public class CommonRepositoryImpl implements CommonRepository {
 
+    private LangPairData crtLangPair;
+
+    private BehaviorSubject<LangPairData> changingLanguageEvents;
     private BehaviorSubject<Boolean> changingModeEvents;
 
     CommonRepositoryImpl() {
         changingModeEvents = BehaviorSubject.create();
+        changingLanguageEvents = BehaviorSubject.create();
     }
 
 
     @Override
     public Observable<LangPairData> loadLastLangPair() {
-        return Observable.just(SharedPreferencesStorage.loadLastLangPair());
+        crtLangPair = SharedPreferencesStorage.loadLastLangPair();
+        changingLanguageEvents.onNext(crtLangPair);
+        return Observable.just(crtLangPair);
     }
 
     @Override
-    public void saveLastLangPair(LangPairData langPair) {
-        SharedPreferencesStorage.saveLastLangPair(langPair);
+    public void saveLastLangPair() {
+        changingLanguageEvents.onNext(crtLangPair);
+        SharedPreferencesStorage.saveLastLangPair(crtLangPair);
     }
 
     @Override
@@ -60,6 +67,17 @@ public class CommonRepositoryImpl implements CommonRepository {
                 .flatMap(response -> Observable.from(response.getAllLangs()))
                 .map(this::convertToLanguage)
                 .toList();
+    }
+
+    @Override
+    public Observable<LangPairData> subscribeToLangPairChanging() {
+        return changingLanguageEvents;
+    }
+
+    @Override
+    public Observable<LangPairData> changeLangPair(LangPairData langPair) {
+        crtLangPair = langPair;
+        return Observable.just(langPair);
     }
 
     private Language convertToLanguage(LanguageItem languageItem) {

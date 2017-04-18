@@ -1,6 +1,5 @@
 package com.ringov.yatrnsltr.base.implementations;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
@@ -66,6 +65,19 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     protected abstract void restoreState(Bundle bundle);
 
     protected abstract Bundle saveState(Bundle bundle);
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onViewResumed();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.onViewPaused();
+    }
+
 
     @Override
     public void onDestroy() {

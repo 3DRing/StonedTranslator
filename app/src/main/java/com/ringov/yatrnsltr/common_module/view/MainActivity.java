@@ -17,6 +17,7 @@ import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
 import com.ringov.yatrnsltr.storage_module.view.StorageFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.List;
 
@@ -99,6 +100,12 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
 
     @Override
     public void showAllLanguages(List<String> languages) {
+        // nothing
+        // todo optimize in order not having these empty methods!
+    }
+
+    @Override
+    public void showLanguagePair(UILangPair langPair) {
         // nothing
         // todo optimize in order not having these empty methods!
     }

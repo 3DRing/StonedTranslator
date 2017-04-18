@@ -115,18 +115,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.onViewResumed();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mPresenter.onViewPaused();
-    }
-
-    @Override
     protected void restoreState(Bundle bundle) {
         if (bundle != null) {
             ViewState state = bundle.getParcelable(ViewState.class.getCanonicalName());

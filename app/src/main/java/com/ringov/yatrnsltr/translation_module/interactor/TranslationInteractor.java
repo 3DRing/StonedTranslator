@@ -15,7 +15,5 @@ public interface TranslationInteractor extends BaseInteractor {
 
     Observable<UILangPair> swapLanguage();
 
-    Observable<UILangPair> loadLastLangPair();
-
-    void saveLastLangPair();
+    Observable<UILangPair> subscribeToLangPairChanging();
 }

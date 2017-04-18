@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.common_module.interactor;
 
 import com.ringov.yatrnsltr.base.interfaces.BaseInteractor;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.List;
 
@@ -17,4 +18,8 @@ public interface CommonInteractor extends BaseInteractor {
     Observable<Boolean> loadStonedMode();
 
     Observable<List<String>> loadAllLanguages();
+
+    Observable<UILangPair> loadLastLangPair();
+
+    void saveLastLangPair();
 }

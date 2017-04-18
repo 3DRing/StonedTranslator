@@ -12,6 +12,7 @@ import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
 import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.List;
 
@@ -39,6 +40,11 @@ public class ChooseLanguageActivity extends BaseActivity<CommonPresenter> implem
     @Override
     public void showAllLanguages(List<String> languages) {
         mAdapter.setLanguages(languages);
+    }
+
+    @Override
+    public void showLanguagePair(UILangPair langPair) {
+        // nothing so far
     }
 
     @Override

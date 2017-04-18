@@ -3,6 +3,8 @@ package com.ringov.yatrnsltr.common_module.interactor;
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
 import com.ringov.yatrnsltr.data.common_repo.CommonRepositoryProvider;
 import com.ringov.yatrnsltr.data.lang.Language;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.List;
 
@@ -15,6 +17,17 @@ import rx.Observable;
 public class CommonInteractorImpl extends BaseInteractorImpl implements CommonInteractor {
 
     private boolean stonedMode;
+
+    @Override
+    public Observable<UILangPair> loadLastLangPair() {
+        return CommonRepositoryProvider.getCommonRepository().loadLastLangPair()
+                .map(LangPairData::toUILangPair);
+    }
+
+    @Override
+    public void saveLastLangPair() {
+        CommonRepositoryProvider.getCommonRepository().saveLastLangPair();
+    }
 
     @Override
     public Observable<Boolean> changeStonedMode() {

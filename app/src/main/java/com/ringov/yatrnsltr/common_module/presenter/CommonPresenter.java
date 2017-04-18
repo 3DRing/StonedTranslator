@@ -18,6 +18,18 @@ public class CommonPresenter extends BasePresenter<CommonView, CommonRouter, Com
         loadStonedMode();
     }
 
+    @Override
+    public void onViewResumed() {
+        mSubscription.add(getInteractor().loadLastLangPair()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::showLanguagePair, this::handleError));
+    }
+
+    @Override
+    public void onViewPaused() {
+        getInteractor().saveLastLangPair();
+    }
+
     /**
      * each view can be switched from one mode to another
      */
@@ -46,15 +58,5 @@ public class CommonPresenter extends BasePresenter<CommonView, CommonRouter, Com
                     getView().hideLoading();
                 })
                 .subscribe(getView()::showAllLanguages, this::handleError));
-    }
-
-    @Override
-    public void onViewResumed() {
-
-    }
-
-    @Override
-    public void onViewPaused() {
-
     }
 }

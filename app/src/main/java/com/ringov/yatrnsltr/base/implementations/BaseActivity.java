@@ -1,7 +1,6 @@
 package com.ringov.yatrnsltr.base.implementations;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
@@ -30,6 +29,25 @@ public abstract class BaseActivity<PRESENTER extends BasePresenter> extends AppC
         setContentView(getLayout());
         ButterKnife.bind(this);
         mPresenter = providePresenter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onViewResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.onViewPaused();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
+        mPresenter = null;
     }
 
     @Override

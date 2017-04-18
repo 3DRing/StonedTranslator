@@ -14,13 +14,20 @@ import rx.Observable;
 public interface CommonRepository {
     Observable<LangPairData> loadLastLangPair();
 
-    void saveLastLangPair(LangPairData langPair);
+    void saveLastLangPair();
 
     Observable<Boolean> changeStonedMode(boolean stonedMode);
 
     Observable<Boolean> loadStonedMode();
 
+    Observable<List<Language>> loadAllLanguages();
+
+
+    // todo move to separate interface
     Observable<Boolean> subscribeToModeChanging();
 
-    Observable<List<Language>> loadAllLanguages();
+    // todo move to separate interface
+    Observable<LangPairData> subscribeToLangPairChanging();
+
+    Observable<LangPairData> changeLangPair(LangPairData langPair);
 }
