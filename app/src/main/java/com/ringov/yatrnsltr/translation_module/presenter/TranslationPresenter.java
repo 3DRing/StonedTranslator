@@ -2,7 +2,6 @@ package com.ringov.yatrnsltr.translation_module.presenter;
 
 import com.ringov.yatrnsltr.Utils;
 import com.ringov.yatrnsltr.base.BasePresenter;
-import com.ringov.yatrnsltr.data.common_repo.CommonRepositoryProvider;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractor;
 import com.ringov.yatrnsltr.translation_module.router.TranslationRouter;
 import com.ringov.yatrnsltr.translation_module.view.TranslationView;
@@ -20,18 +19,17 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
         super(view, router, interactor);
 
         subscribeToModeChangedCommon();
+        subscribeToLangChangingCommon();
     }
 
     @Override
     public void onViewResumed() {
-        mSubscription.add(getInteractor().loadLastLangPair()
-                .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::showLanguagePair, this::handleError));
+
     }
 
     @Override
     public void onViewPaused() {
-        getInteractor().saveLastLangPair();
+
     }
 
     public void translateClicked(String text) {
@@ -48,6 +46,7 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .doOnTerminate(getView()::hideLoading)
                 .doOnTerminate(getView()::hideKeyboard)
                 .doOnTerminate(() -> loading = false)
+                .doOnError(throwable -> getView().hideLoading())
                 .subscribe(getView()::showTranslation, this::handleError));
     }
 
@@ -75,8 +74,15 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
     }
 
     protected void subscribeToModeChangedCommon() {
-        mSubscription.add(CommonRepositoryProvider.getCommonRepository().subscribeToModeChanging()
+        mSubscription.add(getInteractor().subscribeToModeChanges()
                 .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::setStonedMode));
+                .subscribe(getView()::setStonedMode, this::handleError));
     }
+
+    void subscribeToLangChangingCommon() {
+        mSubscription.add(getInteractor().subscribeToLangPairChanging()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::showLanguagePair, this::handleError));
+    }
+
 }

@@ -5,6 +5,7 @@ import com.ringov.yatrnsltr.base.BasePresenter;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractor;
 import com.ringov.yatrnsltr.common_module.router.CommonRouter;
 import com.ringov.yatrnsltr.common_module.view.CommonView;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 /**
  * Created by Sergey Koltsov on 17.04.2017.
@@ -16,6 +17,18 @@ public class CommonPresenter extends BasePresenter<CommonView, CommonRouter, Com
         super(view, router, interactor);
 
         loadStonedMode();
+    }
+
+    @Override
+    public void onViewResumed() {
+        mSubscription.add(getInteractor().loadLastLangPair()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::showLanguagePair, this::handleError));
+    }
+
+    @Override
+    public void onViewPaused() {
+        getInteractor().saveLastLangPair();
     }
 
     /**
@@ -37,13 +50,24 @@ public class CommonPresenter extends BasePresenter<CommonView, CommonRouter, Com
                 .subscribe(getView()::setStonedMode, this::handleError));
     }
 
-    @Override
-    public void onViewResumed() {
-
+    public void loadAllLanguages() {
+        mSubscription.add(getInteractor().loadAllLanguages()
+                .compose(Utils.setRxSchedulers())
+                .doOnSubscribe(getView()::showLoading)
+                .doOnTerminate(getView()::hideLoading)
+                .doOnError(throwable -> {
+                    getView().hideLoading();
+                })
+                .subscribe(getView()::showAllLanguages, this::handleError));
     }
 
-    @Override
-    public void onViewPaused() {
+    public void onLangPairChanged(UILangPair langPair) {
+        mSubscription.add(getInteractor().changeLangPair(langPair)
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::showLanguagePair, this::handleError));
+    }
 
+    public void onLanguagesClicked() {
+        getRouter().openChooseLanguageScreen();
     }
 }

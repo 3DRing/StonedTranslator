@@ -1,7 +1,13 @@
 package com.ringov.yatrnsltr.common_module.interactor;
 
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
+import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.data.common_repo.CommonRepositoryProvider;
+import com.ringov.yatrnsltr.data.lang.Language;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -12,6 +18,24 @@ import rx.Observable;
 public class CommonInteractorImpl extends BaseInteractorImpl implements CommonInteractor {
 
     private boolean stonedMode;
+
+    @Override
+    public Observable<UILangPair> loadLastLangPair() {
+        return CommonRepositoryProvider.getCommonRepository().loadLastLangPair()
+                .map(LangPairData::toUILangPair);
+    }
+
+    @Override
+    public void saveLastLangPair() {
+        CommonRepositoryProvider.getCommonRepository().saveLastLangPair();
+    }
+
+    @Override
+    public Observable<UILangPair> changeLangPair(UILangPair langPair) {
+        return CommonRepositoryProvider.getCommonRepository()
+                .changeLangPair(new LangPairData(langPair))
+                .map(LangPairData::toUILangPair);
+    }
 
     @Override
     public Observable<Boolean> changeStonedMode() {
@@ -25,5 +49,18 @@ public class CommonInteractorImpl extends BaseInteractorImpl implements CommonIn
         return CommonRepositoryProvider.getCommonRepository()
                 .loadStonedMode()
                 .doOnNext(stonedMode -> this.stonedMode = stonedMode);
+    }
+
+    @Override
+    public Observable<List<UILanguage>> loadAllLanguages() {
+        return CommonRepositoryProvider.getCommonRepository()
+                .loadAllLanguages()
+                .flatMap(Observable::from)
+                .map(this::convertToUILanguage)
+                .toList();
+    }
+
+    private UILanguage convertToUILanguage(Language languages) {
+        return new UILanguage(languages);
     }
 }

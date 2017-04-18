@@ -13,9 +13,5 @@ import rx.subjects.PublishSubject;
 public interface TranslationRepository {
     Observable<TranslationData> translate(String text, LangPairData langPair);
 
-    Observable<LangPairData> loadLastLangPair();
-
-    void saveLastLangPair(LangPairData langPair);
-
     PublishSubject<TranslationData> subscribeToTranslation();
 }

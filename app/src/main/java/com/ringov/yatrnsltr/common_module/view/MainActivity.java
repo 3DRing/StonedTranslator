@@ -4,30 +4,32 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.ringov.yatrnsltr.R;
+import com.ringov.yatrnsltr.base.implementations.BaseActivity;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
+import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
 import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
 import com.ringov.yatrnsltr.storage_module.view.StorageFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
+
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-// todo create parent-base-class (?)
-public class MainActivity extends AppCompatActivity implements CommonView {
+public class MainActivity extends BaseActivity<CommonPresenter> implements CommonView {
 
     @BindView(R.id.ll_stoned_bear)
     View mStonedBear;
-    CommonPresenter mPresenter;
+
 
     private boolean stonedModeEnabled;
 
@@ -37,18 +39,20 @@ public class MainActivity extends AppCompatActivity implements CommonView {
 
     }
 
+    @Override
     protected CommonPresenter providePresenter() {
         return new CommonPresenter(this, new CommonRouterImpl(new ContextAdapter(this)), new CommonInteractorImpl());
     }
 
     @Override
+    protected int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-
         initializeFragments();
-        mPresenter = providePresenter();
     }
 
     @Override
@@ -65,8 +69,13 @@ public class MainActivity extends AppCompatActivity implements CommonView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_stoned_mode) {
-            mPresenter.onStonedModeChangedClicked();
+        switch (item.getItemId()) {
+            case R.id.menu_stoned_mode:
+                mPresenter.onStonedModeChangedClicked();
+                break;
+            case R.id.menu_languages:
+                mPresenter.onLanguagesClicked();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -88,35 +97,22 @@ public class MainActivity extends AppCompatActivity implements CommonView {
     }
 
     @Override
-    public void showLoading() {
-        // nothing, maybe in future
-    }
-
-    @Override
-    public void hideLoading() {
-        // nothing, maybe in future
-    }
-
-    @Override
-    public void showKnownException(String message) {
-        // nothing, maybe in future
-    }
-
-    @Override
-    public void showInternalException(String message) {
-        // nothing, maybe in future
-    }
-
-    @Override
-    public void showUnknownException(String message) {
-        // nothing, maybe in future
-    }
-
-    @Override
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
         mStonedBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
 
         invalidateOptionsMenu(); // redraw options menu in top-right corner
+    }
+
+    @Override
+    public void showAllLanguages(List<UILanguage> languages) {
+        // nothing
+        // todo optimize in order not having these empty methods!
+    }
+
+    @Override
+    public void showLanguagePair(UILangPair langPair) {
+        // nothing
+        // todo optimize in order not having these empty methods!
     }
 }

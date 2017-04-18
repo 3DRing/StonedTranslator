@@ -4,7 +4,6 @@ import com.ringov.yatrnsltr.data.lang.Language;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 
 /**
  * Created by Sergey Koltsov on 13.04.2017.
@@ -17,6 +16,11 @@ public class LangPairData implements RealmModel {
     public LangPairData(Language sourceLang, Language targetLang) {
         this.sourceLang = sourceLang;
         this.targetLang = targetLang;
+    }
+
+    public LangPairData(UILangPair langPair) {
+        this.sourceLang = new Language(langPair.getSourceLang().getShortName());
+        this.targetLang = new Language(langPair.getTargetLang().getShortName());
     }
 
     public Language getSourceLang() {
@@ -34,6 +38,6 @@ public class LangPairData implements RealmModel {
     }
 
     public UILangPair toUILangPair() {
-        return new UILangPair(sourceLang, targetLang);
+        return new UILangPair(sourceLang.toUILanguage(), targetLang.toUILanguage());
     }
 }
