@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseActivity;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
+import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
 import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
@@ -38,13 +39,13 @@ public class ChooseLanguageActivity extends BaseActivity<CommonPresenter> implem
     }
 
     @Override
-    public void showAllLanguages(List<String> languages) {
+    public void showAllLanguages(List<UILanguage> languages) {
         mAdapter.setLanguages(languages);
     }
 
     @Override
     public void showLanguagePair(UILangPair langPair) {
-        // nothing so far
+
     }
 
     @Override

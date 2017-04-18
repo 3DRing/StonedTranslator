@@ -12,6 +12,7 @@ import android.view.View;
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseActivity;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
+import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
 import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
@@ -99,7 +100,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     }
 
     @Override
-    public void showAllLanguages(List<String> languages) {
+    public void showAllLanguages(List<UILanguage> languages) {
         // nothing
         // todo optimize in order not having these empty methods!
     }

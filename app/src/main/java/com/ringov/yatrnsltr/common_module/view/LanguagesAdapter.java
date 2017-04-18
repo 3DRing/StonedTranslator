@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.ringov.yatrnsltr.R;
+import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import butterknife.OnClick;
 
 public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.ViewHolder> {
 
-    private List<String> items;
+    private List<UILanguage> items;
 
     private ViewHolder crtFromHolder;
     private ViewHolder crtToHolder;
@@ -47,7 +48,7 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
         return items.size();
     }
 
-    public void setLanguages(List<String> languages) {
+    public void setLanguages(List<UILanguage> languages) {
         this.items = languages;
         notifyDataSetChanged();
     }
@@ -89,7 +90,7 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
         }
 
         public void bindView(int position) {
-            mTvLanguageName.setText(items.get(position));
+            mTvLanguageName.setText(items.get(position).getFullName());
 
             if (this == crtFromHolder) {
                 mBtnTo.setEnabled(false);

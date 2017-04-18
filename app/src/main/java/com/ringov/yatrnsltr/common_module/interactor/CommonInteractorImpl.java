@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.common_module.interactor;
 
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
+import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.data.common_repo.CommonRepositoryProvider;
 import com.ringov.yatrnsltr.data.lang.Language;
 import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
@@ -44,7 +45,7 @@ public class CommonInteractorImpl extends BaseInteractorImpl implements CommonIn
     }
 
     @Override
-    public Observable<List<String>> loadAllLanguages() {
+    public Observable<List<UILanguage>> loadAllLanguages() {
         return CommonRepositoryProvider.getCommonRepository()
                 .loadAllLanguages()
                 .flatMap(Observable::from)
@@ -52,7 +53,7 @@ public class CommonInteractorImpl extends BaseInteractorImpl implements CommonIn
                 .toList();
     }
 
-    private String convertToUILanguage(Language languages) {
-        return languages.getFullOriginalName();
+    private UILanguage convertToUILanguage(Language languages) {
+        return new UILanguage(languages);
     }
 }
