@@ -6,6 +6,7 @@ import com.ringov.yatrnsltr.api.TranslationRetrofitService;
 import com.ringov.yatrnsltr.api.raw_entity.LanguageItem;
 import com.ringov.yatrnsltr.data.SharedPreferencesStorage;
 import com.ringov.yatrnsltr.data.lang.Language;
+import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 
 import java.util.List;
 
@@ -22,6 +23,17 @@ public class CommonRepositoryImpl implements CommonRepository {
 
     CommonRepositoryImpl() {
         changingModeEvents = BehaviorSubject.create();
+    }
+
+
+    @Override
+    public Observable<LangPairData> loadLastLangPair() {
+        return Observable.just(SharedPreferencesStorage.loadLastLangPair());
+    }
+
+    @Override
+    public void saveLastLangPair(LangPairData langPair) {
+        SharedPreferencesStorage.saveLastLangPair(langPair);
     }
 
     @Override

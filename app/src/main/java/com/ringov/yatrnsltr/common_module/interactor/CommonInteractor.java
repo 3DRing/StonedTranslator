@@ -11,6 +11,7 @@ import rx.Observable;
  */
 
 public interface CommonInteractor extends BaseInteractor {
+
     Observable<Boolean> changeStonedMode();
 
     Observable<Boolean> loadStonedMode();

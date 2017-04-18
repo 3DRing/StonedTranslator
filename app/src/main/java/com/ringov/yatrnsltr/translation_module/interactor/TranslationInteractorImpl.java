@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.translation_module.interactor;
 
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
+import com.ringov.yatrnsltr.data.common_repo.CommonRepositoryProvider;
 import com.ringov.yatrnsltr.data.stoned_service.StonedConvertingService;
 import com.ringov.yatrnsltr.data.translation_repo.TranslationRepositoryProvider;
 import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
@@ -33,7 +34,7 @@ public class TranslationInteractorImpl extends BaseInteractorImpl implements Tra
 
     @Override
     public Observable<UILangPair> loadLastLangPair() {
-        return TranslationRepositoryProvider.getTranslationRepository().loadLastLangPair()
+        return CommonRepositoryProvider.getCommonRepository().loadLastLangPair()
                 .map(langPairData -> {
                     crtLangPair = langPairData;
                     return crtLangPair.toUILangPair();
@@ -42,7 +43,7 @@ public class TranslationInteractorImpl extends BaseInteractorImpl implements Tra
 
     @Override
     public void saveLastLangPair() {
-        TranslationRepositoryProvider.getTranslationRepository().saveLastLangPair(crtLangPair);
+        CommonRepositoryProvider.getCommonRepository().saveLastLangPair(crtLangPair);
     }
 
     private UITranslation convertTranslation(TranslationData translationData) {
