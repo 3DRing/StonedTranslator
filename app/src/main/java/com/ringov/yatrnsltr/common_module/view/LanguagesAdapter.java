@@ -29,6 +29,8 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
     private ViewHolder crtFromHolder;
     private ViewHolder crtToHolder;
 
+    private UILangPair crtLangPair;
+
     LanguagesAdapter() {
         items = new ArrayList<>();
     }
@@ -55,7 +57,7 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
     }
 
     public void setLanguagePair(UILangPair languagePair) {
-
+        this.crtLangPair = languagePair;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -97,10 +99,10 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
         public void bindView(int position) {
             mTvLanguageName.setText(items.get(position).getFullName());
 
-            if (this == crtFromHolder) {
+            if (crtLangPair.getSourceLang().equals(items.get(position))) {
                 mBtnTo.setEnabled(false);
             }
-            if (this == crtToHolder) {
+            if (crtLangPair.getTargetLang().equals(items.get(position))) {
                 mBtnFrom.setEnabled(false);
             }
         }

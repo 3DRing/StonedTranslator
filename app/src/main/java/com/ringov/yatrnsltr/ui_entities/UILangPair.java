@@ -24,11 +24,11 @@ public class UILangPair {
         this.targetLang = UILanguage.EMPTY;
     }
 
-    public String getSourceLangShortName() {
-        return sourceLang.getShortName();
+    public UILanguage getSourceLang() {
+        return sourceLang;
     }
 
-    public String getTargetLangShortName() {
-        return targetLang.getShortName();
+    public UILanguage getTargetLang() {
+        return targetLang;
     }
 }

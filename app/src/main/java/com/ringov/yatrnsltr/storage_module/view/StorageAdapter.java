@@ -111,7 +111,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
 
             UILangPair langPair = crtTranslation.getLangPair();
             mTvLangPair.setText(String.format(itemView.getContext().getString(R.string.lang_pair_item),
-                    langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
+                    langPair.getSourceLang().getShortName(), langPair.getTargetLang().getShortName()));
             mFb.setChecked(crtTranslation.isFavorite());
             mTmbMode.setChecked(crtTranslation.isChanged());
 
