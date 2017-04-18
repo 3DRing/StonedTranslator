@@ -108,18 +108,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.onViewResumed();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mPresenter.onViewPaused();
-    }
-
-    @Override
     protected void restoreState(Bundle bundle) {
         if (bundle != null) {
             ViewState state = bundle.getParcelable(ViewState.class.getCanonicalName());
@@ -157,7 +145,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
                 : translation.getTranslations().get(0));
         UILangPair langPair = translation.getLangPair();
         mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
-                langPair.getSourceLangShortName(), langPair.getTargetLangShortName()));
+                langPair.getSourceLang().getShortName(), langPair.getTargetLang().getShortName()));
         mFb.setChecked(translation.isFavorite());
         mTmbMode.setChecked(translation.isChanged());
     }
@@ -185,8 +173,8 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     @Override
     public void showLanguagePair(UILangPair langPair) {
-        mTvSourceLang.setText(langPair.getSourceLangShortName());
-        mTvTargetLang.setText(langPair.getTargetLangShortName());
+        mTvSourceLang.setText(langPair.getSourceLang().getShortName());
+        mTvTargetLang.setText(langPair.getTargetLang().getShortName());
     }
 
     @Override

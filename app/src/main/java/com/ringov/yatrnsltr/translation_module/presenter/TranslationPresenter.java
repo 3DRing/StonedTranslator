@@ -19,18 +19,17 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
         super(view, router, interactor);
 
         subscribeToModeChangedCommon();
+        subscribeToLangChangingCommon();
     }
 
     @Override
     public void onViewResumed() {
-        mSubscription.add(getInteractor().loadLastLangPair()
-                .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::showLanguagePair, this::handleError));
+
     }
 
     @Override
     public void onViewPaused() {
-        getInteractor().saveLastLangPair();
+
     }
 
     public void translateClicked(String text) {
@@ -77,6 +76,13 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
     protected void subscribeToModeChangedCommon() {
         mSubscription.add(getInteractor().subscribeToModeChanges()
                 .compose(Utils.setRxSchedulers())
-                .subscribe(getView()::setStonedMode));
+                .subscribe(getView()::setStonedMode, this::handleError));
     }
+
+    void subscribeToLangChangingCommon() {
+        mSubscription.add(getInteractor().subscribeToLangPairChanging()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::showLanguagePair, this::handleError));
+    }
+
 }

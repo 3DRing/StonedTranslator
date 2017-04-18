@@ -1,6 +1,10 @@
 package com.ringov.yatrnsltr.common_module.view;
 
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
+import com.ringov.yatrnsltr.common_module.entities.UILanguage;
+import com.ringov.yatrnsltr.ui_entities.UILangPair;
+
+import java.util.List;
 
 /**
  * Created by Sergey Koltsov on 17.04.2017.
@@ -15,4 +19,8 @@ public interface CommonView extends BaseView {
      * @param enable
      */
     void setStonedMode(boolean enable);
+
+    void showAllLanguages(List<UILanguage> languages);
+
+    void showLanguagePair(UILangPair langPair);
 }
