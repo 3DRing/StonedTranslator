@@ -49,10 +49,10 @@ public class StorageRepositoryImpl implements StorageRepository {
     }
 
     @Override
-    public Completable deleteItem(StoredTranslationData data) {
+    public Completable deleteItem(long timeStamp) {
         Realm.getDefaultInstance().executeTransaction(realm -> {
             realm.where(StoredTranslationData.class)
-                    .equalTo(PRIMARY_LEY, data.getTimestamp())
+                    .equalTo(PRIMARY_LEY, timeStamp)
                     .findAll().deleteAllFromRealm();
         });
         return Completable.complete();

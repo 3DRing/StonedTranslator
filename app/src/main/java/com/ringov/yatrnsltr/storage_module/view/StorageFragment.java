@@ -72,18 +72,19 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         mRvStorage.setAdapter(mAdapter);
 
         // swipe for deleting works with both sides
-        DoubleSideSwipeItemTouchHelper swipeHelper = new DoubleSideSwipeItemTouchHelper(itemPosition -> {
-            mPresenter.onItemsSwiped(itemPosition);
-            mAdapter.remove(itemPosition);
+        DoubleSideSwipeItemTouchHelper swipeHelper =
+                new DoubleSideSwipeItemTouchHelper(mAdapter, (translation, position) -> {
+                    mPresenter.onItemsSwiped(translation, position);
+                    mAdapter.remove(position);
 
-            // what strings will be pick depends on mode
-            Snackbar.make(mStorageContainer,
-                    stonedModeEnabled ? R.string.deleted_from_history_stoned : R.string.deleted_from_history,
-                    Snackbar.LENGTH_LONG)
-                    .setAction(stonedModeEnabled ? R.string.restore_item_stoned : R.string.restore_item,
-                            v -> mPresenter.onUndoDeletion(itemPosition))
-                    .show();
-        });
+                    // what strings will be pick depends on mode
+                    Snackbar.make(mStorageContainer,
+                            stonedModeEnabled ? R.string.deleted_from_history_stoned : R.string.deleted_from_history,
+                            Snackbar.LENGTH_LONG)
+                            .setAction(stonedModeEnabled ? R.string.restore_item_stoned : R.string.restore_item,
+                                    v -> mPresenter.onUndoDeletion())
+                            .show();
+                });
         swipeHelper.attachToRecyclerView(mRvStorage);
     }
 
@@ -150,8 +151,10 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
         ItemTouchHelper itmLeft;
         ItemTouchHelper itmRight;
+        private StorageAdapter mAdapter;
 
-        DoubleSideSwipeItemTouchHelper(DoubleSideSwipeItemTouchHelper.Callback callback) {
+        DoubleSideSwipeItemTouchHelper(StorageAdapter adapter, DoubleSideSwipeItemTouchHelper.Callback callback) {
+            this.mAdapter = adapter;
             itmLeft = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                 @Override
                 public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
@@ -161,7 +164,8 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
                 @Override
                 public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                    callback.onSwiped(viewHolder.getAdapterPosition());
+                    UITranslation crtTranslation = mAdapter.getTranslation(viewHolder.getAdapterPosition());
+                    callback.onSwiped(crtTranslation, viewHolder.getAdapterPosition());
                 }
             });
             itmRight = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -173,7 +177,8 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
                 @Override
                 public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                    callback.onSwiped(viewHolder.getAdapterPosition());
+                    UITranslation crtTranslation = mAdapter.getTranslation(viewHolder.getAdapterPosition());
+                    callback.onSwiped(crtTranslation, viewHolder.getAdapterPosition());
                 }
             });
         }
@@ -184,7 +189,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
         }
 
         public interface Callback {
-            void onSwiped(int itemPosition);
+            void onSwiped(UITranslation translation, int position);
         }
     }
 }

@@ -19,7 +19,7 @@ public interface StorageInteractor extends BaseInteractor {
 
     Observable<UITranslation>  itemInserted();
 
-    Completable deleteItem(int position);
+    Completable deleteItem(long timeStamp);
 
-    Observable<UITranslation> undoLastDeletion(int position);
+    Observable<UITranslation> undoLastDeletion();
 }

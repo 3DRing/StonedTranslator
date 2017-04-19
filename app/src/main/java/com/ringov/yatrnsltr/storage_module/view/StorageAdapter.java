@@ -77,6 +77,10 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
         }
     }
 
+    public UITranslation getTranslation(int position) {
+        return items.get(position);
+    }
+
     public interface OnItemClickListener {
         void onItemClick(UITranslation translation);
     }

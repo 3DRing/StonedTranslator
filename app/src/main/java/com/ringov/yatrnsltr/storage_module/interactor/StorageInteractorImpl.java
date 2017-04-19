@@ -9,8 +9,9 @@ import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
 import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rx.Completable;
 import rx.Observable;
@@ -24,9 +25,9 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
     private static final int DEFAULT_NUMBER_OF_LOADINGS = 20;
     // this list is used for storing current state of history field
     // and manage interactions with this list (deletion, changing options etc)
-    List<StoredTranslationData> crtHistoryRecords;
+    Map<Long, StoredTranslationData> crtHistoryRecords;
     StoredTranslationData lastRemovedItem;
-    int lastRemovedPosition;
+    long lastRemovedTimeStamp;
     private int crtFrom;
     private int crtTo;
 
@@ -35,15 +36,15 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         crtFrom = 0;
         crtTo = DEFAULT_NUMBER_OF_LOADINGS;
 
-        crtHistoryRecords = new ArrayList<>();
+        crtHistoryRecords = new HashMap<>();
     }
 
     @Override
     public Observable<List<UITranslation>> loadHistory() {
         return StorageRepositoryProvider.getStorageRepository()
                 .loadHistory()
-                .doOnNext(crtHistoryRecords::addAll)
                 .flatMap(Observable::from)
+                .doOnNext(translation -> crtHistoryRecords.put(translation.getTimestamp(), translation))
                 .map(this::applyStonedMode)
                 .toList();
     }
@@ -58,21 +59,21 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         return TranslationRepositoryProvider.getTranslationRepository()
                 .subscribeToTranslation()
                 .map(StorageRepositoryProvider.getStorageRepository()::addHistoryItem)
-                .doOnNext(crtHistoryRecords::add)
+                .doOnNext(translation -> crtHistoryRecords.put(translation.getTimestamp(), translation))
                 .map(this::applyStonedMode);
     }
 
     @Override
-    public Completable deleteItem(int position) {
+    public Completable deleteItem(long timeStamp) {
         return StorageRepositoryProvider.getStorageRepository()
-                .deleteItem(crtHistoryRecords.get(position))
-                .doOnSubscribe(subscription -> lastRemovedItem = crtHistoryRecords.get(position))
-                .doOnSubscribe(subscription -> lastRemovedPosition = position)
-                .doOnSubscribe(subscription -> crtHistoryRecords.remove(position));
+                .deleteItem(timeStamp)
+                .doOnSubscribe(subscription -> lastRemovedItem = crtHistoryRecords.get(timeStamp))
+                .doOnSubscribe(subscription -> lastRemovedTimeStamp = timeStamp)
+                .doOnSubscribe(subscription -> crtHistoryRecords.remove(timeStamp));
     }
 
     @Override
-    public Observable<UITranslation> undoLastDeletion(int position) {
+    public Observable<UITranslation> undoLastDeletion() {
         if (lastRemovedItem == null) {
             return Observable.error(
                     new InternalException("undo of deletion was called from inappropriate place"));
@@ -80,7 +81,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         }
         return StorageRepositoryProvider.getStorageRepository()
                 .undoLastDeletion(lastRemovedItem)
-                .doOnNext(translation -> crtHistoryRecords.add(position, translation))
+                .doOnNext(translation -> crtHistoryRecords.put(lastRemovedTimeStamp, translation))
                 .map(this::applyStonedMode);
     }
 

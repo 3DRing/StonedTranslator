@@ -18,6 +18,8 @@ import rx.Observable;
 
 public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, StorageInteractor> {
 
+    int lastRemovedPosition;
+
     public StoragePresenter(StorageView view, StorageRouter router, StorageInteractor interactor) {
         super(view, router, interactor);
 
@@ -64,16 +66,17 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
 
     }
 
-    public void onItemsSwiped(int position) {
-        mSubscription.add(getInteractor().deleteItem(position)
+    public void onItemsSwiped(UITranslation translation, int position) {
+        lastRemovedPosition = position;
+        mSubscription.add(getInteractor().deleteItem(translation.getId())
                 .compose(Utils.setRxSchedulersForCompletable())
                 .subscribe(getView()::itemDeleted, this::handleError));
     }
 
-    public void onUndoDeletion(int position) {
-        mSubscription.add(getInteractor().undoLastDeletion(position)
+    public void onUndoDeletion() {
+        mSubscription.add(getInteractor().undoLastDeletion()
                 .compose(Utils.setRxSchedulers())
-                .subscribe(translation -> getView().returnItemBack(translation, position),
+                .subscribe(translation -> getView().returnItemBack(translation, lastRemovedPosition),
                         this::handleError));
     }
 
