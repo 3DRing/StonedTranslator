@@ -17,7 +17,8 @@ import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
 import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
-import com.ringov.yatrnsltr.storage_module.view.StorageFragment;
+import com.ringov.yatrnsltr.storage_module.view.FavoriteFragment;
+import com.ringov.yatrnsltr.storage_module.view.HistoryFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
@@ -65,8 +66,10 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
+                        commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
                         break;
                     case 1:
+                        commitFragmentIfNotExist(getSupportFragmentManager(), new FavoriteFragment(), R.id.storage_content);
                         break;
                 }
             }
@@ -110,7 +113,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
 
     private void initializeFragments() {
         commitFragmentIfNotExist(getSupportFragmentManager(), new TranslateFragment(), R.id.translate_content);
-        commitFragmentIfNotExist(getSupportFragmentManager(), new StorageFragment(), R.id.storage_content);
+        commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
     }
 
     private boolean commitFragmentIfNotExist(FragmentManager fm, Fragment fragment, @IdRes int fragmentContainer) {

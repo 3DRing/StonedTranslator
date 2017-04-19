@@ -5,4 +5,8 @@ package com.ringov.yatrnsltr.storage_module.view;
  */
 
 public class HistoryFragment extends StorageFragment {
+    @Override
+    public StorageType getStorageType() {
+        return StorageType.HISTORY;
+    }
 }

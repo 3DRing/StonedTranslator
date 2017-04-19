@@ -6,4 +6,8 @@ package com.ringov.yatrnsltr.storage_module.view;
 
 public class FavoriteFragment extends StorageFragment {
 
+    @Override
+    public StorageType getStorageType() {
+        return StorageType.FAVORITE;
+    }
 }

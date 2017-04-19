@@ -26,7 +26,7 @@ import butterknife.BindView;
  * Created by Sergey Koltsov on 10.04.2017.
  */
 
-public class StorageFragment extends BaseFragment<StoragePresenter> implements StorageView {
+public abstract class StorageFragment extends BaseFragment<StoragePresenter> implements StorageView {
 
     @BindView(R.id.rv_storage)
     RecyclerView mRvStorage;
@@ -38,10 +38,6 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
     StorageAdapter mAdapter;
 
     private boolean stonedModeEnabled;
-
-    public StorageType getStorageType() {
-        return StorageType.HISTORY;
-    }
 
     @Override
     protected StoragePresenter providePresenter() {

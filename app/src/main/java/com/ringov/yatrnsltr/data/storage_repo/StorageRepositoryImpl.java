@@ -19,11 +19,21 @@ import rx.Observable;
 public class StorageRepositoryImpl implements StorageRepository {
 
     private static final String PRIMARY_LEY = "timestamp";
+    private static final String FAVORITE = "favorite";
 
     @Override
     public Observable<List<StoredTranslationData>> loadHistory() {
         RealmResults<StoredTranslationData> results =
                 Realm.getDefaultInstance().where(StoredTranslationData.class).findAll();
+        return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
+    }
+
+    @Override
+    public Observable<List<StoredTranslationData>> loadFavorite() {
+        RealmResults<StoredTranslationData> results =
+                Realm.getDefaultInstance().where(StoredTranslationData.class)
+                        .equalTo(FAVORITE, true)
+                        .findAll();
         return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
     }
 
