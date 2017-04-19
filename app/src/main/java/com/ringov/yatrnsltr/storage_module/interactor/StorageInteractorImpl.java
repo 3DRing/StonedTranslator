@@ -51,7 +51,10 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
 
     @Override
     public Observable<List<UITranslation>> loadFavorite() {
-        return null;
+        return Observable.from(crtHistoryRecords.values())
+                .filter(StoredTranslationData::isFavorite)
+                .map(this::applyStonedMode)
+                .toList();
     }
 
     @Override
@@ -83,6 +86,12 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
                 .undoLastDeletion(lastRemovedItem)
                 .doOnNext(translation -> crtHistoryRecords.put(lastRemovedTimeStamp, translation))
                 .map(this::applyStonedMode);
+    }
+
+    @Override
+    public Completable setFavorite(long timeStamp, boolean isFavorite) {
+        return StorageRepositoryProvider.getStorageRepository()
+                .setFavorite(timeStamp, isFavorite);
     }
 
     private UITranslation convertToUITranslation(StoredTranslationData storedTranslationData, TranslationData stonedTranslation) {

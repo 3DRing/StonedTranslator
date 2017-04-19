@@ -85,4 +85,12 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
                 .compose(Utils.setRxSchedulers())
                 .subscribe(getView()::setStonedMode));
     }
+
+    public void onFavoriteClicked(UITranslation translation, boolean isFavorite) {
+        mSubscription.add(getInteractor().setFavorite(translation.getId(), isFavorite)
+                .compose(Utils.setRxSchedulersForCompletable())
+                .subscribe(() -> {
+                    // nothing to do in view, because items handled icon changing by itself
+                }, this::handleError));
+    }
 }

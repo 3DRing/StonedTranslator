@@ -64,4 +64,15 @@ public class StorageRepositoryImpl implements StorageRepository {
         return Observable.just(lastRemovedItem);
     }
 
+    @Override
+    public Completable setFavorite(long timeStamp, boolean isFavorite) {
+        StoredTranslationData record = Realm.getDefaultInstance().where(StoredTranslationData.class)
+                .equalTo(PRIMARY_LEY, timeStamp)
+                .findFirst();
+        Realm.getDefaultInstance().beginTransaction();
+        record.setFavorite(isFavorite);
+        Realm.getDefaultInstance().commitTransaction();
+        return Completable.complete();
+    }
+
 }

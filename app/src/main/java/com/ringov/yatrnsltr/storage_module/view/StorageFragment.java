@@ -65,9 +65,16 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
                 llm.getOrientation());
         mRvStorage.addItemDecoration(divider);
 
-        mAdapter = new StorageAdapter(translation -> {
-            // todo open separate screen with full size text and translation (?)
-            // Toast.makeText(getContext(), translation.getOriginalText(), Toast.LENGTH_SHORT).show();
+        mAdapter = new StorageAdapter(new StorageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(UITranslation translation) {
+                // nothing
+            }
+
+            @Override
+            public void onFavoriteClick(UITranslation translation, boolean isFavorite) {
+                mPresenter.onFavoriteClicked(translation, isFavorite);
+            }
         });
         mRvStorage.setAdapter(mAdapter);
 

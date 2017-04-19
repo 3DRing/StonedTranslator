@@ -19,4 +19,6 @@ public interface StorageRepository {
     Completable deleteItem(long timeStamp);
 
     Observable<StoredTranslationData> undoLastDeletion(StoredTranslationData lastRemovedItem);
+
+    Completable setFavorite(long timeStamp, boolean isFavorite);
 }
