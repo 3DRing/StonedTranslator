@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
@@ -32,8 +31,6 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
     RecyclerView mRvStorage;
     @BindView(R.id.storage_container)
     ViewGroup mStorageContainer;
-    @BindView(R.id.tv_history_title)
-    TextView mTvHistoryTitle;
 
     StorageAdapter mAdapter;
 
@@ -147,7 +144,6 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
         stonedModeEnabled = enable;
 
         mAdapter.setStonedMode(enable);
-        mTvHistoryTitle.setText(enable ? R.string.history_title_stoned : R.string.history_title);
     }
 
     private static class DoubleSideSwipeItemTouchHelper {

@@ -53,6 +53,7 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
     private void subscribeToItemsInsertion() {
         mSubscription.add(getInteractor().itemInserted()
                 .compose(Utils.setRxSchedulers())
+                .filter(item -> getView().getStorageType() != StorageView.StorageType.FAVORITE || item.isFavorite())
                 .subscribe(getView()::addToStorage, this::handleError));
     }
 
