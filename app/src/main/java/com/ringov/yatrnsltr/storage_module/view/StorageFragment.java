@@ -39,6 +39,10 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
 
     private boolean stonedModeEnabled;
 
+    public StorageType getStorageType() {
+        return StorageType.HISTORY;
+    }
+
     @Override
     protected StoragePresenter providePresenter() {
         return new StoragePresenter(this, new StorageRouterImpl(new ContextAdapter(getContext())),
@@ -104,7 +108,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
     }
 
     @Override
-    public void showHistory(List<UITranslation> translations) {
+    public void showTranslations(List<UITranslation> translations) {
         if (translations.size() != 0) {
             showHistoryField();
             mAdapter.setTranslations(translations);
@@ -112,7 +116,7 @@ public class StorageFragment extends BaseFragment<StoragePresenter> implements S
     }
 
     @Override
-    public void addToHistory(UITranslation transaction) {
+    public void addToStorage(UITranslation transaction) {
         showHistoryField();
         mAdapter.addTransaction(transaction);
     }

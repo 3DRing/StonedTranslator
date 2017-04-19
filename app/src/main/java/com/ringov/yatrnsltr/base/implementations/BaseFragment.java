@@ -62,9 +62,27 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
         super.onSaveInstanceState(saveState(outState));
     }
 
-    protected abstract void restoreState(Bundle bundle);
+    /**
+     * This method can be used any of child
+     * to restore state
+     *
+     * @param bundle
+     */
+    protected void restoreState(Bundle bundle) {
+        // to override
+    }
 
-    protected abstract Bundle saveState(Bundle bundle);
+    /**
+     * This method can be used any of child
+     * to save its state
+     *
+     * @param bundle
+     * @return
+     */
+    protected Bundle saveState(Bundle bundle) {
+        // to override
+        return bundle;
+    }
 
     @Override
     public void onResume() {
@@ -96,7 +114,6 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     public void hideLoading() {
         // implemented by children
     }
-
 
     @Override
     public void showKnownException(String message) {

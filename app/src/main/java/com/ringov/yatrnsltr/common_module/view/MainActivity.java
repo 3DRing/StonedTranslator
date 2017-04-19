@@ -2,6 +2,7 @@ package com.ringov.yatrnsltr.common_module.view;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -29,7 +30,8 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
 
     @BindView(R.id.ll_stoned_bear)
     View mStonedBear;
-
+    @BindView(R.id.tab_layout)
+    TabLayout mTabLayout;
 
     private boolean stonedModeEnabled;
 
@@ -53,6 +55,32 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeFragments();
+        initializeTabLayout();
+    }
+
+    private void initializeTabLayout() {
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override

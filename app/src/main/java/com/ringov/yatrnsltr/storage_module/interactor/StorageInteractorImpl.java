@@ -49,6 +49,11 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
     }
 
     @Override
+    public Observable<List<UITranslation>> loadFavorite() {
+        return null;
+    }
+
+    @Override
     public Observable<UITranslation> itemInserted() {
         return TranslationRepositoryProvider.getTranslationRepository()
                 .subscribeToTranslation()
