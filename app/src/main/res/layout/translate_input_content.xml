@@ -60,7 +60,7 @@
         android:indeterminateDuration="1"
         android:scaleX="0.7"
         android:scaleY="0.7"
-        android:visibility="gone"
+        android:visibility="invisible"
         tools:visibility="visible" />
 
     <ProgressBar
@@ -74,7 +74,7 @@
         android:indeterminateDuration="1"
         android:scaleX="0.7"
         android:scaleY="0.7"
-        android:visibility="gone"
+        android:visibility="invisible"
         tools:visibility="visible" />
 
     <TextView

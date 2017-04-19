@@ -193,9 +193,9 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         // two views for the sake of not using deprecated or not supported methods for getting drawables
         if (stonedModeEnabled) {
             mPbLoadingStoned.setVisibility(View.VISIBLE);
-            mPbLoading.setVisibility(View.GONE);
+            mPbLoading.setVisibility(View.INVISIBLE);
         } else {
-            mPbLoadingStoned.setVisibility(View.GONE);
+            mPbLoadingStoned.setVisibility(View.INVISIBLE);
             mPbLoading.setVisibility(View.VISIBLE);
         }
     }
@@ -204,11 +204,11 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     public void hideLoading() {
         super.hideLoading();
         if (stonedModeEnabled) {
-            mPbLoadingStoned.setVisibility(View.GONE);
-            mPbLoading.setVisibility(View.GONE);
+            mPbLoadingStoned.setVisibility(View.INVISIBLE); // invisible in order not to collapse and expand layout every time
+            mPbLoading.setVisibility(View.INVISIBLE);
         } else {
-            mPbLoadingStoned.setVisibility(View.GONE);
-            mPbLoading.setVisibility(View.GONE);
+            mPbLoadingStoned.setVisibility(View.INVISIBLE);
+            mPbLoading.setVisibility(View.INVISIBLE);
         }
     }
 
