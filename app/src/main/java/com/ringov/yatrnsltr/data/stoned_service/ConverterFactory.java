@@ -24,7 +24,7 @@ class ConverterFactory {
             case NOT:
                 // break missed intentionally
             default:
-                converter = new DefaultConverter(); // throws StonedServiceException on convert() call
+                converter = new DefaultConverter();
                 break;
         }
 

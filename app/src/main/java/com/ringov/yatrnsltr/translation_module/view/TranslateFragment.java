@@ -60,7 +60,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.tv_translate)
     TextView mBtnTranslate;
     @BindView(R.id.tv_yandex_badge)
-    TextView mYandexBedge;
+    TextView mYandexBadge;
 
     @BindView(R.id.pb_loading_stoned)
     ProgressBar mPbLoadingStoned;
@@ -218,7 +218,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
         mBtnTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
         mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
-        mYandexBedge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
+        mYandexBadge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
 
         // refresh output field
         if (crtTranslation != null) {
