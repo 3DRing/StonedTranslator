@@ -15,9 +15,13 @@ import rx.Observable;
 public interface StorageInteractor extends BaseInteractor {
     Observable<List<UITranslation>> loadHistory();
 
+    Observable<List<UITranslation>> loadFavorite();
+
     Observable<UITranslation>  itemInserted();
 
-    Completable deleteItem(int position);
+    Completable deleteItem(long timeStamp);
 
-    Observable<UITranslation> undoLastDeletion(int position);
+    Observable<UITranslation> undoLastDeletion();
+
+    Completable setFavorite(long timeStamp, boolean isFavorite);
 }

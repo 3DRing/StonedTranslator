@@ -19,11 +19,21 @@ import rx.Observable;
 public class StorageRepositoryImpl implements StorageRepository {
 
     private static final String PRIMARY_LEY = "timestamp";
+    private static final String FAVORITE = "favorite";
 
     @Override
     public Observable<List<StoredTranslationData>> loadHistory() {
         RealmResults<StoredTranslationData> results =
                 Realm.getDefaultInstance().where(StoredTranslationData.class).findAll();
+        return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
+    }
+
+    @Override
+    public Observable<List<StoredTranslationData>> loadFavorite() {
+        RealmResults<StoredTranslationData> results =
+                Realm.getDefaultInstance().where(StoredTranslationData.class)
+                        .equalTo(FAVORITE, true)
+                        .findAll();
         return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
     }
 
@@ -49,10 +59,10 @@ public class StorageRepositoryImpl implements StorageRepository {
     }
 
     @Override
-    public Completable deleteItem(StoredTranslationData data) {
+    public Completable deleteItem(long timeStamp) {
         Realm.getDefaultInstance().executeTransaction(realm -> {
             realm.where(StoredTranslationData.class)
-                    .equalTo(PRIMARY_LEY, data.getTimestamp())
+                    .equalTo(PRIMARY_LEY, timeStamp)
                     .findAll().deleteAllFromRealm();
         });
         return Completable.complete();
@@ -62,6 +72,17 @@ public class StorageRepositoryImpl implements StorageRepository {
     public Observable<StoredTranslationData> undoLastDeletion(StoredTranslationData lastRemovedItem) {
         Realm.getDefaultInstance().executeTransaction(realm -> realm.insert(lastRemovedItem));
         return Observable.just(lastRemovedItem);
+    }
+
+    @Override
+    public Completable setFavorite(long timeStamp, boolean isFavorite) {
+        StoredTranslationData record = Realm.getDefaultInstance().where(StoredTranslationData.class)
+                .equalTo(PRIMARY_LEY, timeStamp)
+                .findFirst();
+        Realm.getDefaultInstance().beginTransaction();
+        record.setFavorite(isFavorite);
+        Realm.getDefaultInstance().commitTransaction();
+        return Completable.complete();
     }
 
 }

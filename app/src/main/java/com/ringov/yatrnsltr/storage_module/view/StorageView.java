@@ -10,9 +10,12 @@ import java.util.List;
  */
 
 public interface StorageView extends BaseView {
-    void showHistory(List<UITranslation> translations);
 
-    void addToHistory(UITranslation transaction);
+    StorageType getStorageType();
+
+    void showTranslations(List<UITranslation> translations);
+
+    void addToStorage(UITranslation transaction);
 
     void itemDeleted();
 
@@ -20,4 +23,6 @@ public interface StorageView extends BaseView {
 
     // todo create a new parent class StonedView and move this method there
     void setStonedMode(boolean enable);
+
+    enum StorageType {HISTORY, FAVORITE}
 }
