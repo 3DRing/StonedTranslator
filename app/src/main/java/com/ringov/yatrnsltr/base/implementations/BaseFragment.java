@@ -115,6 +115,12 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
                 getString(R.string.unknown_exception_appeared)).show();
     }
 
+    @Override
+    public void showInternetConnectionException(String message) {
+        MessageDialogHelper.getErrorDialog(getActivity(), getString(R.string.exception),
+                getString(R.string.no_internet_connection_text)).show();
+    }
+
     protected static abstract class BaseViewState implements Parcelable {
 
         public static class Builder<STATE extends BaseViewState, BUILDER extends BaseViewState.Builder> {

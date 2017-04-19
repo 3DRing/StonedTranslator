@@ -22,4 +22,5 @@
     <string name="hello_stoned">првет</string>
     <string name="stoned_mode_title">Упоротый</string>
     <string name="languages_title">Языки</string>
+    <string name="no_internet_connection_text">Интернет подключение отсутствует</string>
 </resources>
