@@ -36,8 +36,7 @@ public abstract class ToggleImageButton extends android.support.v7.widget.AppCom
     }
 
     public void toggle() {
-        this.mChecked = !mChecked;
-        handleImageAndBackground();
+        this.setChecked(!mChecked);
         if (mListener != null) {
             mListener.onToggled(mChecked);
         }
@@ -61,9 +60,8 @@ public abstract class ToggleImageButton extends android.support.v7.widget.AppCom
     }
 
     public void setChecked(boolean checked) {
-        if (this.mChecked != checked) {
-            this.toggle();
-        }
+        mChecked = checked;
+        handleImageAndBackground();
     }
 
     private void initializeOnClickListener() {

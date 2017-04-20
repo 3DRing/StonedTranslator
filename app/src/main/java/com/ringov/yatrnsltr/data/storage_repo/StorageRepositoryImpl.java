@@ -24,7 +24,7 @@ public class StorageRepositoryImpl implements StorageRepository {
     @Override
     public Observable<List<StoredTranslationData>> loadHistory() {
         RealmResults<StoredTranslationData> results =
-                Realm.getDefaultInstance().where(StoredTranslationData.class).findAll();
+                Realm.getDefaultInstance().where(StoredTranslationData.class).findAll().sort(PRIMARY_LEY);
         return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
     }
 
@@ -33,7 +33,7 @@ public class StorageRepositoryImpl implements StorageRepository {
         RealmResults<StoredTranslationData> results =
                 Realm.getDefaultInstance().where(StoredTranslationData.class)
                         .equalTo(FAVORITE, true)
-                        .findAll();
+                        .findAll().sort(PRIMARY_LEY);
         return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
     }
 
