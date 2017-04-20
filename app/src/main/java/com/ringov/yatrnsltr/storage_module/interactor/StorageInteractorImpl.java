@@ -27,7 +27,6 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
     // and manage interactions with this list (deletion, changing options etc)
     Map<Long, StoredTranslationData> crtHistoryRecords;
     StoredTranslationData lastRemovedItem;
-    long lastRemovedTimeStamp;
     private int crtFrom;
     private int crtTo;
 
@@ -73,7 +72,6 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         return StorageRepositoryProvider.getStorageRepository()
                 .deleteItem(timeStamp)
                 .doOnSubscribe(subscription -> lastRemovedItem = crtHistoryRecords.get(timeStamp))
-                .doOnSubscribe(subscription -> lastRemovedTimeStamp = timeStamp)
                 .doOnSubscribe(subscription -> crtHistoryRecords.remove(timeStamp));
     }
 
@@ -86,7 +84,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         }
         return StorageRepositoryProvider.getStorageRepository()
                 .undoLastDeletion(lastRemovedItem)
-                .doOnNext(translation -> crtHistoryRecords.put(lastRemovedTimeStamp, translation))
+                .doOnNext(translation -> crtHistoryRecords.put(lastRemovedItem.getTimestamp(), translation))
                 .map(this::applyStonedMode);
     }
 
