@@ -29,6 +29,9 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<CommonPresenter> implements CommonView {
 
+    private static final int HISTORY_TAB = 0;
+    private static final int FAVORITE_TAB = 1;
+
     @BindView(R.id.ll_stoned_bear)
     View mStonedBear;
     @BindView(R.id.tab_layout)
@@ -131,6 +134,8 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
         mStonedBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
+        mTabLayout.getTabAt(HISTORY_TAB).setText(enable ? R.string.history_title_stoned : R.string.history_title);
+        mTabLayout.getTabAt(FAVORITE_TAB).setText(enable ? R.string.favorite_title_stoned : R.string.favorite_title);
 
         invalidateOptionsMenu(); // redraw options menu in top-right corner
     }
