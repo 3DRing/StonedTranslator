@@ -4,17 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_stoned_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:visibility="gone"
-        app:fabSize="normal"
-        app:srcCompat="@mipmap/mipmap_stoned_bear_white_true" />
-
     <LinearLayout
         android:id="@+id/ll_stoned_bear"
         android:layout_width="match_parent"
@@ -40,41 +29,6 @@
             android:textAlignment="center"
             android:textAllCaps="false" />
     </LinearLayout>
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        android:visibility="gone"
-        app:menu="@menu/navigation" />
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:alpha="0.9"
-        android:background="@android:color/white"
-        android:elevation="4dp"
-        app:tabMode="fixed">
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/tab_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="@string/history_title" />
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/tab_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="@string/favorite_title" />
-
-    </android.support.design.widget.TabLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -108,4 +62,41 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:alpha="0.9"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        app:tabMode="fixed">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/history_title" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/favorite_title" />
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_stoned_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:visibility="gone"
+        app:fabSize="normal"
+        app:srcCompat="@mipmap/mipmap_stoned_bear_white_true" />
 </android.support.design.widget.CoordinatorLayout>
