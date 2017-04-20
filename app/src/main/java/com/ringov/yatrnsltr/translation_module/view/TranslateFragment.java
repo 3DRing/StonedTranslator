@@ -3,7 +3,6 @@ package com.ringov.yatrnsltr.translation_module.view;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcel;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.Space;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import android.widget.TextView;
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
-import com.ringov.yatrnsltr.custom_views.FavoriteButton;
-import com.ringov.yatrnsltr.custom_views.StonedModeButton;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.presenter.TranslationPresenter;
 import com.ringov.yatrnsltr.translation_module.router.TranslationRouterImpl;
@@ -52,15 +49,11 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     TextView mTvTranslation;
     @BindView(R.id.tv_lang_pair)
     TextView mTvLangPair;
-    @BindView(R.id.fb_favorite)
-    FavoriteButton mFb;
-    @BindView(R.id.tmb_changed)
-    StonedModeButton mTmbMode;
 
     @BindView(R.id.tv_translate)
     TextView mBtnTranslate;
     @BindView(R.id.tv_yandex_badge)
-    TextView mYandexBedge;
+    TextView mYandexBadge;
 
     @BindView(R.id.pb_loading_stoned)
     ProgressBar mPbLoadingStoned;
@@ -103,11 +96,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
     protected void restoreState(Bundle bundle) {
         if (bundle != null) {
             ViewState state = bundle.getParcelable(ViewState.class.getCanonicalName());
@@ -146,8 +134,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         UILangPair langPair = translation.getLangPair();
         mTvLangPair.setText(String.format(getString(R.string.lang_pair_item),
                 langPair.getSourceLang().getShortName(), langPair.getTargetLang().getShortName()));
-        mFb.setChecked(translation.isFavorite());
-        mTmbMode.setChecked(translation.isChanged());
     }
 
     private void showOutputField() {
@@ -193,9 +179,9 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         // two views for the sake of not using deprecated or not supported methods for getting drawables
         if (stonedModeEnabled) {
             mPbLoadingStoned.setVisibility(View.VISIBLE);
-            mPbLoading.setVisibility(View.GONE);
+            mPbLoading.setVisibility(View.INVISIBLE);
         } else {
-            mPbLoadingStoned.setVisibility(View.GONE);
+            mPbLoadingStoned.setVisibility(View.INVISIBLE);
             mPbLoading.setVisibility(View.VISIBLE);
         }
     }
@@ -204,11 +190,11 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     public void hideLoading() {
         super.hideLoading();
         if (stonedModeEnabled) {
-            mPbLoadingStoned.setVisibility(View.GONE);
-            mPbLoading.setVisibility(View.GONE);
+            mPbLoadingStoned.setVisibility(View.INVISIBLE); // invisible in order not to collapse and expand layout every time
+            mPbLoading.setVisibility(View.INVISIBLE);
         } else {
-            mPbLoadingStoned.setVisibility(View.GONE);
-            mPbLoading.setVisibility(View.GONE);
+            mPbLoadingStoned.setVisibility(View.INVISIBLE);
+            mPbLoading.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -218,7 +204,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
         mBtnTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
         mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
-        mYandexBedge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
+        mYandexBadge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
 
         // refresh output field
         if (crtTranslation != null) {

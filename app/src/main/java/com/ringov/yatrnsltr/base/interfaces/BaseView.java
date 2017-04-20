@@ -10,4 +10,6 @@ public interface BaseView {
     void showKnownException(String message);
     void showInternalException(String message);
     void showUnknownException(String message);
+
+    void showInternetConnectionException(String message);
 }

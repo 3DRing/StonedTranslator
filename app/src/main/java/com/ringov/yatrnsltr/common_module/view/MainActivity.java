@@ -2,6 +2,7 @@ package com.ringov.yatrnsltr.common_module.view;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -16,7 +17,8 @@ import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
 import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
-import com.ringov.yatrnsltr.storage_module.view.StorageFragment;
+import com.ringov.yatrnsltr.storage_module.view.FavoriteFragment;
+import com.ringov.yatrnsltr.storage_module.view.HistoryFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
@@ -27,9 +29,13 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<CommonPresenter> implements CommonView {
 
+    private static final int HISTORY_TAB = 0;
+    private static final int FAVORITE_TAB = 1;
+
     @BindView(R.id.ll_stoned_bear)
     View mStonedBear;
-
+    @BindView(R.id.tab_layout)
+    TabLayout mTabLayout;
 
     private boolean stonedModeEnabled;
 
@@ -53,6 +59,34 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeFragments();
+        initializeTabLayout();
+    }
+
+    private void initializeTabLayout() {
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
+                        break;
+                    case 1:
+                        commitFragmentIfNotExist(getSupportFragmentManager(), new FavoriteFragment(), R.id.storage_content);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
@@ -82,7 +116,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
 
     private void initializeFragments() {
         commitFragmentIfNotExist(getSupportFragmentManager(), new TranslateFragment(), R.id.translate_content);
-        commitFragmentIfNotExist(getSupportFragmentManager(), new StorageFragment(), R.id.storage_content);
+        commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
     }
 
     private boolean commitFragmentIfNotExist(FragmentManager fm, Fragment fragment, @IdRes int fragmentContainer) {
@@ -100,6 +134,8 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
         mStonedBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
+        mTabLayout.getTabAt(HISTORY_TAB).setText(enable ? R.string.history_title_stoned : R.string.history_title);
+        mTabLayout.getTabAt(FAVORITE_TAB).setText(enable ? R.string.favorite_title_stoned : R.string.favorite_title);
 
         invalidateOptionsMenu(); // redraw options menu in top-right corner
     }

@@ -77,8 +77,14 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
         }
     }
 
+    public UITranslation getTranslation(int position) {
+        return items.get(position);
+    }
+
     public interface OnItemClickListener {
         void onItemClick(UITranslation translation);
+
+        void onFavoriteClick(UITranslation translation, boolean isFavorite);
     }
 
     class BaseViewHolder extends RecyclerView.ViewHolder {
@@ -116,6 +122,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
             mTmbMode.setChecked(crtTranslation.isChanged());
 
             mLlItemLayout.setOnClickListener(v -> mListener.onItemClick(crtTranslation));
+            mFb.setOnToggleListener(favorite -> mListener.onFavoriteClick(crtTranslation, favorite));
         }
     }
 }

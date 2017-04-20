@@ -76,4 +76,10 @@ public abstract class BaseActivity<PRESENTER extends BasePresenter> extends AppC
         MessageDialogHelper.getErrorDialog(this, getString(R.string.exception),
                 getString(R.string.unknown_exception_appeared));
     }
+
+    @Override
+    public void showInternetConnectionException(String message) {
+        MessageDialogHelper.getErrorDialog(this, getString(R.string.exception),
+                getString(R.string.no_internet_connection_text)).show();
+    }
 }

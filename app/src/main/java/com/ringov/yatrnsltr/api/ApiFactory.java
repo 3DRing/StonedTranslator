@@ -19,7 +19,8 @@ public class ApiFactory {
 
     @NonNull
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .addInterceptor(new ExceptionsHandlingInterceptor())
+            .addInterceptor(new ConnectivityInterceptor())
+            .addInterceptor(new ExceptionsInterceptor())
             .readTimeout(Config.TIMEOUT, TimeUnit.MILLISECONDS)
             .connectTimeout(Config.TIMEOUT, TimeUnit.MILLISECONDS)
             .build();

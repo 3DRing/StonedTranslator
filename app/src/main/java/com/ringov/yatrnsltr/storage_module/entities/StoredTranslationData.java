@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
-import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -29,23 +28,6 @@ public class StoredTranslationData extends RealmObject {
     private boolean favorite;
     private boolean changed;
 
-    public String getOriginal() {
-        return originalText;
-    }
-
-    public List<String> getTranslations() {
-        List<String> list = new ArrayList<>();
-        for (RealmString s :
-                translations) {
-            list.add(s.value);
-        }
-        return list;
-    }
-
-    public LangPairData getLangPair() {
-        return new LangPairData(new Language(sourceLang), new Language(targetLang));
-    }
-
     public StoredTranslationData() {
 
     }
@@ -64,8 +46,29 @@ public class StoredTranslationData extends RealmObject {
         this.changed = params.isChanged();
     }
 
+    public String getOriginal() {
+        return originalText;
+    }
+
+    public List<String> getTranslations() {
+        List<String> list = new ArrayList<>();
+        for (RealmString s :
+                translations) {
+            list.add(s.value);
+        }
+        return list;
+    }
+
+    public LangPairData getLangPair() {
+        return new LangPairData(new Language(sourceLang), new Language(targetLang));
+    }
+
     public boolean isFavorite() {
         return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public boolean isChanged() {

@@ -5,8 +5,8 @@ import com.ringov.yatrnsltr.api.raw_entity.TranslationResponse;
 import com.ringov.yatrnsltr.exceptions.ApiException;
 import com.ringov.yatrnsltr.exceptions.LimitException;
 import com.ringov.yatrnsltr.exceptions.TranslationException;
-import com.ringov.yatrnsltr.exceptions.base.ExceptionsConfig;
 import com.ringov.yatrnsltr.exceptions.UnknownException;
+import com.ringov.yatrnsltr.exceptions.base.ExceptionsConfig;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import okhttp3.Response;
  * Created by Sergey Koltsov on 13.04.2017.
  */
 
-public class ExceptionsHandlingInterceptor implements Interceptor {
+public class ExceptionsInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();

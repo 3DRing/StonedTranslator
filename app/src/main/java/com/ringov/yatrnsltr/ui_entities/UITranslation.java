@@ -13,7 +13,10 @@ import java.util.List;
 
 public class UITranslation {
 
+    private static final long TEMPORARY_ID = -1;
     public static UITranslation EMPTY = new UITranslation();
+
+    private long id;
 
     private String originalText;
     private String changedOriginal;
@@ -27,6 +30,8 @@ public class UITranslation {
     private boolean changed;
 
     public UITranslation(TranslationData translationData, LangPairData langPair) {
+        this.id = TEMPORARY_ID;
+
         this.originalText = translationData.getOriginal();
         this.changedOriginal = this.originalText;
 
@@ -37,6 +42,8 @@ public class UITranslation {
     }
 
     public UITranslation(StoredTranslationData translationData, LangPairData langPair) {
+        this.id = translationData.getTimestamp();
+
         this.originalText = translationData.getOriginal();
         this.changedOriginal = this.originalText;
 
@@ -58,6 +65,10 @@ public class UITranslation {
     public void setChangedData(String changedOriginal, List<String> changedTranslations) {
         this.changedOriginal = changedOriginal;
         this.changedTranslations = changedTranslations;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public List<String> getTranslations() {

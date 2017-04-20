@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.base;
 
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
+import com.ringov.yatrnsltr.exceptions.NoInternetConnectionException;
 import com.ringov.yatrnsltr.exceptions.base.InternalException;
 import com.ringov.yatrnsltr.exceptions.base.UserImportantException;
 
@@ -23,9 +24,9 @@ public class ExceptionHandler {
     }
 
     public void handleError(Throwable t) {
-        if (t.getClass().isAssignableFrom(UserImportantException.class)) {
+        if (UserImportantException.class.isAssignableFrom(t.getClass())) {
             handleUserImportantException(t);
-        } else if (t.getClass().isAssignableFrom(InternalException.class)) {
+        } else if (InternalException.class.isAssignableFrom(t.getClass())) {
             handleInternalException(t);
         } else {
             handleOtherException(t);
@@ -43,6 +44,10 @@ public class ExceptionHandler {
     }
 
     private void handleUserImportantException(Throwable t) {
-        getView().showKnownException(t.getLocalizedMessage());
+        if (t instanceof NoInternetConnectionException) {
+            getView().showInternetConnectionException(t.getLocalizedMessage());
+        } else {
+            getView().showKnownException(t.getLocalizedMessage());
+        }
     }
 }

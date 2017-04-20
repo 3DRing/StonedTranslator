@@ -62,9 +62,27 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
         super.onSaveInstanceState(saveState(outState));
     }
 
-    protected abstract void restoreState(Bundle bundle);
+    /**
+     * This method can be used any of child
+     * to restore state
+     *
+     * @param bundle
+     */
+    protected void restoreState(Bundle bundle) {
+        // to override
+    }
 
-    protected abstract Bundle saveState(Bundle bundle);
+    /**
+     * This method can be used any of child
+     * to save its state
+     *
+     * @param bundle
+     * @return
+     */
+    protected Bundle saveState(Bundle bundle) {
+        // to override
+        return bundle;
+    }
 
     @Override
     public void onResume() {
@@ -97,7 +115,6 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
         // implemented by children
     }
 
-
     @Override
     public void showKnownException(String message) {
         MessageDialogHelper.getErrorDialog(getActivity(), getString(R.string.exception), message).show();
@@ -113,6 +130,12 @@ public abstract class BaseFragment<PRESENTER extends BasePresenter> extends Frag
     public void showUnknownException(String message) {
         MessageDialogHelper.getErrorDialog(getActivity(), getString(R.string.exception),
                 getString(R.string.unknown_exception_appeared)).show();
+    }
+
+    @Override
+    public void showInternetConnectionException(String message) {
+        MessageDialogHelper.getErrorDialog(getActivity(), getString(R.string.exception),
+                getString(R.string.no_internet_connection_text)).show();
     }
 
     protected static abstract class BaseViewState implements Parcelable {

@@ -14,9 +14,15 @@ import rx.Observable;
 
 public interface StorageRepository {
     Observable<List<StoredTranslationData>> loadHistory();
+
+    Observable<List<StoredTranslationData>> loadFavorite();
+
     StoredTranslationData addHistoryItem(TranslationData translation);
 
-    Completable deleteItem(StoredTranslationData data);
+    Completable deleteItem(long timeStamp);
 
     Observable<StoredTranslationData> undoLastDeletion(StoredTranslationData lastRemovedItem);
+
+    Completable setFavorite(long timeStamp, boolean isFavorite);
+
 }
