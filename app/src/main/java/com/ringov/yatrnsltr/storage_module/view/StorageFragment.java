@@ -29,8 +29,6 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
 
     @BindView(R.id.rv_storage)
     RecyclerView mRvStorage;
-    @BindView(R.id.storage_container)
-    ViewGroup mStorageContainer;
 
     StorageAdapter mAdapter;
 
@@ -78,7 +76,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
                     mAdapter.remove(position);
 
                     // what strings will be pick depends on mode
-                    Snackbar.make(mStorageContainer,
+                    Snackbar.make(mRvStorage,
                             stonedModeEnabled ? R.string.deleted_from_history_stoned : R.string.deleted_from_history,
                             Snackbar.LENGTH_LONG)
                             .setAction(stonedModeEnabled ? R.string.restore_item_stoned : R.string.restore_item,
@@ -105,7 +103,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
     }
 
     private void showHistoryField() {
-        mStorageContainer.setVisibility(View.VISIBLE);
+        mRvStorage.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -136,7 +134,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
     }
 
     private void hideHistoryField() {
-        mStorageContainer.setVisibility(View.GONE);
+        mRvStorage.setVisibility(View.GONE);
     }
 
     @Override

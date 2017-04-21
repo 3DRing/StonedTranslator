@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
 
     private void initializeTabLayout() {
 
-        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
+/*        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
                         break;
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         TranslateFragment translateFragment = new TranslateFragment();
         translateCallback = translateFragment;
         commitFragmentIfNotExist(getSupportFragmentManager(), translateFragment, R.id.translate_content);
-        commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
+        //commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
     }
 
     private boolean commitFragmentIfNotExist(FragmentManager fm, Fragment fragment, @IdRes int fragmentContainer) {
