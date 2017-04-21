@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
@@ -48,7 +47,6 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
 
     private void initializeRecycler() {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setReverseLayout(true);
         mRvStorage.setLayoutManager(llm);
 
         // adding divider for list
