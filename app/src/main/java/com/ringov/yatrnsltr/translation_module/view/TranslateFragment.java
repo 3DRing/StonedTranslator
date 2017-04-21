@@ -212,6 +212,13 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         }
     }
 
+    @Override
+    public void showTranslationAndInputText(UITranslation translation) {
+        showTranslation(translation);
+        mEtOriginalText.setText(translation.getOriginalText());
+        mEtOriginalText.requestFocus();
+    }
+
     private static class ViewState extends BaseViewState {
         public static final Creator<ViewState> CREATOR = new Creator<ViewState>() {
             @Override

@@ -38,13 +38,29 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         crtHistoryRecords = new HashMap<>();
     }
 
+    private static UITranslation convertToUITranslation(StoredTranslationData storedTranslationData, TranslationData stonedTranslation) {
+        UITranslation uiTranslation = new UITranslation(storedTranslationData, storedTranslationData.getLangPair());
+        uiTranslation.setChangedData(stonedTranslation.getOriginal(), stonedTranslation.getTranslations());
+        uiTranslation.setFavorite(storedTranslationData.isFavorite());
+        uiTranslation.setChanged(storedTranslationData.isChanged());
+        return uiTranslation;
+    }
+
+    public static UITranslation applyStonedMode(StoredTranslationData translation) {
+        TranslationData tmp = new TranslationData(translation.getOriginal(),
+                translation.getTranslations(),
+                translation.getLangPair());
+        TranslationData stoned = StonedConvertingService.convert(tmp);
+        return StorageInteractorImpl.convertToUITranslation(translation, stoned);
+    }
+
     @Override
     public Observable<List<UITranslation>> loadHistory() {
         return StorageRepositoryProvider.getStorageRepository()
                 .loadHistory()
                 .flatMap(Observable::from)
                 .doOnNext(translation -> crtHistoryRecords.put(translation.getTimestamp(), translation))
-                .map(this::applyStonedMode)
+                .map(StorageInteractorImpl::applyStonedMode)
                 .toList();
     }
 
@@ -54,7 +70,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
                 .loadFavorite()
                 .flatMap(Observable::from)
                 .doOnNext(translation -> crtHistoryRecords.put(translation.getTimestamp(), translation))
-                .map(this::applyStonedMode)
+                .map(StorageInteractorImpl::applyStonedMode)
                 .toList();
     }
 
@@ -64,7 +80,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
                 .subscribeToTranslation()
                 .map(StorageRepositoryProvider.getStorageRepository()::addHistoryItem)
                 .doOnNext(translation -> crtHistoryRecords.put(translation.getTimestamp(), translation))
-                .map(this::applyStonedMode);
+                .map(StorageInteractorImpl::applyStonedMode);
     }
 
     @Override
@@ -85,7 +101,7 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
         return StorageRepositoryProvider.getStorageRepository()
                 .undoLastDeletion(lastRemovedItem)
                 .doOnNext(translation -> crtHistoryRecords.put(lastRemovedItem.getTimestamp(), translation))
-                .map(this::applyStonedMode);
+                .map(StorageInteractorImpl::applyStonedMode);
     }
 
     @Override
@@ -95,19 +111,9 @@ public class StorageInteractorImpl extends BaseInteractorImpl implements Storage
                 .doOnCompleted(() -> crtHistoryRecords.get(timeStamp).setFavorite(isFavorite));
     }
 
-    private UITranslation convertToUITranslation(StoredTranslationData storedTranslationData, TranslationData stonedTranslation) {
-        UITranslation uiTranslation = new UITranslation(storedTranslationData, storedTranslationData.getLangPair());
-        uiTranslation.setChangedData(stonedTranslation.getOriginal(), stonedTranslation.getTranslations());
-        uiTranslation.setFavorite(storedTranslationData.isFavorite());
-        uiTranslation.setChanged(storedTranslationData.isChanged());
-        return uiTranslation;
-    }
-
-    private UITranslation applyStonedMode(StoredTranslationData translation) {
-        TranslationData tmp = new TranslationData(translation.getOriginal(),
-                translation.getTranslations(),
-                translation.getLangPair());
-        TranslationData stoned = StonedConvertingService.convert(tmp);
-        return this.convertToUITranslation(translation, stoned);
+    @Override
+    public Completable pickPreviousTranslation(long timestamp) {
+        return StorageRepositoryProvider.getStorageRepository()
+                .pickPreviousTranslation(timestamp);
     }
 }

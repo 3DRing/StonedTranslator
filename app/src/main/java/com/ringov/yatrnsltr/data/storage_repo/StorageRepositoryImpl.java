@@ -11,6 +11,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Completable;
 import rx.Observable;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by Sergey Koltsov on 14.04.2017.
@@ -20,6 +21,12 @@ public class StorageRepositoryImpl implements StorageRepository {
 
     private static final String PRIMARY_LEY = "timestamp";
     private static final String FAVORITE = "favorite";
+
+    private PublishSubject<StoredTranslationData> pickPreviousTranslationEvents;
+
+    StorageRepositoryImpl() {
+        pickPreviousTranslationEvents = PublishSubject.create();
+    }
 
     @Override
     public Observable<List<StoredTranslationData>> loadHistory() {
@@ -85,4 +92,16 @@ public class StorageRepositoryImpl implements StorageRepository {
         return Completable.complete();
     }
 
+    @Override
+    public Completable pickPreviousTranslation(long timestamp) {
+        StoredTranslationData translation = Realm.getDefaultInstance().where(StoredTranslationData.class)
+                .equalTo(PRIMARY_LEY, timestamp).findFirst();
+        pickPreviousTranslationEvents.onNext(translation);
+        return Completable.complete();
+    }
+
+    @Override
+    public Observable<StoredTranslationData> subscribeToPreviousTranslationPicking() {
+        return pickPreviousTranslationEvents;
+    }
 }

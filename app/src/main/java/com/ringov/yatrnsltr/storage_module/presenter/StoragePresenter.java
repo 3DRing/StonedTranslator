@@ -94,4 +94,11 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
                     // nothing to do in view, because items handled icon changing by itself
                 }, this::handleError));
     }
+
+    public void onItemClicked(UITranslation translation) {
+        mSubscription.add(getInteractor().pickPreviousTranslation(translation.getId())
+                .compose(Utils.setRxSchedulersForCompletable())
+                .subscribe(() -> {
+                }, this::handleError));
+    }
 }

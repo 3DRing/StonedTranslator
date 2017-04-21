@@ -20,6 +20,7 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
 
         subscribeToModeChangedCommon();
         subscribeToLangChangingCommon();
+        subscribeToPreviousTranslationPicking();
     }
 
     @Override
@@ -85,4 +86,9 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .subscribe(getView()::showLanguagePair, this::handleError));
     }
 
+    void subscribeToPreviousTranslationPicking() {
+        mSubscription.add(getInteractor().subscribeToPreviousTranslationPicking()
+                .compose(Utils.setRxSchedulers())
+                .subscribe(getView()::showTranslationAndInputText, this::handleError));
+    }
 }

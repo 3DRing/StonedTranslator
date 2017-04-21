@@ -61,7 +61,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
         mAdapter = new StorageAdapter(new StorageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(UITranslation translation) {
-                // nothing
+                mPresenter.onItemClicked(translation);
             }
 
             @Override

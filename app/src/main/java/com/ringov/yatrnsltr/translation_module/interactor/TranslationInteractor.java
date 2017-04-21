@@ -16,4 +16,6 @@ public interface TranslationInteractor extends BaseInteractor {
     Observable<UILangPair> swapLanguage();
 
     Observable<UILangPair> subscribeToLangPairChanging();
+
+    Observable<UITranslation> subscribeToPreviousTranslationPicking();
 }
