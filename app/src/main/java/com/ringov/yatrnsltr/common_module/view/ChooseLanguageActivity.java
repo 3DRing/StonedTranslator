@@ -50,6 +50,18 @@ public class ChooseLanguageActivity extends BaseActivity<CommonPresenter> implem
     }
 
     @Override
+    public void requestInputFocus() {
+        // not used
+        // todo refactor, to avoid this
+    }
+
+    @Override
+    public void requestTranslate() {
+        // not used
+        // todo refactor, to avoid this
+    }
+
+    @Override
     protected CommonPresenter providePresenter() {
         return new CommonPresenter(this, new CommonRouterImpl(new ContextAdapter(this)), new CommonInteractorImpl());
     }
