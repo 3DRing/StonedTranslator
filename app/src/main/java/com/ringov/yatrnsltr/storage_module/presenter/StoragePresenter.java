@@ -29,7 +29,7 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
         subscribeToModeChangedCommon();
     }
 
-    private void loadStorage(StorageView.StorageType type) {
+    public void loadStorage(StorageView.StorageType type) {
         Observable<List<UITranslation>> observable;
         switch (type) {
             case HISTORY:
@@ -100,5 +100,9 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
                 .compose(Utils.setRxSchedulersForCompletable())
                 .subscribe(() -> {
                 }, this::handleError));
+    }
+
+    public void onUpdateRequest() {
+        loadStorage(getView().getStorageType());
     }
 }

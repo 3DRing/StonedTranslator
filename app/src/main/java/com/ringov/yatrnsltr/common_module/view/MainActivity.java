@@ -49,9 +49,8 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     View activityRootLayout;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
     TranslateViewCallback translateCallback;
-
+    private StoragePagerAdapter mViewPagerAdapter;
     private boolean stonedModeEnabled;
     private boolean translateOnFloatingButtonClick;
 
@@ -80,26 +79,38 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     }
 
     private void initializeTabLayoutAndViewPager() {
-        StoragePagerAdapter adapter = new StoragePagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(adapter);
+        mViewPagerAdapter = new StoragePagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initializeTabLayout() {
 
-/*        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
-                        break;
-                    case 1:
-                        commitFragmentIfNotExist(getSupportFragmentManager(), new FavoriteFragment(), R.id.storage_content);
-                        break;
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+                    mViewPagerAdapter.setCrtItemPosition(mViewPager.getCurrentItem());
+                    mViewPagerAdapter.notifyDataSetChanged();
                 }
             }
-        });*/
+        });
+
+        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
@@ -163,7 +174,6 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         mStonedBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
         mTabLayout.getTabAt(HISTORY_TAB).setText(enable ? R.string.history_title_stoned : R.string.history_title);
         mTabLayout.getTabAt(FAVORITE_TAB).setText(enable ? R.string.favorite_title_stoned : R.string.favorite_title);
-
         invalidateOptionsMenu(); // redraw options menu in top-right corner
     }
 
@@ -221,7 +231,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         }
     }
 
-    private static abstract class OnTabSelectedAdaptedListener implements TabLayout.OnTabSelectedListener {
+    private abstract class OnTabSelectedAdaptedListener implements TabLayout.OnTabSelectedListener {
 
         @Override
         public void onTabUnselected(TabLayout.Tab tab) {
