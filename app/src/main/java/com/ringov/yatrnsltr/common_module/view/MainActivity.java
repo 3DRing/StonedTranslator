@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +39,8 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
 
     @BindView(R.id.ll_stoned_bear)
     View mStonedBear;
+    @BindView(R.id.viewpager)
+    ViewPager mViewPager;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.root_layout)
@@ -71,6 +74,13 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         initializeFragments();
         initializeTabLayout();
         initializeKeyboardChangedListener();
+        initializeTabLayoutAndViewPager();
+    }
+
+    private void initializeTabLayoutAndViewPager() {
+        StoragePagerAdapter adapter = new StoragePagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initializeTabLayout() {
