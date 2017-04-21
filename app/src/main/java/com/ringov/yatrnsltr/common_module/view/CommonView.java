@@ -23,4 +23,8 @@ public interface CommonView extends BaseView {
     void showAllLanguages(List<UILanguage> languages);
 
     void showLanguagePair(UILangPair langPair);
+
+    void requestInputFocus();
+
+    void requestTranslate();
 }

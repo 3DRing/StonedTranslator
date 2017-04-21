@@ -12,7 +12,7 @@ import com.ringov.yatrnsltr.common_module.view.ChooseLanguageActivity;
 public class StoryBoard {
     public static StoryDestination yandexTranslateLink() {
         return context -> {
-            String url = "https://www.translate.yandex.ru";
+            String url = "https://www.requestTranslate.yandex.ru";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             context.startActivity(i);

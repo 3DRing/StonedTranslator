@@ -23,6 +23,7 @@ import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
 import com.ringov.yatrnsltr.storage_module.view.FavoriteFragment;
 import com.ringov.yatrnsltr.storage_module.view.HistoryFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
+import com.ringov.yatrnsltr.translation_module.view.TranslateViewCallback;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.List;
@@ -44,12 +45,14 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    private boolean stonedModeEnabled;
+    TranslateViewCallback translateCallback;
 
-    @Deprecated // button will be used for other reasons
+    private boolean stonedModeEnabled;
+    private boolean translateOnFloatingButtonClick;
+
     @OnClick(R.id.fab)
     void onFloatingButtonClick() {
-
+        mPresenter.onFloatingButtonClicked(translateOnFloatingButtonClick);
     }
 
     @Override
@@ -118,13 +121,16 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
                 .addOnGlobalLayoutListener(new OnKeyboardStateChangedListener(activityRootLayout) {
                     @Override
                     public void onStateChanged(boolean nextStateOpened) {
+                        translateOnFloatingButtonClick = nextStateOpened;
                         fab.setImageResource(nextStateOpened ? R.drawable.ic_forward_24dp : R.drawable.ic_focus_24dp);
                     }
                 });
     }
 
     private void initializeFragments() {
-        commitFragmentIfNotExist(getSupportFragmentManager(), new TranslateFragment(), R.id.translate_content);
+        TranslateFragment translateFragment = new TranslateFragment();
+        translateCallback = translateFragment;
+        commitFragmentIfNotExist(getSupportFragmentManager(), translateFragment, R.id.translate_content);
         commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
     }
 
@@ -159,6 +165,16 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     public void showLanguagePair(UILangPair langPair) {
         // nothing
         // todo optimize in order not having these empty methods!
+    }
+
+    @Override
+    public void requestInputFocus() {
+        translateCallback.requestInputFocus();
+    }
+
+    @Override
+    public void requestTranslate() {
+        translateCallback.requestTranslate();
     }
 
     private static abstract class OnKeyboardStateChangedListener implements ViewTreeObserver.OnGlobalLayoutListener {

@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.translation_module.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.support.v4.widget.Space;
@@ -28,8 +29,10 @@ import butterknife.OnClick;
  */
 
 public class TranslateFragment extends BaseFragment<TranslationPresenter>
-        implements TranslationView {
+        implements TranslationView,
+        TranslateViewCallback {
 
+    private static final long OPEN_KEYBOARD_DELAY = 200;
     @BindView(R.id.et_input)
     EditText mEtOriginalText;
     @BindView(R.id.inc_more_options)
@@ -217,6 +220,22 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         showTranslation(translation);
         mEtOriginalText.setText(translation.getOriginalText());
         mEtOriginalText.requestFocus();
+    }
+
+    @Override
+    public void requestInputFocus() {
+        mEtOriginalText.requestFocus();
+        mEtOriginalText.postDelayed(() -> {
+                    InputMethodManager keyboard =
+                            (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    keyboard.showSoftInput(mEtOriginalText, 0);
+                }
+                , OPEN_KEYBOARD_DELAY);
+    }
+
+    @Override
+    public void requestTranslate() {
+        onTranslateClick();
     }
 
     private static class ViewState extends BaseViewState {

@@ -70,4 +70,12 @@ public class CommonPresenter extends BasePresenter<CommonView, CommonRouter, Com
     public void onLanguagesClicked() {
         getRouter().openChooseLanguageScreen();
     }
+
+    public void onFloatingButtonClicked(boolean translateOnFloatingButtonClick) {
+        if (translateOnFloatingButtonClick) {
+            getView().requestTranslate();
+        } else {
+            getView().requestInputFocus();
+        }
+    }
 }
