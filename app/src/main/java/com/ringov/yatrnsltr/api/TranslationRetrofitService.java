@@ -15,7 +15,7 @@ import rx.Observable;
 public interface TranslationRetrofitService {
 
     @FormUrlEncoded
-    @POST("requestTranslate")
+    @POST("translate")
     Observable<TranslationResponse> translate(@Field("key") String key,
                                               @Field("lang") String lang,
                                               @Field("text") String text);
