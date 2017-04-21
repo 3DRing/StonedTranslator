@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
-import android.support.v4.widget.Space;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -41,8 +40,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     TextView mTvSourceLang;
     @BindView(R.id.tv_target_lang)
     TextView mTvTargetLang;
-    @BindView(R.id.space_near_output)
-    Space mSpace;
 
     @BindView(R.id.fl_output_field)
     ViewGroup mFlOutputField;
@@ -53,8 +50,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.tv_lang_pair)
     TextView mTvLangPair;
 
-    @BindView(R.id.tv_translate)
-    TextView mBtnTranslate;
     @BindView(R.id.tv_yandex_badge)
     TextView mYandexBadge;
 
@@ -87,7 +82,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mPresenter.moreOptionsClicked();
     }
 
-    @OnClick(R.id.tv_translate)
     void onTranslateClick() {
         mPresenter.translateClicked(mEtOriginalText.getText().toString());
     }
@@ -141,7 +135,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     private void showOutputField() {
         mFlOutputField.setVisibility(View.VISIBLE);
-        mSpace.setVisibility(View.VISIBLE);
         mFlOutputField.requestFocus();
     }
 
@@ -205,7 +198,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
 
-        mBtnTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
         mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
         mYandexBadge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
 
