@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,7 +20,7 @@
             app:srcCompat="@drawable/pic_stoned_bear" />
 
         <TextView
-            android:id="@+id/tv_bear_monolog"
+            android:id="@+id/tv_bear_monologue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -90,13 +91,14 @@
     </android.support.design.widget.TabLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_stoned_mode"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:clickable="true"
-        android:visibility="gone"
         app:fabSize="normal"
-        app:srcCompat="@mipmap/mipmap_stoned_bear_white_true" />
+        app:srcCompat="@drawable/ic_focus_24dp" />
 </android.support.design.widget.CoordinatorLayout>

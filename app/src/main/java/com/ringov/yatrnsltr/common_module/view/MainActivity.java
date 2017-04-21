@@ -1,7 +1,9 @@
 package com.ringov.yatrnsltr.common_module.view;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseActivity;
@@ -36,11 +39,15 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     View mStonedBear;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
+    @BindView(R.id.root_layout)
+    View activityRootLayout;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     private boolean stonedModeEnabled;
 
     @Deprecated // button will be used for other reasons
-    @OnClick(R.id.fab_stoned_mode)
+    @OnClick(R.id.fab)
     void onFloatingButtonClick() {
 
     }
@@ -60,11 +67,12 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         super.onCreate(savedInstanceState);
         initializeFragments();
         initializeTabLayout();
+        initializeKeyboardChangedListener();
     }
 
     private void initializeTabLayout() {
 
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
@@ -75,16 +83,6 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
                         commitFragmentIfNotExist(getSupportFragmentManager(), new FavoriteFragment(), R.id.storage_content);
                         break;
                 }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
     }
@@ -112,6 +110,17 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initializeKeyboardChangedListener() {
+        // changing image of floating button depending on state of the keyboard
+        activityRootLayout.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new OnKeyboardStateChangedListener(activityRootLayout) {
+                    @Override
+                    public void onStateChanged(boolean nextStateOpened) {
+                        fab.setImageResource(nextStateOpened ? R.drawable.ic_forward_24dp : R.drawable.ic_focus_24dp);
+                    }
+                });
     }
 
     private void initializeFragments() {
@@ -150,5 +159,49 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     public void showLanguagePair(UILangPair langPair) {
         // nothing
         // todo optimize in order not having these empty methods!
+    }
+
+    private static abstract class OnKeyboardStateChangedListener implements ViewTreeObserver.OnGlobalLayoutListener {
+
+        private View activityRootView;
+        private boolean softKeyboardOpened;
+
+        OnKeyboardStateChangedListener(View activityRootView) {
+            this.activityRootView = activityRootView;
+            this.softKeyboardOpened = false;
+        }
+
+        public abstract void onStateChanged(boolean nextStateOpened);
+
+        @Override
+        public void onGlobalLayout() {
+            Rect r = new Rect();
+            activityRootView.getWindowVisibleDisplayFrame(r);
+            int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
+            if (heightDiff > 100) {
+                if (!softKeyboardOpened) {
+                    onStateChanged(true);
+                    softKeyboardOpened = true;
+                }
+            } else {
+                if (softKeyboardOpened) {
+                    onStateChanged(false);
+                    softKeyboardOpened = false;
+                }
+            }
+        }
+    }
+
+    private static abstract class OnTabSelectedAdaptedListener implements TabLayout.OnTabSelectedListener {
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+            // nothing
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+            // nothing
+        }
     }
 }
