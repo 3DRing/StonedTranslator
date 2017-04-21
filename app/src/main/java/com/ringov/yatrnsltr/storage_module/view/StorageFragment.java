@@ -129,6 +129,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
     public void returnItemBack(UITranslation translation, int position) {
         showHistoryField();
         mAdapter.insertTranslation(translation, position);
+        mRvStorage.smoothScrollToPosition(position);
     }
 
     private void hideHistoryField() {
