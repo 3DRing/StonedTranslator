@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.ringov.yatrnsltr.R;
@@ -22,6 +23,7 @@ import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
 import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
+import com.ringov.yatrnsltr.storage_module.view.HistoryFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateViewCallback;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
@@ -41,8 +43,8 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
 
     @BindView(R.id.ll_stoned_bear)
     View mStonedBear;
-    @BindView(R.id.viewpager)
-    ViewPager mViewPager;
+    @BindView(R.id.storage_content)
+    ViewGroup mStorageContent;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.root_layout)
@@ -50,7 +52,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     @BindView(R.id.fab)
     FloatingActionButton fab;
     TranslateViewCallback translateCallback;
-    private StoragePagerAdapter mViewPagerAdapter;
+
     private boolean stonedModeEnabled;
     private boolean translateOnFloatingButtonClick;
 
@@ -75,45 +77,15 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         initializeFragments();
         initializeTabLayout();
         initializeKeyboardChangedListener();
-        initializeTabLayoutAndViewPager();
-    }
-
-    private void initializeTabLayoutAndViewPager() {
-        mViewPagerAdapter = new StoragePagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mViewPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initializeTabLayout() {
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-                    mViewPagerAdapter.setCrtItemPosition(mViewPager.getCurrentItem());
-                    mViewPagerAdapter.notifyDataSetChanged();
-                } else if (state == ViewPager.SCROLL_STATE_SETTLING) {
-                    if (mViewPager.isFakeDragging()) {
-
-                    }
-                } else {
-                    if (mViewPager.isFakeDragging()) {
-
-                    }
-                }
+            public void onTabSelected(TabLayout.Tab tab) {
+                
             }
         });
-
-        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener(mViewPager));
     }
 
     @Override
@@ -157,7 +129,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         TranslateFragment translateFragment = new TranslateFragment();
         translateCallback = translateFragment;
         commitFragmentIfNotExist(getSupportFragmentManager(), translateFragment, R.id.translate_content);
-        //commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
+        commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
     }
 
     private boolean commitFragmentIfNotExist(FragmentManager fm, Fragment fragment, @IdRes int fragmentContainer) {
@@ -234,30 +206,11 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         }
     }
 
-    private static class OnTabSelectedAdaptedListener implements TabLayout.OnTabSelectedListener {
-
-        private ViewPager mViewPager;
-        private TabLayout.Tab crtTab;
-
-        OnTabSelectedAdaptedListener(ViewPager viewPager) {
-            this.mViewPager = viewPager;
-        }
-
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            if (mViewPager.isFakeDragging()) {
-                //mViewPager.endFakeDrag();
-            }
-        }
+    private static abstract class OnTabSelectedAdaptedListener implements TabLayout.OnTabSelectedListener {
 
         @Override
         public void onTabUnselected(TabLayout.Tab tab) {
             // nothing
-            mViewPager.beginFakeDrag();
-            if(mViewPager.isFakeDragging()){
-                mViewPager.endFakeDrag();
-            }
-            mViewPager.beginFakeDrag();
         }
 
         @Override
