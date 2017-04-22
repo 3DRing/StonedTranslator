@@ -20,7 +20,7 @@ import rx.subjects.BehaviorSubject;
 
 public class CommonRepositoryImpl implements CommonRepository {
 
-    private static final long langUpdateExpired = 1000 * 60 * 60 * 24 * 7; // 7 days
+    private static final long LANG_UPDATE_EXPIRED = 1000 * 60 * 60 * 24 * 7; // 7 days
     private LangPairData crtLangPair;
 
     private BehaviorSubject<LangPairData> changingLanguageEvents;
@@ -67,7 +67,7 @@ public class CommonRepositoryImpl implements CommonRepository {
         // update languages once in 7 days
         long lastUpdate = SharedPreferencesStorage.loadLastLanguagesUpdate();
         long crt = System.currentTimeMillis();
-        if (crt - lastUpdate < langUpdateExpired) {
+        if (crt - lastUpdate < LANG_UPDATE_EXPIRED) {
             return Observable.just(Realm.getDefaultInstance()
                     .copyFromRealm(Realm.getDefaultInstance()
                             .where(Language.class)
