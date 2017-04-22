@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
@@ -29,8 +28,6 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
 
     @BindView(R.id.rv_storage)
     RecyclerView mRvStorage;
-    @BindView(R.id.storage_container)
-    ViewGroup mStorageContainer;
 
     StorageAdapter mAdapter;
 
@@ -50,7 +47,6 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
 
     private void initializeRecycler() {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setReverseLayout(true);
         mRvStorage.setLayoutManager(llm);
 
         // adding divider for list
@@ -61,7 +57,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
         mAdapter = new StorageAdapter(new StorageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(UITranslation translation) {
-                // nothing
+                mPresenter.onItemClicked(translation);
             }
 
             @Override
@@ -78,7 +74,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
                     mAdapter.remove(position);
 
                     // what strings will be pick depends on mode
-                    Snackbar.make(mStorageContainer,
+                    Snackbar.make(mRvStorage,
                             stonedModeEnabled ? R.string.deleted_from_history_stoned : R.string.deleted_from_history,
                             Snackbar.LENGTH_LONG)
                             .setAction(stonedModeEnabled ? R.string.restore_item_stoned : R.string.restore_item,
@@ -105,7 +101,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
     }
 
     private void showHistoryField() {
-        mStorageContainer.setVisibility(View.VISIBLE);
+        mRvStorage.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -133,10 +129,11 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
     public void returnItemBack(UITranslation translation, int position) {
         showHistoryField();
         mAdapter.insertTranslation(translation, position);
+        mRvStorage.smoothScrollToPosition(position);
     }
 
     private void hideHistoryField() {
-        mStorageContainer.setVisibility(View.GONE);
+        mRvStorage.setVisibility(View.GONE);
     }
 
     @Override

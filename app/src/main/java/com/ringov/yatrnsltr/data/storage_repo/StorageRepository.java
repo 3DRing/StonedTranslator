@@ -25,4 +25,7 @@ public interface StorageRepository {
 
     Completable setFavorite(long timeStamp, boolean isFavorite);
 
+    Completable pickPreviousTranslation(long timestamp);
+
+    Observable<StoredTranslationData> subscribeToPreviousTranslationPicking();
 }

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:id="@+id/ll_stoned_bear"
@@ -19,9 +22,9 @@
             app:srcCompat="@drawable/pic_stoned_bear" />
 
         <TextView
-            android:id="@+id/tv_bear_monolog"
+            android:id="@+id/tv_bear_monologue"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:alpha="0.5"
@@ -30,38 +33,43 @@
             android:textAllCaps="false" />
     </LinearLayout>
 
-    <ScrollView
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true">
 
-        <LinearLayout
-            android:id="@+id/container"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
 
-            <FrameLayout
-                android:id="@+id/translate_content"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="@android:color/white">
 
-            </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/translate_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.CardView>
 
-            <FrameLayout
-                android:id="@+id/storage_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        </android.support.design.widget.CollapsingToolbarLayout>
 
-            </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
 
-            <android.support.v4.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="48dp" />
 
-        </LinearLayout>
-    </ScrollView>
+    <FrameLayout
+        android:id="@+id/storage_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </FrameLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -90,13 +98,14 @@
     </android.support.design.widget.TabLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_stoned_mode"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:clickable="true"
-        android:visibility="gone"
         app:fabSize="normal"
-        app:srcCompat="@mipmap/mipmap_stoned_bear_white_true" />
+        app:srcCompat="@drawable/ic_focus_24dp" />
 </android.support.design.widget.CoordinatorLayout>

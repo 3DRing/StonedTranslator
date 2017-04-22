@@ -1,7 +1,10 @@
 package com.ringov.yatrnsltr.common_module.view;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseActivity;
@@ -20,6 +25,7 @@ import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
 import com.ringov.yatrnsltr.storage_module.view.FavoriteFragment;
 import com.ringov.yatrnsltr.storage_module.view.HistoryFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
+import com.ringov.yatrnsltr.translation_module.view.TranslateViewCallback;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.List;
@@ -32,17 +38,27 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     private static final int HISTORY_TAB = 0;
     private static final int FAVORITE_TAB = 1;
 
+    @BindView(R.id.appbar)
+    AppBarLayout mAppbar;
+
     @BindView(R.id.ll_stoned_bear)
     View mStonedBear;
+    @BindView(R.id.storage_content)
+    ViewGroup mStorageContent;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
+    @BindView(R.id.root_layout)
+    View activityRootLayout;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    TranslateViewCallback translateCallback;
 
     private boolean stonedModeEnabled;
+    private boolean translateOnFloatingButtonClick;
 
-    @Deprecated // button will be used for other reasons
-    @OnClick(R.id.fab_stoned_mode)
+    @OnClick(R.id.fab)
     void onFloatingButtonClick() {
-
+        mPresenter.onFloatingButtonClicked(translateOnFloatingButtonClick);
     }
 
     @Override
@@ -60,11 +76,11 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         super.onCreate(savedInstanceState);
         initializeFragments();
         initializeTabLayout();
+        initializeKeyboardChangedListener();
     }
 
     private void initializeTabLayout() {
-
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
@@ -75,16 +91,6 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
                         commitFragmentIfNotExist(getSupportFragmentManager(), new FavoriteFragment(), R.id.storage_content);
                         break;
                 }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
     }
@@ -114,8 +120,22 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         return super.onOptionsItemSelected(item);
     }
 
+    private void initializeKeyboardChangedListener() {
+        // changing image of floating button depending on state of the keyboard
+        activityRootLayout.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new OnKeyboardStateChangedListener(activityRootLayout) {
+                    @Override
+                    public void onStateChanged(boolean nextStateOpened) {
+                        translateOnFloatingButtonClick = nextStateOpened;
+                        fab.setImageResource(nextStateOpened ? R.drawable.ic_forward_24dp : R.drawable.ic_focus_24dp);
+                    }
+                });
+    }
+
     private void initializeFragments() {
-        commitFragmentIfNotExist(getSupportFragmentManager(), new TranslateFragment(), R.id.translate_content);
+        TranslateFragment translateFragment = new TranslateFragment();
+        translateCallback = translateFragment;
+        commitFragmentIfNotExist(getSupportFragmentManager(), translateFragment, R.id.translate_content);
         commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
     }
 
@@ -136,7 +156,6 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         mStonedBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
         mTabLayout.getTabAt(HISTORY_TAB).setText(enable ? R.string.history_title_stoned : R.string.history_title);
         mTabLayout.getTabAt(FAVORITE_TAB).setText(enable ? R.string.favorite_title_stoned : R.string.favorite_title);
-
         invalidateOptionsMenu(); // redraw options menu in top-right corner
     }
 
@@ -150,5 +169,60 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     public void showLanguagePair(UILangPair langPair) {
         // nothing
         // todo optimize in order not having these empty methods!
+    }
+
+    @Override
+    public void requestInputFocus() {
+        translateCallback.requestInputFocus();
+        mAppbar.setExpanded(true, true);
+    }
+
+    @Override
+    public void requestTranslate() {
+        translateCallback.requestTranslate();
+    }
+
+    private static abstract class OnKeyboardStateChangedListener implements ViewTreeObserver.OnGlobalLayoutListener {
+
+        private View activityRootView;
+        private boolean softKeyboardOpened;
+
+        OnKeyboardStateChangedListener(View activityRootView) {
+            this.activityRootView = activityRootView;
+            this.softKeyboardOpened = false;
+        }
+
+        public abstract void onStateChanged(boolean nextStateOpened);
+
+        @Override
+        public void onGlobalLayout() {
+            Rect r = new Rect();
+            activityRootView.getWindowVisibleDisplayFrame(r);
+            int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
+            if (heightDiff > 100) {
+                if (!softKeyboardOpened) {
+                    onStateChanged(true);
+                    softKeyboardOpened = true;
+                }
+            } else {
+                if (softKeyboardOpened) {
+                    onStateChanged(false);
+                    softKeyboardOpened = false;
+                }
+            }
+        }
+    }
+
+    private static abstract class OnTabSelectedAdaptedListener implements TabLayout.OnTabSelectedListener {
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+            // nothing
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+            // nothing
+        }
     }
 }

@@ -1,9 +1,9 @@
 package com.ringov.yatrnsltr.translation_module.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
-import android.support.v4.widget.Space;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -28,8 +28,10 @@ import butterknife.OnClick;
  */
 
 public class TranslateFragment extends BaseFragment<TranslationPresenter>
-        implements TranslationView {
+        implements TranslationView,
+        TranslateViewCallback {
 
+    private static final long OPEN_KEYBOARD_DELAY = 200;
     @BindView(R.id.et_input)
     EditText mEtOriginalText;
     @BindView(R.id.inc_more_options)
@@ -38,8 +40,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     TextView mTvSourceLang;
     @BindView(R.id.tv_target_lang)
     TextView mTvTargetLang;
-    @BindView(R.id.space_near_output)
-    Space mSpace;
 
     @BindView(R.id.fl_output_field)
     ViewGroup mFlOutputField;
@@ -50,8 +50,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.tv_lang_pair)
     TextView mTvLangPair;
 
-    @BindView(R.id.tv_translate)
-    TextView mBtnTranslate;
     @BindView(R.id.tv_yandex_badge)
     TextView mYandexBadge;
 
@@ -84,7 +82,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mPresenter.moreOptionsClicked();
     }
 
-    @OnClick(R.id.tv_translate)
     void onTranslateClick() {
         mPresenter.translateClicked(mEtOriginalText.getText().toString());
     }
@@ -138,7 +135,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
 
     private void showOutputField() {
         mFlOutputField.setVisibility(View.VISIBLE);
-        mSpace.setVisibility(View.VISIBLE);
         mFlOutputField.requestFocus();
     }
 
@@ -202,7 +198,6 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
 
-        mBtnTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
         mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
         mYandexBadge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
 
@@ -210,6 +205,29 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         if (crtTranslation != null) {
             showTranslation(crtTranslation);
         }
+    }
+
+    @Override
+    public void showTranslationAndInputText(UITranslation translation) {
+        showTranslation(translation);
+        mEtOriginalText.setText(translation.getOriginalText());
+        mEtOriginalText.requestFocus();
+    }
+
+    @Override
+    public void requestInputFocus() {
+        mEtOriginalText.requestFocus();
+        mEtOriginalText.postDelayed(() -> {
+                    InputMethodManager keyboard =
+                            (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    keyboard.showSoftInput(mEtOriginalText, 0);
+                }
+                , OPEN_KEYBOARD_DELAY);
+    }
+
+    @Override
+    public void requestTranslate() {
+        onTranslateClick();
     }
 
     private static class ViewState extends BaseViewState {

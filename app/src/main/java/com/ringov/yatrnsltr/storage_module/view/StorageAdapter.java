@@ -40,8 +40,8 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.BaseView
     }
 
     public void addTransaction(UITranslation transaction) {
-        this.items.add(transaction);
-        notifyItemInserted(this.items.size() - 1);
+        this.items.add(0, transaction);
+        notifyItemInserted(0);
     }
 
     @Override

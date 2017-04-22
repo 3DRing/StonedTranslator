@@ -3,7 +3,9 @@ package com.ringov.yatrnsltr.translation_module.interactor;
 import com.ringov.yatrnsltr.base.implementations.BaseInteractorImpl;
 import com.ringov.yatrnsltr.data.common_repo.CommonRepositoryProvider;
 import com.ringov.yatrnsltr.data.stoned_service.StonedConvertingService;
+import com.ringov.yatrnsltr.data.storage_repo.StorageRepositoryProvider;
 import com.ringov.yatrnsltr.data.translation_repo.TranslationRepositoryProvider;
+import com.ringov.yatrnsltr.storage_module.interactor.StorageInteractorImpl;
 import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
 import com.ringov.yatrnsltr.ui_entities.UILangPair;
@@ -25,6 +27,12 @@ public class TranslationInteractorImpl extends BaseInteractorImpl implements Tra
                 .subscribeToLangPairChanging()
                 .doOnNext(langPair -> crtLangPair = langPair)
                 .map(LangPairData::toUILangPair);
+    }
+
+    @Override
+    public Observable<UITranslation> subscribeToPreviousTranslationPicking() {
+        return StorageRepositoryProvider.getStorageRepository().subscribeToPreviousTranslationPicking()
+                .map(StorageInteractorImpl::applyStonedMode);
     }
 
     public Observable<UITranslation> translate(String text) {

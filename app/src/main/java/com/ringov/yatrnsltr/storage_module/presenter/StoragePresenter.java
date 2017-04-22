@@ -29,7 +29,7 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
         subscribeToModeChangedCommon();
     }
 
-    private void loadStorage(StorageView.StorageType type) {
+    public void loadStorage(StorageView.StorageType type) {
         Observable<List<UITranslation>> observable;
         switch (type) {
             case HISTORY:
@@ -93,5 +93,16 @@ public class StoragePresenter extends BasePresenter<StorageView, StorageRouter, 
                 .subscribe(() -> {
                     // nothing to do in view, because items handled icon changing by itself
                 }, this::handleError));
+    }
+
+    public void onItemClicked(UITranslation translation) {
+        mSubscription.add(getInteractor().pickPreviousTranslation(translation.getId())
+                .compose(Utils.setRxSchedulersForCompletable())
+                .subscribe(() -> {
+                }, this::handleError));
+    }
+
+    public void onUpdateRequest() {
+        loadStorage(getView().getStorageType());
     }
 }

@@ -24,4 +24,6 @@ public interface StorageInteractor extends BaseInteractor {
     Observable<UITranslation> undoLastDeletion();
 
     Completable setFavorite(long timeStamp, boolean isFavorite);
+
+    Completable pickPreviousTranslation(long id);
 }

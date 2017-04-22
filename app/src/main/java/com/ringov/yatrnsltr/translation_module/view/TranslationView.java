@@ -23,4 +23,6 @@ public interface TranslationView extends BaseView {
 
     // todo create a new parent class StonedView and move this method there
     void setStonedMode(boolean enable);
+
+    void showTranslationAndInputText(UITranslation translation);
 }
