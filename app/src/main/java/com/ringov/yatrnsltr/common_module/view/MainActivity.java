@@ -3,6 +3,7 @@ package com.ringov.yatrnsltr.common_module.view;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.ringov.yatrnsltr.R;
@@ -36,15 +38,19 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     private static final int HISTORY_TAB = 0;
     private static final int FAVORITE_TAB = 1;
 
+    @BindView(R.id.appbar)
+    AppBarLayout mAppbar;
+
     @BindView(R.id.ll_stoned_bear)
     View mStonedBear;
+    @BindView(R.id.storage_content)
+    ViewGroup mStorageContent;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.root_layout)
     View activityRootLayout;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
     TranslateViewCallback translateCallback;
 
     private boolean stonedModeEnabled;
@@ -74,7 +80,6 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     }
 
     private void initializeTabLayout() {
-
         mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -151,7 +156,6 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         mStonedBear.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
         mTabLayout.getTabAt(HISTORY_TAB).setText(enable ? R.string.history_title_stoned : R.string.history_title);
         mTabLayout.getTabAt(FAVORITE_TAB).setText(enable ? R.string.favorite_title_stoned : R.string.favorite_title);
-
         invalidateOptionsMenu(); // redraw options menu in top-right corner
     }
 
@@ -170,6 +174,7 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
     @Override
     public void requestInputFocus() {
         translateCallback.requestInputFocus();
+        mAppbar.setExpanded(true, true);
     }
 
     @Override

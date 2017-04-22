@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import rx.Completable;
 import rx.Observable;
 import rx.subjects.PublishSubject;
@@ -31,7 +32,9 @@ public class StorageRepositoryImpl implements StorageRepository {
     @Override
     public Observable<List<StoredTranslationData>> loadHistory() {
         RealmResults<StoredTranslationData> results =
-                Realm.getDefaultInstance().where(StoredTranslationData.class).findAll().sort(PRIMARY_LEY);
+                Realm.getDefaultInstance().where(StoredTranslationData.class)
+                        .findAll()
+                        .sort(PRIMARY_LEY, Sort.DESCENDING);
         return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
     }
 
@@ -40,7 +43,8 @@ public class StorageRepositoryImpl implements StorageRepository {
         RealmResults<StoredTranslationData> results =
                 Realm.getDefaultInstance().where(StoredTranslationData.class)
                         .equalTo(FAVORITE, true)
-                        .findAll().sort(PRIMARY_LEY);
+                        .findAll()
+                        .sort(PRIMARY_LEY, Sort.DESCENDING);
         return Observable.just(Realm.getDefaultInstance().copyFromRealm(results));
     }
 
