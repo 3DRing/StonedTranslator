@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.realm.RealmModel;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by Sergey Koltsov on 14.04.2017.
  */
 
+@RealmClass
 public class Language implements RealmModel {
 
     public static final Language EMPTY = new Language();
@@ -20,7 +22,7 @@ public class Language implements RealmModel {
     /**
      * service constructor
      */
-    private Language() {
+    public Language() {
         this.shortName = "";
         this.fullOriginalName = "";
     }
