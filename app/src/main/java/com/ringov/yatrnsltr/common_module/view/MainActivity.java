@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +22,7 @@ import com.ringov.yatrnsltr.common_module.entities.UILanguage;
 import com.ringov.yatrnsltr.common_module.interactor.CommonInteractorImpl;
 import com.ringov.yatrnsltr.common_module.presenter.CommonPresenter;
 import com.ringov.yatrnsltr.common_module.router.CommonRouterImpl;
+import com.ringov.yatrnsltr.storage_module.view.FavoriteFragment;
 import com.ringov.yatrnsltr.storage_module.view.HistoryFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateFragment;
 import com.ringov.yatrnsltr.translation_module.view.TranslateViewCallback;
@@ -83,7 +83,14 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                
+                switch (tab.getPosition()) {
+                    case 0:
+                        commitFragmentIfNotExist(getSupportFragmentManager(), new HistoryFragment(), R.id.storage_content);
+                        break;
+                    case 1:
+                        commitFragmentIfNotExist(getSupportFragmentManager(), new FavoriteFragment(), R.id.storage_content);
+                        break;
+                }
             }
         });
     }
