@@ -99,12 +99,10 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
         @OnClick(R.id.btn_from)
         void onFromClick() {
             if (crtFromHolder != null) {
-                crtFromHolder.mBtnTo.setEnabled(true);
                 crtFromHolder.mBtnFrom.setChecked(false);
             }
             crtFromHolder = this;
             mBtnFrom.setChecked(true);
-            mBtnTo.setEnabled(false);
 
             if (!items.get(position).equals(crtLangPair.getSourceLang())) {
                 crtLangPair.setSourceLang(items.get(position));
@@ -115,12 +113,10 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
         @OnClick(R.id.btn_to)
         void onToClick() {
             if (crtToHolder != null) {
-                crtToHolder.mBtnFrom.setEnabled(true);
                 crtToHolder.mBtnTo.setChecked(false);
             }
             crtToHolder = this;
             mBtnTo.setChecked(true);
-            mBtnFrom.setEnabled(false);
 
             if (!items.get(position).equals(crtLangPair.getTargetLang())) {
                 crtLangPair.setTargetLang(items.get(position));
@@ -138,18 +134,14 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
 
             if (crtLang.equals(crtLangPair.getSourceLang())) {
                 mBtnFrom.setChecked(true);
-                mBtnTo.setEnabled(false);
                 crtFromHolder = this;
             } else {
                 mBtnFrom.setChecked(false);
-                mBtnTo.setEnabled(true);
             }
             if (crtLang.equals(crtLangPair.getTargetLang())) {
-                mBtnFrom.setEnabled(false);
                 mBtnTo.setChecked(true);
                 crtToHolder = this;
             } else {
-                mBtnFrom.setEnabled(true);
                 mBtnTo.setChecked(false);
             }
         }
