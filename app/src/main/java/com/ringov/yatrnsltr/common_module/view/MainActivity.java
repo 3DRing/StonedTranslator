@@ -101,16 +101,19 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
                 if (state == ViewPager.SCROLL_STATE_DRAGGING) {
                     mViewPagerAdapter.setCrtItemPosition(mViewPager.getCurrentItem());
                     mViewPagerAdapter.notifyDataSetChanged();
+                } else if (state == ViewPager.SCROLL_STATE_SETTLING) {
+                    if (mViewPager.isFakeDragging()) {
+
+                    }
+                } else {
+                    if (mViewPager.isFakeDragging()) {
+
+                    }
                 }
             }
         });
 
-        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-            }
-        });
+        mTabLayout.addOnTabSelectedListener(new OnTabSelectedAdaptedListener(mViewPager));
     }
 
     @Override
@@ -231,11 +234,30 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
         }
     }
 
-    private abstract class OnTabSelectedAdaptedListener implements TabLayout.OnTabSelectedListener {
+    private static class OnTabSelectedAdaptedListener implements TabLayout.OnTabSelectedListener {
+
+        private ViewPager mViewPager;
+        private TabLayout.Tab crtTab;
+
+        OnTabSelectedAdaptedListener(ViewPager viewPager) {
+            this.mViewPager = viewPager;
+        }
+
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            if (mViewPager.isFakeDragging()) {
+                //mViewPager.endFakeDrag();
+            }
+        }
 
         @Override
         public void onTabUnselected(TabLayout.Tab tab) {
             // nothing
+            mViewPager.beginFakeDrag();
+            if(mViewPager.isFakeDragging()){
+                mViewPager.endFakeDrag();
+            }
+            mViewPager.beginFakeDrag();
         }
 
         @Override
