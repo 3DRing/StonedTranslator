@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.translation_module.view;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -10,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
@@ -22,6 +24,9 @@ import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.
@@ -58,6 +63,9 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.pb_loading)
     ProgressBar mPbLoading;
 
+    @BindView(R.id.tv_translate)
+    TextView mTvTranslate;
+
     private boolean stonedModeEnabled;
 
     private UITranslation crtTranslation;
@@ -82,13 +90,26 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mPresenter.moreOptionsClicked();
     }
 
+    @OnClick(R.id.btn_translate)
     void onTranslateClick() {
         mPresenter.translateClicked(mEtOriginalText.getText().toString());
     }
 
+    @OnLongClick(R.id.fl_output_field)
+    boolean onOutputFieldLongClick() {
+        mPresenter.onOutputLongClicked(mTvTranslation.getText().toString());
+        return true;
+    }
+
+    @OnClick(R.id.fl_output_field)
+    void onOutputFieldClick() {
+        mPresenter.onOutputClicked(mTvTranslation.getText().toString(),
+                (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE));
+    }
+
     @Override
     protected TranslationPresenter providePresenter() {
-        return new TranslationPresenter(this, new TranslationRouterImpl(new ContextAdapter(getContext())),
+        return new TranslationPresenter(this, new TranslationRouterImpl(new ContextAdapter(getActivity())),
                 new TranslationInteractorImpl());
     }
 
@@ -198,6 +219,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
 
+        mTvTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
         mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
         mYandexBadge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
 
@@ -212,6 +234,11 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         showTranslation(translation);
         mEtOriginalText.setText(translation.getOriginalText());
         mEtOriginalText.requestFocus();
+    }
+
+    @Override
+    public void showCopiedToClipBoard() {
+        Toast.makeText(getActivity(), getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show();
     }
 
     @Override

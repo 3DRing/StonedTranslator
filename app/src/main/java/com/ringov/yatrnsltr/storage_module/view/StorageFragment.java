@@ -35,7 +35,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
 
     @Override
     protected StoragePresenter providePresenter() {
-        return new StoragePresenter(this, new StorageRouterImpl(new ContextAdapter(getContext())),
+        return new StoragePresenter(this, new StorageRouterImpl(new ContextAdapter(getActivity())),
                 new StorageInteractorImpl());
     }
 
@@ -76,7 +76,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
                     // what strings will be pick depends on mode
                     Snackbar.make(mRvStorage,
                             stonedModeEnabled ? R.string.deleted_from_history_stoned : R.string.deleted_from_history,
-                            Snackbar.LENGTH_LONG)
+                            Snackbar.LENGTH_SHORT)
                             .setAction(stonedModeEnabled ? R.string.restore_item_stoned : R.string.restore_item,
                                     v -> mPresenter.onUndoDeletion())
                             .show();
@@ -116,6 +116,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
     public void addToStorage(UITranslation transaction) {
         showHistoryField();
         mAdapter.addTransaction(transaction);
+        mRvStorage.smoothScrollToPosition(0);
     }
 
     @Override

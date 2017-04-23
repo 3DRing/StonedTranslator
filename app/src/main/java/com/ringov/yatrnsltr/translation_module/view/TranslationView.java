@@ -25,4 +25,6 @@ public interface TranslationView extends BaseView {
     void setStonedMode(boolean enable);
 
     void showTranslationAndInputText(UITranslation translation);
+
+    void showCopiedToClipBoard();
 }
