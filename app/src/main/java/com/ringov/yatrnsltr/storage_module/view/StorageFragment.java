@@ -76,7 +76,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
                     // what strings will be pick depends on mode
                     Snackbar.make(mRvStorage,
                             stonedModeEnabled ? R.string.deleted_from_history_stoned : R.string.deleted_from_history,
-                            Snackbar.LENGTH_LONG)
+                            Snackbar.LENGTH_SHORT)
                             .setAction(stonedModeEnabled ? R.string.restore_item_stoned : R.string.restore_item,
                                     v -> mPresenter.onUndoDeletion())
                             .show();
