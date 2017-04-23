@@ -116,6 +116,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
     public void addToStorage(UITranslation transaction) {
         showHistoryField();
         mAdapter.addTransaction(transaction);
+        mRvStorage.smoothScrollToPosition(0);
     }
 
     @Override
