@@ -2,6 +2,7 @@ package com.ringov.yatrnsltr.base.routing;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.ShareCompat;
 
 import com.ringov.yatrnsltr.common_module.view.ChooseLanguageActivity;
 
@@ -11,18 +12,28 @@ import com.ringov.yatrnsltr.common_module.view.ChooseLanguageActivity;
 
 public class StoryBoard {
     public static StoryDestination yandexTranslateLink() {
-        return context -> {
+        return activity -> {
             String url = "https://www.translate.yandex.ru";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
-            context.startActivity(i);
+            activity.startActivity(i);
         };
     }
 
     public static StoryDestination chooseLanguageScreen() {
-        return context -> {
-            Intent i = new Intent(context, ChooseLanguageActivity.class);
-            context.startActivity(i);
+        return activity -> {
+            Intent i = new Intent(activity, ChooseLanguageActivity.class);
+            activity.startActivity(i);
         };
+    }
+
+    public static StoryDestination shareText(String translation) {
+        return activity ->
+                ShareCompat.IntentBuilder
+                        .from(activity)
+                        .setText(translation)
+                        .setType("text/plain")
+                        .setChooserTitle("Отправить перевод")
+                        .startChooser();
     }
 }

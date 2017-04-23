@@ -22,6 +22,7 @@ import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.
@@ -90,9 +91,15 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mPresenter.translateClicked(mEtOriginalText.getText().toString());
     }
 
+    @OnLongClick(R.id.fl_output_field)
+    boolean onOutputFieldClick() {
+        mPresenter.onOutputLongClicked(mTvTranslation.getText().toString());
+        return true;
+    }
+
     @Override
     protected TranslationPresenter providePresenter() {
-        return new TranslationPresenter(this, new TranslationRouterImpl(new ContextAdapter(getContext())),
+        return new TranslationPresenter(this, new TranslationRouterImpl(new ContextAdapter(getActivity())),
                 new TranslationInteractorImpl());
     }
 

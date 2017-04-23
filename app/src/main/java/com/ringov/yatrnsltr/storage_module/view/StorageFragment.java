@@ -35,7 +35,7 @@ public abstract class StorageFragment extends BaseFragment<StoragePresenter> imp
 
     @Override
     protected StoragePresenter providePresenter() {
-        return new StoragePresenter(this, new StorageRouterImpl(new ContextAdapter(getContext())),
+        return new StoragePresenter(this, new StorageRouterImpl(new ContextAdapter(getActivity())),
                 new StorageInteractorImpl());
     }
 

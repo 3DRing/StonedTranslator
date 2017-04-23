@@ -1,8 +1,6 @@
 package com.ringov.yatrnsltr.base.implementations;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 
 import com.ringov.yatrnsltr.base.routing.StoryDestination;
 
@@ -13,17 +11,17 @@ import com.ringov.yatrnsltr.base.routing.StoryDestination;
  * Created by Sergey Koltsov on 14.04.2017.
  */
 public class ContextAdapter {
-    private Context context;
+    private Activity activity;
 
-    public ContextAdapter(Context context) {
-        this.context = context;
+    public ContextAdapter(Activity activity) {
+        this.activity = activity;
     }
 
     public void start(StoryDestination destination) {
-        destination.start(context);
+        destination.start(activity);
     }
 
     public void detach() {
-        this.context = null;
+        this.activity = null;
     }
 }

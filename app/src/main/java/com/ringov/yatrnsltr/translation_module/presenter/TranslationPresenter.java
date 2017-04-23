@@ -91,4 +91,8 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
                 .compose(Utils.setRxSchedulers())
                 .subscribe(getView()::showTranslationAndInputText, this::handleError));
     }
+
+    public void onOutputLongClicked(String translation) {
+        getRouter().shareTranslation(translation);
+    }
 }
