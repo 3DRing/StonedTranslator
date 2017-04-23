@@ -58,6 +58,9 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     @BindView(R.id.pb_loading)
     ProgressBar mPbLoading;
 
+    @BindView(R.id.tv_translate)
+    TextView mTvTranslate;
+
     private boolean stonedModeEnabled;
 
     private UITranslation crtTranslation;
@@ -82,6 +85,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         mPresenter.moreOptionsClicked();
     }
 
+    @OnClick(R.id.btn_translate)
     void onTranslateClick() {
         mPresenter.translateClicked(mEtOriginalText.getText().toString());
     }
@@ -198,6 +202,7 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     public void setStonedMode(boolean enable) {
         stonedModeEnabled = enable;
 
+        mTvTranslate.setText(enable ? R.string.translate_button_text_stoned : R.string.translate_button_text);
         mEtOriginalText.setHint(enable ? R.string.input_hint_text_stoned : R.string.input_hint_text);
         mYandexBadge.setText(enable ? R.string.yandex_badge_text_stoned : R.string.yandex_badge_text);
 
