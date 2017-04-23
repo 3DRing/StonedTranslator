@@ -20,6 +20,7 @@ public class SharedPreferencesStorage {
     private static final String LAST_SOURCE_LANG = "last_source_lang";
     private static final String LAST_TARGET_LANG = "last_target_lang";
     private static final String STONED_MODE = "stoned_mode";
+    private static final String LAST_LANGS_UPDATE = "last_langs_update";
 
     private static SharedPreferences sp;
 
@@ -60,5 +61,15 @@ public class SharedPreferencesStorage {
 
     public static Observable<Boolean> loadStonedMode() {
         return Observable.just(sp.getBoolean(STONED_MODE, false));
+    }
+
+    public static long loadLastLanguagesUpdate() {
+        return sp.getLong(LAST_LANGS_UPDATE, 0);
+    }
+
+    public static void saveLanguagesUpdate(long crtUpdate) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putLong(LAST_LANGS_UPDATE, crtUpdate);
+        editor.apply();
     }
 }

@@ -55,9 +55,7 @@ public class CommonPresenter extends BasePresenter<CommonView, CommonRouter, Com
                 .compose(Utils.setRxSchedulers())
                 .doOnSubscribe(getView()::showLoading)
                 .doOnTerminate(getView()::hideLoading)
-                .doOnError(throwable -> {
-                    getView().hideLoading();
-                })
+                .doOnError(throwable -> getView().hideLoading())
                 .subscribe(getView()::showAllLanguages, this::handleError));
     }
 

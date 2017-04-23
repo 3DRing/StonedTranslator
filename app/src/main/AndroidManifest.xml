@@ -12,7 +12,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".common_module.view.MainActivity">
+        <activity
+            android:name=".common_module.view.MainActivity"
+            android:screenOrientation="portrait">
+            <!--Из за какого-то одного нелепого бага, всплывшего за несколько часов до дедлайна,
+            пришлось отказаться от адаптаций к разным экранам в пользу устойчивости :(
+            Столько часов разработки было отдано именно этой адаптации... Но усточивость важнее возможности крутить приложение-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +25,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".common_module.view.ChooseLanguageActivity" />
+        <activity
+            android:name=".common_module.view.ChooseLanguageActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

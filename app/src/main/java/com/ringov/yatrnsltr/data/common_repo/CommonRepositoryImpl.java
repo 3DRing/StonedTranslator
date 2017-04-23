@@ -10,6 +10,7 @@ import com.ringov.yatrnsltr.translation_module.entities.LangPairData;
 
 import java.util.List;
 
+import io.realm.Realm;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
@@ -19,6 +20,7 @@ import rx.subjects.BehaviorSubject;
 
 public class CommonRepositoryImpl implements CommonRepository {
 
+    private static final long LANG_UPDATE_EXPIRED = 1000 * 60 * 60 * 24 * 7; // 7 days
     private LangPairData crtLangPair;
 
     private BehaviorSubject<LangPairData> changingLanguageEvents;
@@ -62,11 +64,27 @@ public class CommonRepositoryImpl implements CommonRepository {
 
     @Override
     public Observable<List<Language>> loadAllLanguages() {
-        return getService().getAllLanguages(Config.API_KEY,
-                new Language(Language.SupportedLanguage.RU).getShortName()) // customize
-                .flatMap(response -> Observable.from(response.getAllLangs()))
-                .map(this::convertToLanguage)
-                .toList();
+        // update languages once in 7 days
+        long lastUpdate = SharedPreferencesStorage.loadLastLanguagesUpdate();
+        long crt = System.currentTimeMillis();
+        if (crt - lastUpdate < LANG_UPDATE_EXPIRED) {
+            return Observable.just(Realm.getDefaultInstance()
+                    .copyFromRealm(Realm.getDefaultInstance()
+                            .where(Language.class)
+                            .findAll()));
+        } else {
+            return getService().getAllLanguages(Config.API_KEY,
+                    new Language(Language.SupportedLanguage.RU).getShortName())
+                    .flatMap(response -> Observable.from(response.getAllLangs()))
+                    .map(this::convertToLanguage)
+                    .toList()
+                    .doOnNext(langs -> SharedPreferencesStorage.saveLanguagesUpdate(crt))
+                    .doOnNext(langs ->
+                            Realm.getDefaultInstance().executeTransaction(realm -> {
+                                realm.delete(Language.class);
+                                realm.insert(langs);
+                            }));
+        }
     }
 
     @Override
