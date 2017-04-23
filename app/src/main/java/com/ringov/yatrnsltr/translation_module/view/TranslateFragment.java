@@ -1,6 +1,7 @@
 package com.ringov.yatrnsltr.translation_module.view;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -10,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
@@ -23,6 +25,8 @@ import com.ringov.yatrnsltr.ui_entities.UITranslation;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.
@@ -92,9 +96,15 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
     }
 
     @OnLongClick(R.id.fl_output_field)
-    boolean onOutputFieldClick() {
+    boolean onOutputFieldLongClick() {
         mPresenter.onOutputLongClicked(mTvTranslation.getText().toString());
         return true;
+    }
+
+    @OnClick(R.id.fl_output_field)
+    void onOutputFieldClick() {
+        mPresenter.onOutputClicked(mTvTranslation.getText().toString(),
+                (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE));
     }
 
     @Override
@@ -224,6 +234,11 @@ public class TranslateFragment extends BaseFragment<TranslationPresenter>
         showTranslation(translation);
         mEtOriginalText.setText(translation.getOriginalText());
         mEtOriginalText.requestFocus();
+    }
+
+    @Override
+    public void showCopiedToClipBoard() {
+        Toast.makeText(getActivity(), getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show();
     }
 
     @Override

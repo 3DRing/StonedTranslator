@@ -1,5 +1,8 @@
 package com.ringov.yatrnsltr.translation_module.presenter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+
 import com.ringov.yatrnsltr.Utils;
 import com.ringov.yatrnsltr.base.BasePresenter;
 import com.ringov.yatrnsltr.translation_module.interactor.TranslationInteractor;
@@ -94,5 +97,11 @@ public class TranslationPresenter extends BasePresenter<TranslationView, Transla
 
     public void onOutputLongClicked(String translation) {
         getRouter().shareTranslation(translation);
+    }
+
+    public void onOutputClicked(String translation, ClipboardManager clipboardManager) {
+        ClipData clip = ClipData.newPlainText("translation", translation);
+        clipboardManager.setPrimaryClip(clip);
+        getView().showCopiedToClipBoard();
     }
 }
