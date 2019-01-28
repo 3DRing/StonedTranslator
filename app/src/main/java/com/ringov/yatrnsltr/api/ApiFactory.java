@@ -1,11 +1,10 @@
 package com.ringov.yatrnsltr.api;
 
-import android.support.annotation.NonNull;
-
 import com.ringov.yatrnsltr.Config;
 
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

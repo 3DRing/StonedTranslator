@@ -2,12 +2,6 @@ package com.ringov.yatrnsltr.common_module.view;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseActivity;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
@@ -30,6 +27,9 @@ import com.ringov.yatrnsltr.ui_entities.UILangPair;
 
 import java.util.List;
 
+import androidx.annotation.IdRes;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.OnClick;
 

@@ -1,14 +1,16 @@
 package com.ringov.yatrnsltr.custom_views;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
+
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.
  */
 
-public abstract class ToggleImageButton extends android.support.v7.widget.AppCompatImageButton {
+public abstract class ToggleImageButton extends AppCompatImageButton {
 
     protected boolean mChecked;
     private OnToggleListener mListener;

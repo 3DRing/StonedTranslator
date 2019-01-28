@@ -1,11 +1,11 @@
 package com.ringov.yatrnsltr.common_module.view;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-
 import com.ringov.yatrnsltr.storage_module.view.FavoriteFragment;
 import com.ringov.yatrnsltr.storage_module.view.HistoryFragment;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 /**
  * Created by Sergey Koltsov on 22.04.2017.

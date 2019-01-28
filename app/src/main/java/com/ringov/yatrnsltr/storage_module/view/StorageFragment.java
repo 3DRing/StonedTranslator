@@ -1,13 +1,9 @@
 package com.ringov.yatrnsltr.storage_module.view;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.implementations.BaseFragment;
 import com.ringov.yatrnsltr.base.implementations.ContextAdapter;
@@ -18,6 +14,10 @@ import com.ringov.yatrnsltr.ui_entities.UITranslation;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**

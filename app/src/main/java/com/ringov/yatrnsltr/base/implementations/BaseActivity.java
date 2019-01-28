@@ -1,14 +1,14 @@
 package com.ringov.yatrnsltr.base.implementations;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.v7.app.AppCompatActivity;
 
 import com.ringov.yatrnsltr.MessageDialogHelper;
 import com.ringov.yatrnsltr.R;
 import com.ringov.yatrnsltr.base.BasePresenter;
 import com.ringov.yatrnsltr.base.interfaces.BaseView;
 
+import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 
 /**
@@ -21,7 +21,8 @@ public abstract class BaseActivity<PRESENTER extends BasePresenter> extends AppC
 
     protected abstract PRESENTER providePresenter();
 
-    protected abstract @LayoutRes int getLayout();
+    protected abstract @LayoutRes
+    int getLayout();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

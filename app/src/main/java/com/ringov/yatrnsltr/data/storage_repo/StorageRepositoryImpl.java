@@ -1,6 +1,5 @@
 package com.ringov.yatrnsltr.data.storage_repo;
 
-import com.google.common.annotations.Beta;
 import com.ringov.yatrnsltr.storage_module.entities.ExtraParams;
 import com.ringov.yatrnsltr.storage_module.entities.StoredTranslationData;
 import com.ringov.yatrnsltr.translation_module.entities.TranslationData;
@@ -56,7 +55,6 @@ public class StorageRepositoryImpl implements StorageRepository {
      * @param to   (exclusive)
      * @return
      */
-    @Beta
     private Observable<List<StoredTranslationData>> loadHistory(int from, int to) {
         return loadHistory();
     }

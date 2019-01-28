@@ -1,6 +1,6 @@
 package com.ringov.yatrnsltr.settings;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by Sergey Koltsov on 10.04.2017.

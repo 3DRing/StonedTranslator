@@ -2,9 +2,10 @@ package com.ringov.yatrnsltr.base.routing;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.ShareCompat;
 
 import com.ringov.yatrnsltr.common_module.view.ChooseLanguageActivity;
+
+import androidx.core.app.ShareCompat;
 
 /**
  * Created by Sergey Koltsov on 14.04.2017.

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ringov.yatrnsltr">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,19 +8,17 @@
 
     <application
         android:name=".App"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/mipmap_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".common_module.view.MainActivity"
             android:screenOrientation="portrait">
-            <!--Из за какого-то одного нелепого ненайденного бага, всплывшего за несколько часов до дедлайна,
-            пришлось отказаться от поворота экрана в пользу устойчивости - она важнее возможности крутить приложение-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
