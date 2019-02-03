@@ -31,7 +31,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.ringov.yatrnsltr.custom_views.ChooseLanguageButton
+        <com.ringov.stonedtrnsltr.custom_views.ChooseLanguageButton
             android:id="@+id/btn_from"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -50,7 +50,7 @@
             android:textSize="18sp"
             tools:text="Language" />
 
-        <com.ringov.yatrnsltr.custom_views.ChooseLanguageButton
+        <com.ringov.stonedtrnsltr.custom_views.ChooseLanguageButton
             android:id="@+id/btn_to"
             android:layout_width="32dp"
             android:layout_height="32dp"
