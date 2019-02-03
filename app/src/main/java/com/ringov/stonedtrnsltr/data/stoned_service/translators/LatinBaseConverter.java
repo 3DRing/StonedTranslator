@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * Created by Сергей on 14.04.2017.
  */
-public class ENConverter extends BaseConverter {
+public class LatinBaseConverter extends BaseConverter {
 
     @Override
     Set<Character> setVowels() {

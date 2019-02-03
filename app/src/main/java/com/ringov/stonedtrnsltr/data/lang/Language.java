@@ -66,11 +66,23 @@ public class Language implements RealmModel {
     }
 
     public enum SupportedLanguage {
-        RU, EN, NOT;
+        //- English
+        //- French
+        //- German
+        //- Spanish
+        //- Italian
+        //- Russian
+        //- Ukrainian
+        EN, FR, DE, ES, IT, RU, UKR, NOT;
 
         private static Map<String, SupportedLanguage> langMap = new HashMap<String, SupportedLanguage>() {{
             put("ru", RU);
+            put("uk", UKR);
             put("en", EN);
+            put("fr", FR);
+            put("de", DE);
+            put("es", ES);
+            put("it", IT);
         }};
 
         static SupportedLanguage fromString(String lang) {

@@ -10,7 +10,7 @@ import java.util.Set;
 
 public abstract class BaseConverter implements StonedConverter {
 
-    Set<Character> vowels;
+    private Set<Character> vowels;
 
     BaseConverter() {
         vowels = setVowels();
