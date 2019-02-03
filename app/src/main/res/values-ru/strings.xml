@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Упртый првдчик</string>
+    <string name="app_name">Упоротый переводчик</string>
     <string name="lang_pair_item">%1$s-%2$s</string>
     <string name="translate_button_text">Перевести</string>
     <string name="translate_button_text_stoned">Првсти</string>

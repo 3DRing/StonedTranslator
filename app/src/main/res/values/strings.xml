@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ya Trnsltr</string>
+    <string name="app_name">Stoned Translator</string>
     <string name="lang_pair_item">%1$s-%2$s</string>
     <string name="translate_button_text">Translate</string>
     <string name="translate_button_text_stoned">Trnslte</string>
