@@ -1,8 +1,8 @@
 # Я Првдчк
 
-**Актуальная версия: 0.96**
+**Актуальная версия: 1.0.0**
 
-**[Скачать .apk файл последней версии](https://yadi.sk/d/-wGjqqIP3HHRxC)**
+**[Google Play](https://play.google.com/store/apps/details?id=com.ringov.stonedtrnsltr)**
 
 ## Цель
 
@@ -62,8 +62,5 @@
 - Модуль перевода - весь функционал, связанный с переводом, общением с API переводчика и отображением результатов, сосредоточен в этом модуле.
 - Модуль хранения - работа с локальной базой данных, сохранение и отображение истории и избранного.
 
-## Работа на будущее
-
-Раздел в разработке
 
 ![Screenshots](https://github.com/3DRing/YaTrnsltr/blob/additional_materials/materials/logo_small.png?raw=true)
