@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
-def RELEASE_KEY_STORE_DIR = "../../RingovReleaseKeystore/"
+def RELEASE_KEY_STORE_DIR = "../RingovReleaseKeystore/"
 def RELEASE_KEY_STORE_PROPERTIES_FILE_NAME = "keystore_release.properties"
 
 def loadProps(fileName) {
@@ -57,9 +57,9 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            shrinkResources true
-            minifyEnabled true
-            debuggable true
+            shrinkResources false
+            minifyEnabled false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
