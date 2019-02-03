@@ -10,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.ringov.yatrnsltr"
+        applicationId "com.ringov.stonedtrnsltr"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 10
