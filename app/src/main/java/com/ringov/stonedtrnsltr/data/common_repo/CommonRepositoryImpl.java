@@ -9,6 +9,7 @@ import com.ringov.stonedtrnsltr.data.lang.Language;
 import com.ringov.stonedtrnsltr.translation_module.entities.LangPairData;
 
 import java.util.List;
+import java.util.Locale;
 
 import io.realm.Realm;
 import rx.Observable;
@@ -25,6 +26,8 @@ public class CommonRepositoryImpl implements CommonRepository {
 
     private BehaviorSubject<LangPairData> changingLanguageEvents;
     private BehaviorSubject<Boolean> changingModeEvents;
+
+    private boolean languageUpdate = false;
 
     CommonRepositoryImpl() {
         changingModeEvents = BehaviorSubject.create();
@@ -64,21 +67,24 @@ public class CommonRepositoryImpl implements CommonRepository {
 
     @Override
     public Observable<List<Language>> loadAllLanguages() {
-        // update languages once in 7 days
-        long lastUpdate = SharedPreferencesStorage.loadLastLanguagesUpdate();
-        long crt = System.currentTimeMillis();
-        if (crt - lastUpdate < LANG_UPDATE_EXPIRED) {
+//        update languages once in 7 days
+//        long lastUpdate = SharedPreferencesStorage.loadLastLanguagesUpdate();
+//        long crt = System.currentTimeMillis();
+        if (languageUpdate) {
             return Observable.just(Realm.getDefaultInstance()
                     .copyFromRealm(Realm.getDefaultInstance()
                             .where(Language.class)
                             .findAll()));
         } else {
-            return getService().getAllLanguages(Config.API_KEY,
-                    new Language(Language.SupportedLanguage.RU).getShortName())
+            String currentLocale = Locale.getDefault().getLanguage();
+            return getService().getAllLanguages(Config.API_KEY, currentLocale)
                     .flatMap(response -> Observable.from(response.getAllLangs()))
                     .map(this::convertToLanguage)
                     .toList()
-                    .doOnNext(langs -> SharedPreferencesStorage.saveLanguagesUpdate(crt))
+                    .doOnNext(langs -> {
+                        languageUpdate = true;
+                        //SharedPreferencesStorage.saveLanguagesUpdate(crt);
+                    })
                     .doOnNext(langs ->
                             Realm.getDefaultInstance().executeTransaction(realm -> {
                                 realm.delete(Language.class);
