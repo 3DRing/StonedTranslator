@@ -27,4 +27,11 @@
     <string name="about_title">About</string>
     <string name="no_internet_connection_text">No internet connection</string>
     <string name="copied_to_clipboard">Copied</string>
+
+    <string name="build_version">version %1$s, build %2$s</string>
+    <string name="privacy_text">Privacy Policy</string>
+
+    <string name="play_market_link" translatable="false">https://play.google.com/store/apps/details?id=com.ringov.stonedtrnsltr</string>
+    <string name="privacy_link" translatable="false">https://gitlab.com/ringov/yatrnsltr/raw/master/privacy_en.txt</string>
+    <string name="linkable" translatable="false">&lt;a href=\"%1$s\">%2$s&lt;/a></string>
 </resources>

@@ -28,4 +28,8 @@
     <string name="about_title">О приложении</string>
     <string name="no_internet_connection_text">Интернет подключение отсутствует</string>
     <string name="copied_to_clipboard">Скопировано</string>
+
+    <string name="build_version">версия %1$s, сборка %2$s</string>
+
+    <string name="privacy_text">Политика конфиденциальности</string>
 </resources>
