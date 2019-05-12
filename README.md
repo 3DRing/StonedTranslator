@@ -1,6 +1,6 @@
 # Упртый Првдчик
 
-**Актуальная версия: 1.0.0**
+**Актуальная версия: 1.0.1**
 
 **[Google Play](https://play.google.com/store/apps/details?id=com.ringov.stonedtrnsltr)**
 
