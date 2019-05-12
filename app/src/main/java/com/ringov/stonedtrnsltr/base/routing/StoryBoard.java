@@ -3,6 +3,7 @@ package com.ringov.stonedtrnsltr.base.routing;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.ringov.stonedtrnsltr.about_module.AboutActivity;
 import com.ringov.stonedtrnsltr.common_module.view.ChooseLanguageActivity;
 
 import androidx.core.app.ShareCompat;
@@ -24,6 +25,13 @@ public class StoryBoard {
     public static StoryDestination chooseLanguageScreen() {
         return activity -> {
             Intent i = new Intent(activity, ChooseLanguageActivity.class);
+            activity.startActivity(i);
+        };
+    }
+
+    public static StoryDestination openAboutScreen() {
+        return activity -> {
+            Intent i = new Intent(activity, AboutActivity.class);
             activity.startActivity(i);
         };
     }

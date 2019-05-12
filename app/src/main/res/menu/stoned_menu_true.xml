@@ -4,15 +4,21 @@
 
     <!--learn how to avoid this repetition-->
     <item
+        android:id="@+id/menu_stoned_mode"
+        android:icon="@drawable/ic_stoned_bear_white_true"
+        android:title="@string/stoned_mode_title"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_languages"
         android:icon="@drawable/ic_language_24dp"
         android:title="@string/languages_title"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_stoned_mode"
-        android:icon="@drawable/ic_stoned_bear_white_true"
-        android:title=""
-        app:showAsAction="always" />
+        android:id="@+id/menu_about"
+        android:icon="@drawable/ic_about_24dp"
+        android:title="@string/languages_title"
+        app:showAsAction="ifRoom" />
 
 </menu>

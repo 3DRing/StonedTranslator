@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import androidx.annotation.IdRes;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -27,9 +31,6 @@ import com.ringov.stonedtrnsltr.ui_entities.UILangPair;
 
 import java.util.List;
 
-import androidx.annotation.IdRes;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -115,6 +116,10 @@ public class MainActivity extends BaseActivity<CommonPresenter> implements Commo
                 break;
             case R.id.menu_languages:
                 mPresenter.onLanguagesClicked();
+                break;
+            case R.id.menu_about:
+                mPresenter.onAboutClicked();
+            default:
                 break;
         }
         return super.onOptionsItemSelected(item);

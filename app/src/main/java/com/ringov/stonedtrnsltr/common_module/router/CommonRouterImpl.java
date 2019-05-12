@@ -17,4 +17,9 @@ public class CommonRouterImpl extends BaseRouterImpl implements CommonRouter {
     public void openChooseLanguageScreen() {
         start(StoryBoard.chooseLanguageScreen());
     }
+
+    @Override
+    public void openAboutScreen() {
+        start(StoryBoard.openAboutScreen());
+    }
 }

@@ -26,6 +26,10 @@
         <activity
             android:name=".common_module.view.ChooseLanguageActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".about_module.AboutActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

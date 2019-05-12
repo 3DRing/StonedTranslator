@@ -24,6 +24,7 @@
     <string name="hello_stoned">hllo</string>
     <string name="stoned_mode_title">Stoned</string>
     <string name="languages_title">Languages</string>
+    <string name="about_title">About</string>
     <string name="no_internet_connection_text">No internet connection</string>
     <string name="copied_to_clipboard">Copied</string>
 </resources>

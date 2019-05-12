@@ -8,4 +8,5 @@ import com.ringov.stonedtrnsltr.base.interfaces.BaseRouter;
 
 public interface CommonRouter extends BaseRouter {
     void openChooseLanguageScreen();
+    void openAboutScreen();
 }
